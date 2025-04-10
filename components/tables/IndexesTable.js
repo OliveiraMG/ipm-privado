@@ -1,30 +1,42 @@
 /**
- * Componente para tabela de índices
+ * Componente genérico para tabelas
  */
 
 // Importação do formatador de números
 import { formatNumber } from '../../js/Utilities.js';
 
 /**
- * Classe que representa a tabela de índices
+ * Classe que representa uma tabela dinâmica
  */
 class IndexesTable {
   /**
-   * Cria uma instância da tabela de índices
+   * Cria uma instância da tabela
    * @param {Object} config - Configuração da tabela
    * @param {HTMLElement|string} config.container - Container ou seletor para renderização
    * @param {Array} config.data - Dados para a tabela
    * @param {string} config.title - Título da tabela
+   * @param {Array} config.columns - Configuração das colunas (opcional)
+   * @param {Object} config.options - Opções adicionais (opcional)
    */
-  constructor({ container, data, title }) {
-    console.log(`Criando IndexesTable: ${title}`);
-    
+  constructor({ container, data, title, columns, options = {} }) {
     this.container = typeof container === 'string' 
       ? document.querySelector(container) 
       : container;
       
     this.data = data || [];
-    this.title = title || 'Índices';
+    this.title = title || 'Tabela';
+    this.options = {
+      headerBgClass: 'bg-[#264757]',
+      headerTextClass: 'text-white',
+      rowBgClass: 'bg-white',
+      evenRowBgClass: 'bg-slate-50',
+      useAlternatingRowColors: true,
+      tableClass: 'min-w-full border-collapse',
+      ...options
+    };
+    
+    // Se as colunas não foram definidas, tentamos inferir dos dados
+    this.columns = columns || this.inferColumns();
     
     if (!this.container) {
       console.error('Container não encontrado para IndexesTable');
@@ -35,14 +47,60 @@ class IndexesTable {
   }
   
   /**
+   * Infere configuração de colunas com base nos dados
+   * @returns {Array} Configuração de colunas
+   */
+  inferColumns() {
+    if (!this.data.length) return [];
+    
+    // Obter todas as chaves do primeiro item
+    const keys = Object.keys(this.data[0]);
+    
+    return keys.map(key => {
+      // Inferir tipo e alinhamento
+      let type = 'text';
+      let align = 'center';
+      const sample = this.data[0][key];
+      
+      if (typeof sample === 'number') {
+        type = 'number';
+        align = 'center';
+      } else if (typeof sample === 'string') {
+        // Tentar identificar se é um número formatado ou uma variação
+        if (sample.match(/^[+-]?\d/)) {
+          type = sample.startsWith('+') || sample.startsWith('-') ? 'variation' : 'number';
+          align = 'center';
+        }
+      }
+      
+      // Criar título formatado (capitalizado)
+      const title = key.charAt(0).toUpperCase() + key.slice(1)
+        .replace(/([A-Z])/g, ' $1') // Adicionar espaço antes de letra maiúscula
+        .replace(/_/g, ' '); // Substituir underscores por espaços
+      
+      return {
+        key,
+        title,
+        type,
+        align,
+        format: value => {
+          if (type === 'number' && typeof value === 'number') {
+            return formatNumber(value);
+          }
+          return value;
+        }
+      };
+    });
+  }
+  
+  /**
    * Renderiza a tabela no container
    */
   render() {
-    console.log(`Renderizando IndexesTable (${this.title})`);
     this.container.className = 'w-full';
     
     // Verificação de dados
-    if (!this.data.length) {
+    if (!this.data.length || !this.columns.length) {
       this.renderEmptyState();
       return;
     }
@@ -58,17 +116,13 @@ class IndexesTable {
     
     // Criar tabela
     const table = document.createElement('table');
-    table.className = 'min-w-full border-collapse';
+    table.className = this.options.tableClass;
     
     // Cabeçalho da tabela
     table.innerHTML = `
       <thead>
         <tr>
-          <th class="py-3 px-4 bg-[#264757] text-center text-white font-medium uppercase text-sm border-b border-gray-200">Exercício</th>
-          <th class="py-3 px-4 bg-[#264757] text-center text-white font-medium uppercase text-sm border-b border-gray-200">Município</th>
-          <th class="py-3 px-4 bg-[#264757] text-right text-white font-medium uppercase text-sm border-b border-gray-200">VAF</th>
-          <th class="py-3 px-4 bg-[#264757] text-right text-white font-medium uppercase text-sm border-b border-gray-200">Variação</th>
-          <th class="py-3 px-4 bg-[#264757] text-center text-white font-medium uppercase text-sm border-b border-gray-200">Rank</th>
+          ${this.renderHeaders()}
         </tr>
       </thead>
       <tbody>
@@ -96,22 +150,59 @@ class IndexesTable {
   }
   
   /**
+   * Renderiza os cabeçalhos da tabela
+   * @returns {string} HTML dos cabeçalhos
+   */
+  renderHeaders() {
+    return this.columns.map(column => {
+      const alignClass = column.align === 'right' ? 'text-right' : 
+                         column.align === 'center' ? 'text-center' : 'text-left';
+      
+      return `
+        <th class="py-3 px-4 ${this.options.headerBgClass} ${alignClass} ${this.options.headerTextClass} font-medium uppercase text-sm border-b border-gray-200">
+          ${column.title}
+        </th>
+      `;
+    }).join('');
+  }
+  
+  /**
    * Renderiza as linhas da tabela
    * @returns {string} HTML das linhas
    */
   renderRows() {
-    return this.data.map(item => {
-      const variationClass = item.variacao.startsWith('+') ? 'text-green-600' : 'text-red-600';
+    return this.data.map((item, index) => {
+      // Determinar classe de background (alternando ou não)
+      const bgClass = this.options.useAlternatingRowColors && index % 2 !== 0 
+        ? this.options.evenRowBgClass 
+        : this.options.rowBgClass;
       
-      return `
-        <tr>
-          <td class="py-3 px-4 text-center text-sm border-b border-gray-200 bg-white">${item.exercicio}</td>
-          <td class="py-3 px-4 text-center text-sm border-b border-gray-200 bg-white">${item.municipio}</td>
-          <td class="py-3 px-4 text-right font-bold text-sm border-b border-gray-200 bg-white">${formatNumber(item.vaf)}</td>
-          <td class="py-3 px-4 text-right text-sm ${variationClass} border-b border-gray-200 bg-white">${item.variacao}</td>
-          <td class="py-3 px-4 text-center text-sm border-b border-gray-200 bg-white">${item.rank}</td>
-        </tr>
-      `;
+      const cells = this.columns.map(column => {
+        const value = item[column.key];
+        const formattedValue = column.format ? column.format(value) : value;
+        
+        // Estilo para variação
+        let specialClass = '';
+        if (column.type === 'variation' && typeof value === 'string') {
+          specialClass = value.startsWith('+') ? 'text-green-600' : 
+                         value.startsWith('-') ? 'text-red-600' : '';
+        }
+        
+        // Determinar alinhamento
+        const alignClass = column.align === 'right' ? 'text-right' : 
+                           column.align === 'center' ? 'text-center' : 'text-left';
+        
+        // Adicionar classe de destaque para valores principais
+        const emphasisClass = column.emphasis ? 'font-bold' : '';
+        
+        return `
+          <td class="py-3 px-4 ${alignClass} ${specialClass} ${emphasisClass} text-sm border-b border-gray-200 ${bgClass}">
+            ${formattedValue}
+          </td>
+        `;
+      }).join('');
+      
+      return `<tr>${cells}</tr>`;
     }).join('');
   }
 }

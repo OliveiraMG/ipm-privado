@@ -117,25 +117,7 @@
                 <!-- Filter area com alinhamento melhorado -->
                 <div class="flex justify-center py-5">
                     <div class="w-11/12 search-container">
-                        <div class="relative flex-grow">
-                            <select id="municipality-select" placeholder="Município"
-                                class="border border-gray-200 text-gray-700 py-0 px-4 pr-10 rounded-lg focus:ring-1 focus:ring-blue-light w-full">
-                                <option selected disabled>Município</option>
-                                <option>Pontes e Lacerda</option>
-                                <option>Cuiabá</option>
-                                <option>Várzea Grande</option>
-                                <option>Rondonópolis</option>
-                                <option>Sinop</option>
-                            </select>
-                            <div class="pointer-events-none absolute right-3 top-1/2 transform -translate-y-1/2">
-                                <i class="fa-solid fa-chevron-down text-sm"></i>
-                            </div>
-                        </div>
-                        <button id="search-button"
-                            class="bg-blue-medium hover:bg-blue-dark text-white font-medium px-4 ml-4 rounded-lg flex-shrink-0 transition-colors duration-200">
-                            Buscar
-                            <i class="fa-solid fa-magnifying-glass ml-1 text-sm"></i>
-                        </button>
+                        <!-- Os componentes Select e Button serão injetados aqui via JavaScript -->
                     </div>
                 </div>
 
@@ -212,23 +194,6 @@
                     // Adicionar classe active à tab clicada
                     this.classList.add('active');
                 });
-            });
-
-            // Adicionar função para alternar a visualização com base na seleção do município
-            document.getElementById('search-button').addEventListener('click', function() {
-                const select = document.getElementById('municipality-select');
-                const initialState = document.getElementById('initial-state');
-                const municipalityContent = document.getElementById('municipality-content');
-                
-                if (select && select.value && select.value !== select.options[0].value) {
-                    // Município selecionado - mostrar conteúdo e ocultar estado inicial
-                    if (initialState) initialState.classList.add('hidden');
-                    if (municipalityContent) municipalityContent.classList.remove('hidden');
-                } else {
-                    // Nenhum município selecionado - mostrar estado inicial e ocultar conteúdo
-                    if (initialState) initialState.classList.remove('hidden');
-                    if (municipalityContent) municipalityContent.classList.add('hidden');
-                }
             });
         });
     </script>

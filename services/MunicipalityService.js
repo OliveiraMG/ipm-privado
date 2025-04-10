@@ -134,7 +134,46 @@ const MOCK_DATA = {
       { ano: 2023, vaf_anterior: 5275495.06834, vaf_atual: 5102566.34 },
       { ano: 2024, vaf_anterior: 5800000.00, vaf_atual: 5600000.00 }
     ],
-  }
+  },
+  'Várzea Grande': {
+    contribuintes: {
+      total: { valor: 42157, mei: 1232, simplesNacional: 324, simplificado: 78 },
+      baixados: { valor: 14832, mei: 587, simplesNacional: 120, simplificado: 42 },
+      ativos: { valor: 22568, mei: 4215, simplesNacional: 145, simplificado: 36 },
+      suspensos: { valor: 4757, mei: 430, simplesNacional: 59, simplificado: 0 }
+      },
+    repasses: {
+      ano: 2023,
+      indice: 98427988.13,
+      iva: 125295127.94,
+      educacao: 205459035.22,
+      saude: 298350.0,
+      ucti: 235748944.74,
+      trib_propria: 95719667.0,
+      populacao: 98750875.25,
+      area: 193.5,
+      coef_local: 812701.99
+    },
+    indices: [
+      { exercicio: 2023, municipio: 'Várzea Grande', vaf: 5275495068.34, variacao: '+12.21%', rank: 1 },
+      { exercicio: 2022, municipio: 'Várzea Grande', vaf: 4700774160.22, variacao: '+8.53%', rank: 1 },
+      { exercicio: 2021, municipio: 'Várzea Grande', vaf: 4334287458.73, variacao: '+15.21%', rank: 1 },
+      { exercicio: 2020, municipio: 'Várzea Grande', vaf: 3762102677.81, variacao: '+7.99%', rank: 1 }
+    ],
+    execucao: [
+      { exercicio: 2023, municipio: 'Várzea Grande', vaf: 5102566.34, variacao: '+8.21%', rank: 1 },
+      { exercicio: 2022, municipio: 'Várzea Grande', vaf: 4715089.24, variacao: '+11.30%', rank: 1 },
+      { exercicio: 2021, municipio: 'Várzea Grande', vaf: 4236581.96, variacao: '+12.51%', rank: 1 },
+      { exercicio: 2020, municipio: 'Várzea Grande', vaf: 3765462.18, variacao: '+8.48%', rank: 1 },
+      ],
+      vaf: [
+        { ano: 2020, vaf_anterior: 3762102.67781, vaf_atual: 3765462.18 },
+        { ano: 2021, vaf_anterior: 4334287.45873, vaf_atual: 4236581.96 },
+        { ano: 2022, vaf_anterior: 4700774.16022, vaf_atual: 4715089.24 },
+        { ano: 2023, vaf_anterior: 5275495.06834, vaf_atual: 5102566.34 },
+        { ano: 2024, vaf_anterior: 5800000.00, vaf_atual: 5600000.00 },
+      ],
+    },
 };
 
 // Adicionar séries temporais aos municípios
@@ -152,6 +191,11 @@ Object.keys(MOCK_DATA).forEach(municipio => {
 export const getMunicipality = async (municipalityName) => {
   console.log(`Buscando dados do município: ${municipalityName}`);
 
+  // Verificar se o município está vazio
+  if (!municipalityName || municipalityName.trim() === '') {
+    throw new Error('Nome do município não informado');
+  }
+
   if (USE_MOCK_DATA) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -160,9 +204,11 @@ export const getMunicipality = async (municipalityName) => {
           console.log(`Dados encontrados para ${municipalityName}`);
           resolve(data);
         } else {
-          reject(new Error(`Município não encontrado: ${municipalityName}`));
+          const error = new Error(`Município não encontrado: ${municipalityName}`);
+          console.error(error);
+          reject(error);
         }
-      }, 300); // Simular tempo de resposta
+      }, 500); // Aumentar ligeiramente o tempo para visualizar o carregamento
     });
   }
 
@@ -171,9 +217,21 @@ export const getMunicipality = async (municipalityName) => {
     console.log(`Fazendo requisição para API: ${url}`);
     
     const response = await fetch(url);
-    if (!response.ok) throw new Error(`Erro ao buscar município: ${response.statusText}`);
+    if (!response.ok) {
+      const error = new Error(`Erro ao buscar município: ${response.statusText}`);
+      console.error(error);
+      throw error;
+    }
     
     const data = await response.json();
+    
+    // Verificar se os dados estão vazios
+    if (!data || Object.keys(data).length === 0) {
+      const error = new Error(`Não foram encontrados dados para o município: ${municipalityName}`);
+      console.error(error);
+      throw error;
+    }
+    
     console.log(`Dados recebidos da API para ${municipalityName}`);
     return data;
   } catch (error) {
