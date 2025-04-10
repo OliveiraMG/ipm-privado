@@ -1,0 +1,259 @@
+/* Main CSS file for IPM-e */
+
+/*==============================
+  1. VARIABLES & RESET
+==============================*/
+:root {
+    /* Color palette */
+    --blue-dark: #264757;
+    --blue-medium: #3B657A;
+    --blue-light: #5CACD1;
+    --blue-lighter: #6ECEFA;
+    --gray-light: #EDEDED;
+    --gray-lighter: #F5F5F5;
+    --gray-breadcrumb: #D9D9D9;
+    --gray-text: #666666;
+    --dark: #0A0A0A;
+    
+    /* Spacing & Sizing */
+    --border-radius-sm: 6px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --border-radius-xl: 16px;
+    --border-radius-2xl: 24px;
+    --border-radius-3xl: 32px;
+    --border-radius-full: 64px;
+}
+
+/* Reset & Global styles */
+html, body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+body {
+    background-color: var(--gray-light);
+    line-height: 1.5;
+}
+
+/*==============================
+  2. HEADER & NAVIGATION
+==============================*/
+/* Logo styling */
+h1.text-5xl {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--blue-dark);
+    line-height: 1.1;
+}
+
+/* Navigation list & items */
+ul.flex {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul.flex li a {
+    text-decoration: none;
+    padding: 10px 15px;
+    font-weight: 500;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s ease;
+    color: var(--gray-text);
+}
+
+ul.flex li a:hover {
+    color: var(--blue-light);
+    font-weight: 600;
+}
+
+/* Dashboard active button */
+ul.flex li:first-child a {
+    font-size: 24px;
+    font-weight: 500;
+    background-color: var(--blue-light);
+    color: white;
+    height: 46px;
+    border-radius: var(--border-radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Breadcrumb section */
+.bg-\[\#D9D9D9\] {
+    background-color: var(--gray-breadcrumb);
+}
+
+
+.bg-\[\#D9D9D9\] div div:first-child {
+    font-size: 16px;
+    padding: 16px 40px 0px 82px;
+    color: var(--gray-text);
+}
+
+.bg-\[\#D9D9D9\] div div:last-child {
+    font-size: 40px;
+    padding: 0px 40px 16px 80px;
+    font-weight: 600;
+    color: var(--blue-dark);
+    line-height: 1.2;
+}
+
+/*==============================
+  3. FORMS & CONTROLS
+==============================*/
+/* Municipality Select */
+#municipality-select {
+    border-color: #e5e5e5;
+    border-width: 1px;
+    background-color: white;
+    height: 48px;
+    border-radius: var(--border-radius-lg);
+    appearance: none;
+    font-size: 16px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    outline: none;
+    text-indent: 5px;
+    color: #555;
+}
+
+#municipality-select:focus {
+    border-color: var(--blue-light);
+    box-shadow: 0 0 0 2px rgba(92, 172, 209, 0.2);
+}
+
+#municipality-select option[disabled] {
+    color: var(--gray-text);
+}
+
+/* Search button */
+#search-button {
+    background-color: var(--blue-medium);
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: var(--border-radius-md);
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+#search-button:hover {
+    background-color: var(--blue-dark);
+}
+
+/*==============================
+  4. CONTENT & TYPOGRAPHY
+==============================*/
+/* Page title */
+h2 {
+    color: var(--blue-dark);
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 1.2;
+    margin: 0;
+}
+
+/*==============================
+  5. COMPONENTS
+==============================*/
+/* Card container */
+.bg-white.rounded-lg {
+    background-color: white;
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+.bg-white.rounded-lg h3 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Stats cards */
+.bg-card-blue, .bg-blue-medium {
+    background-color: var(--blue-medium);
+    padding: 24px;
+    color: white;
+    text-align: center;
+}
+
+.bg-card-blue .text-4xl,
+.bg-blue-medium .text-4xl {
+    font-size: 36px;
+    font-weight: 700;
+    margin: 10px 0;
+}
+
+.bg-card-blue .uppercase,
+.bg-blue-medium .uppercase {
+    text-transform: uppercase;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+/*==============================
+  6. RESPONSIVENESS
+==============================*/
+@media (max-width: 1280px) {
+    .bg-\[\#D9D9D9\] div {
+        padding: 20px 40px;
+    }
+    
+    .px-20 {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+    
+    .mx-20 {
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+    
+    ul.flex {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 1024px) {
+    ul.flex {
+        overflow-x: auto;
+        padding-bottom: 20px;
+    }
+    
+    ul.flex li:first-child a {
+        min-width: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    h1.text-5xl {
+        font-size: 36px;
+    }
+    
+    h2 {
+        font-size: 32px;
+    }
+    
+    .bg-\[\#D9D9D9\] div div:last-child {
+        font-size: 32px;
+    }
+    
+    .px-20, .mx-20 {
+        padding-left: 20px;
+        padding-right: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+}
