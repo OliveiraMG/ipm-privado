@@ -106,6 +106,30 @@ ul.flex li:first-child a {
     line-height: 1.2;
 }
 
+.header-dropdown {
+    transition: opacity 0.2s, transform 0.2s;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+  }
+  
+  .header-dropdown.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  
+  .nav-item.active .header-dropdown,
+  .nav-item:hover .header-dropdown {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .nav-item {
+    position: relative;
+  }
+
 /*==============================
   3. FORMS & CONTROLS
 ==============================*/
