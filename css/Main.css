@@ -73,19 +73,6 @@ ul.flex li a:hover {
     font-weight: 600;
 }
 
-/* Dashboard active button */
-ul.flex li:first-child a {
-    font-size: 24px;
-    font-weight: 500;
-    background-color: var(--blue-light);
-    color: white;
-    height: 46px;
-    border-radius: var(--border-radius-full);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 /* Breadcrumb section */
 .bg-\[\#D9D9D9\] {
     background-color: var(--gray-breadcrumb);
@@ -164,7 +151,7 @@ ul.flex li:first-child a {
     font-weight: 500;
     font-size: 14px;
     border-radius: var(--border-radius-md);
-    height: 40px;
+    height: 48px;
     display: inline-flex;
     align-items: center;
     justify-content: center;

@@ -19,6 +19,8 @@ class Select {
       const select = document.createElement('select');
       select.id = config.id || '';
       select.className = `border border-gray-200 text-gray-700 py-2 px-4 pr-10 rounded-lg focus:ring-1 focus:ring-blue-light w-full ${config.className || ''}`;
+      select.style.appearance = 'none';
+      select.style.mozAppearance = 'none';
       
       // Adicionar placeholder
       if (config.placeholder) {
