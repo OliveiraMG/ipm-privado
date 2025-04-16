@@ -124,7 +124,7 @@ class Header {
         targetElement: document.getElementById('nav-importacao'),
         items: [
           { title: 'IMPORTAR', icon: 'file-import', url: '/pages/imports/import.html' },
-          { title: 'IMPORTADOS', icon: 'list', url: '/importados' },
+          { title: 'IMPORTADOS', icon: 'list', url: '/pages/imports/imported/ImportedPage.html' },
           { title: 'REMESSAS', icon: 'box', url: '/remessas' },
           { title: 'PUBLICAÇÕES', icon: 'newspaper', url: '/publicacoes' },
           { title: 'EXERCÍCIOS', icon: 'dumbbell', url: '/exercicios' },
