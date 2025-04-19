@@ -5,6 +5,7 @@ import { Header } from '/components/layout/Header.js';
 import IndexesTable from '/components/tables/IndexesTable.js';
 import { toast } from '/js/Utilities.js';
 import RegisterEntityComponent from '/pages/auxiliares/register/RegisterEntityComponent.js';
+import SearchEntityComponent from '/pages/auxiliares/search/SearchEntityComponent.js';
 import ModalComponent from '/components/common/ModalComponent.js';
 
 class EntitiesPage {
@@ -13,6 +14,7 @@ class EntitiesPage {
     this.totalPages = 10;
     this.pageSize = 10;
     this.tableData = [];
+    this.originalData = []; // Armazenar dados originais para restaurar após limpar filtros
     this.modal = null;
     this.initialize();
   }
@@ -68,22 +70,11 @@ class EntitiesPage {
     const card = document.createElement('div');
     card.className = 'bg-white rounded-2xl shadow-[6px_6px_12px_rgba(0,0,0,0.25)] mx-24 my-20 p-12';
 
-    // Título e botões
+    // Título
     const header = document.createElement('div');
     header.className = 'flex justify-between items-center mb-6';
     header.innerHTML = `
       <h2 class="text-2xl font-semibold text-blue-dark">Listagem</h2>
-      <div class="space-x-4">
-        <button id="print-btn" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
-          <i class="fa-solid fa-print mr-2"></i>Imprimir
-        </button>
-        <button id="register-btn" class="px-4 py-2 bg-blue-dark text-white rounded-md hover:bg-blue-medium">
-          <i class="fa-solid fa-plus mr-2"></i>Cadastrar
-        </button>
-        <button id="search-btn" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
-          <i class="fa-solid fa-search mr-2"></i>Pesquisar
-        </button>
-      </div>
     `;
     card.appendChild(header);
 
@@ -92,6 +83,22 @@ class EntitiesPage {
     tableContainer.id = 'entities-table';
     tableContainer.className = 'w-full px-2';
     card.appendChild(tableContainer);
+
+    // Botões abaixo da tabela
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'flex justify-center space-x-4 mt-6';
+    buttonContainer.innerHTML = `
+      <button id="print-btn" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+        <i class="fa-solid fa-print mr-2"></i>Imprimir
+      </button>
+      <button id="register-btn" class="px-4 py-2 bg-blue-dark text-white rounded-md hover:bg-blue-medium">
+        <i class="fa-solid fa-plus mr-2"></i>Cadastrar
+      </button>
+      <button id="search-btn" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+        <i class="fa-solid fa-search mr-2"></i>Pesquisar
+      </button>
+    `;
+    card.appendChild(buttonContainer);
 
     // Adicionar card à página
     mainContent.appendChild(card);
@@ -128,7 +135,7 @@ class EntitiesPage {
     if (searchBtn) {
       searchBtn.addEventListener('click', () => {
         toast.info('Abrindo pesquisa...');
-        // Lógica para abrir interface de pesquisa pode ser adicionada aqui
+        this.openSearchModal();
       });
     }
   }
@@ -137,16 +144,13 @@ class EntitiesPage {
    * Abre o modal com o formulário de cadastro
    */
   openRegisterModal() {
-    // Criar um container temporário para o RegisterEntityComponent
     const formContainer = document.createElement('div');
     formContainer.id = 'register-entity-modal-container';
 
-    // Instanciar RegisterEntityComponent
     const registerComponent = new RegisterEntityComponent({
       containerId: 'register-entity-modal-container',
       onSubmit: (data) => {
         console.log('Formulário submetido:', data);
-        // Simular adição de nova entidade
         if (data.entidade) {
           this.tableData.unshift({
             id: Math.max(...this.tableData.map(d => d.id), 0) + 1,
@@ -157,6 +161,7 @@ class EntitiesPage {
             matricula: '',
             cidade: data.cidade || ''
           });
+          this.originalData = [...this.tableData]; // Atualizar dados originais
           this.renderTable();
           toast.success('Entidade cadastrada com sucesso!');
         }
@@ -168,7 +173,6 @@ class EntitiesPage {
       }
     });
 
-    // Criar e abrir o modal
     this.modal = new ModalComponent({
       id: 'register-entity-modal',
       title: 'Cadastrar Entidade',
@@ -181,16 +185,77 @@ class EntitiesPage {
   }
 
   /**
+   * Abre o modal com o formulário de pesquisa
+   */
+  openSearchModal() {
+    const formContainer = document.createElement('div');
+    formContainer.id = 'search-entity-modal-container';
+
+    const searchComponent = new SearchEntityComponent({
+      containerId: 'search-entity-modal-container',
+      onSearch: (filters) => {
+        this.filterData(filters);
+        this.modal.close();
+      },
+      onBack: () => {
+        this.modal.close();
+        toast.info('Retornado à lista de entidades');
+      }
+    });
+
+    this.modal = new ModalComponent({
+      id: 'search-entity-modal',
+      title: 'Pesquisar Entidades',
+      content: searchComponent.element,
+      onClose: () => {
+        this.modal = null;
+      }
+    });
+    this.modal.open();
+  }
+
+  /**
+   * Filtra os dados com base nos critérios de pesquisa
+   */
+  filterData(filters) {
+    let filteredData = [...this.originalData];
+
+    if (filters.codigo) {
+      filteredData = filteredData.filter(item => item.id === filters.codigo);
+    }
+
+    if (filters.cidade) {
+      filteredData = filteredData.filter(item =>
+        item.cidade.toLowerCase().includes(filters.cidade.toLowerCase())
+      );
+    }
+
+    if (filters.ativo !== null) {
+      // Considerando que "ativo" não está nos dados simulados, podemos adicionar um campo "ativo" nos dados mock
+      // Para este exemplo, vamos assumir que todas as entidades estão ativas
+      filteredData = filteredData.filter(() => filters.ativo); // Simulação simples
+    }
+
+    this.tableData = filteredData;
+    this.renderTable();
+
+    if (this.tableData.length === 0) {
+      toast.info('Nenhuma entidade encontrada com os filtros aplicados.');
+    } else {
+      toast.success(`${this.tableData.length} entidade(s) encontrada(s).`);
+    }
+  }
+
+  /**
    * Carrega os dados da tabela
    */
   loadData() {
     console.log("Carregando dados...");
 
-    // Simular carregamento com um pequeno delay
     setTimeout(() => {
-      // Dados simulados para a tabela
       this.tableData = this.getMockData();
-      this.totalPages = 10; // Simulando um total de 10 páginas
+      this.originalData = [...this.tableData]; // Armazenar dados originais
+      this.totalPages = 10;
       this.renderTable();
     }, 300);
   }
@@ -205,14 +270,12 @@ class EntitiesPage {
       return;
     }
 
-    // Verificar se temos dados para exibir
     if (!this.tableData || !this.tableData.length) {
       tableContainer.innerHTML = '<p class="text-center py-4">Nenhum dado disponível</p>';
       return;
     }
 
     try {
-      // Definição das colunas para corresponder ao design
       const columns = [
         {
           key: 'acoes',
@@ -241,13 +304,11 @@ class EntitiesPage {
         { key: 'cidade', title: 'CIDADE', align: 'left', width: '15%' }
       ];
 
-      // Criar os dados da tabela com estrutura garantida
       const safeData = this.tableData.map(item => ({
         ...item,
-        id: item.id || Math.floor(Math.random() * 1000) // Garantir que id existe
+        id: item.id || Math.floor(Math.random() * 1000)
       }));
 
-      // Renderizar a tabela usando o componente IndexesTable
       new IndexesTable({
         container: tableContainer,
         data: safeData,
@@ -262,7 +323,6 @@ class EntitiesPage {
         }
       });
 
-      // Adicionar event listeners aos botões
       setTimeout(() => {
         document.querySelectorAll('.layout-btn').forEach(btn => {
           btn.addEventListener('click', (e) => {
@@ -298,7 +358,6 @@ class EntitiesPage {
     const matriculas = ['0522', '0321'];
     const cidades = ['Pontes e Lacerda', 'Várzea Grande'];
 
-    // Gerar 10 linhas de dados simulados
     return Array.from({ length: 10 }, (_, i) => {
       const id = (125 - i) - ((this.currentPage - 1) * 10);
       return {
@@ -321,7 +380,6 @@ class EntitiesPage {
   }
 }
 
-// Inicializar a página quando o documento carregar
 document.addEventListener('DOMContentLoaded', () => {
   EntitiesPage.initialize();
 });
