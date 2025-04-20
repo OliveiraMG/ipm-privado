@@ -7,6 +7,7 @@ import { toast } from '/js/Utilities.js';
 import RegisterCityComponent from '/pages/auxiliares/register/RegisterCityComponent.js';
 import SearchCityComponent from '/pages/auxiliares/search/SearchCityComponent.js';
 import PrintCityComponent from '/pages/auxiliares/print/PrintCityComponent.js';
+import EditCityComponent from '/pages/auxiliares/edit/EditCityComponent.js';
 import ModalComponent from '/components/common/ModalComponent.js';
 
 class CitiesPage {
@@ -250,6 +251,70 @@ class CitiesPage {
   }
 
   /**
+   * Abre o modal com o formulário de edição
+   */
+  openEditModal(cityId) {
+    const cityData = this.tableData.find(item => item.id === cityId);
+    if (!cityData) {
+      toast.error('Cidade não encontrada!');
+      return;
+    }
+
+    const formContainer = document.createElement('div');
+    formContainer.id = 'edit-city-modal-container';
+
+    const editComponent = new EditCityComponent({
+      containerId: 'edit-city-modal-container',
+      cityData: cityData,
+      onUpdate: (updatedData) => {
+        this.updateData(updatedData);
+        this.modal.close();
+      },
+      onBack: () => {
+        this.modal.close();
+        toast.info('Retornado à lista de cidades');
+      }
+    });
+
+    this.modal = new ModalComponent({
+      id: 'edit-city-modal',
+      title: 'Editar Cidade',
+      titleClass: 'text-blue-dark font-semibold text-xl',
+      content: editComponent.element,
+      contentClass: 'p-0',
+      onClose: () => {
+        this.modal = null;
+      }
+    });
+    this.modal.open();
+  }
+
+  /**
+   * Abre o modal para visualizar distritos (placeholder)
+   */
+  openDistrictsModal(cityId) {
+    const cityData = this.tableData.find(item => item.id === cityId);
+    if (!cityData) {
+      toast.error('Cidade não encontrada!');
+      return;
+    }
+
+    toast.info(`Visualizando distritos de "${cityData.cidade}"... (Funcionalidade não implementada)`);
+    // Aqui você pode implementar a lógica para abrir um modal ou redirecionar para uma página de distritos
+  }
+
+  /**
+   * Atualiza os dados da tabela com os valores editados
+   */
+  updateData(updatedData) {
+    this.tableData = this.tableData.map(item =>
+      item.id === updatedData.id ? updatedData : item
+    );
+    this.originalData = [...this.tableData]; // Atualizar dados originais
+    this.renderTable();
+  }
+
+  /**
    * Filtra os dados para impressão
    */
   printData(filters) {
@@ -355,9 +420,9 @@ class CitiesPage {
    */
   loadData() {
     console.log("Carregando dados...");
-
     setTimeout(() => {
       this.tableData = this.getMockData();
+      console.log("Loaded tableData:", this.tableData); // Debug log
       this.originalData = [...this.tableData]; // Armazenar dados originais
       this.renderTable();
     }, 300);
@@ -373,65 +438,66 @@ class CitiesPage {
       return;
     }
 
+    console.log('tableData before rendering:', this.tableData); // Debug log
+
     if (!this.tableData || !this.tableData.length) {
       tableContainer.innerHTML = '<p class="text-center py-4">Nenhum dado disponível</p>';
       return;
     }
 
     try {
-      const columns = [
-        {
-          key: 'acoes',
-          title: 'AÇÕES',
-          align: 'center',
-          width: '10%',
-          format: (value, row) => {
-            if (!row) return '';
-            return `
+      // Render the table manually
+      let tableHTML = `
+        <table class="min-w-full border-collapse">
+          <thead>
+            <tr class="bg-gray-600">
+              <th class="text-white font-medium text-sm uppercase tracking-wider text-center py-2 px-4" style="width: 10%">AÇÕES</th>
+              <th class="text-white font-medium text-sm uppercase tracking-wider text-center py-2 px-4" style="width: 15%">CÓDIGO</th>
+              <th class="text-white font-medium text-sm uppercase tracking-wider text-left py-2 px-4" style="width: 25%">CIDADE</th>
+              <th class="text-white font-medium text-sm uppercase tracking-wider text-left py-2 px-4" style="width: 15%">ESTADO</th>
+              <th class="text-white font-medium text-sm uppercase tracking-wider text-center py-2 px-4" style="width: 15%">ATIVO</th>
+              <th class="text-white font-medium text-sm uppercase tracking-wider text-center py-2 px-4" style="width: 20%">BRASÃO</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      this.tableData.forEach(row => {
+        console.log('Rendering row:', row); // Debug log
+        tableHTML += `
+          <tr class="bg-white">
+            <td class="text-center py-2 px-4">
               <div class="flex space-x-2 justify-center">
-                <button class="edit-btn bg-blue-dark text-white text-xs rounded px-2 py-1" data-id="${row.id || ''}">
+                <button class="edit-btn bg-blue-dark text-white text-xs rounded px-2 py-1" data-id="${row.id || ''}" style="display: inline-block !important;">
                   <i class="fa-solid fa-edit mr-1"></i> Editar
                 </button>
-                <button class="delete-btn bg-red-600 text-white text-xs rounded px-2 py-1" data-id="${row.id || ''}">
-                  <i class="fa-solid fa-trash mr-1"></i> Excluir
+                <button class="districts-btn bg-gray-500 text-white text-xs rounded px-2 py-1" data-id="${row.id || ''}" style="display: inline-block !important;">
+                  <i class="fa-solid fa-map-marker-alt mr-1"></i> Distritos
                 </button>
               </div>
-            `;
-          }
-        },
-        { key: 'codigo', title: 'CÓDIGO', align: 'center', width: '15%' },
-        { key: 'cidade', title: 'CIDADE', align: 'left', width: '25%' },
-        { key: 'estado', title: 'ESTADO', align: 'left', width: '15%' },
-        { key: 'ativo', title: 'ATIVO', align: 'center', width: '15%' },
-        {
-          key: 'brasao',
-          title: 'BRASÃO',
-          align: 'center',
-          width: '20%',
-          format: (value) => {
-            return value ? `<img src="${value}" alt="Brasão" class="h-8 w-8 mx-auto" />` : '-';
-          }
-        }
-      ];
-
-      const safeData = this.tableData.map(item => ({
-        ...item,
-        id: item.id || Math.floor(Math.random() * 1000)
-      }));
-
-      new IndexesTable({
-        container: tableContainer,
-        data: safeData,
-        title: '',
-        columns: columns,
-        options: {
-          headerBgClass: 'bg-[#264757]',
-          headerTextClass: 'text-white font-medium text-xs uppercase tracking-wider',
-          rowBgClass: 'bg-white',
-          evenRowBgClass: 'bg-slate-50',
-          tableClass: 'min-w-full border-collapse'
-        }
+            </td>
+            <td class="text-center py-2 px-4">${row.codigo}</td>
+            <td class="text-left py-2 px-4">${row.cidade}</td>
+            <td class="text-left py-2 px-4">${row.estado}</td>
+            <td class="text-center py-2 px-4">${row.ativo}</td>
+            <td class="text-center py-2 px-4">
+              ${row.brasao ? `<img src="${row.brasao}" alt="Brasão" class="h-8 w-8 mx-auto" />` : '-'}
+            </td>
+          </tr>
+        `;
       });
+
+      tableHTML += `
+          </tbody>
+        </table>
+      `;
+
+      tableContainer.innerHTML = tableHTML;
+
+      // Delay event binding to ensure DOM is updated
+      setTimeout(() => {
+        this.setupTableButtonEvents();
+      }, 100);
     } catch (error) {
       console.error("Erro ao renderizar tabela:", error);
       tableContainer.innerHTML = `<p class="text-center text-red-500 py-4">Erro ao renderizar tabela: ${error.message}</p>`;
@@ -439,21 +505,48 @@ class CitiesPage {
   }
 
   /**
+   * Configura os eventos dos botões da tabela (Editar e Distritos)
+   */
+  setupTableButtonEvents() {
+    const editButtons = document.querySelectorAll('.edit-btn');
+    const districtsButtons = document.querySelectorAll('.districts-btn');
+
+    console.log('Found edit buttons:', editButtons.length); // Debug log
+    console.log('Found districts buttons:', districtsButtons.length); // Debug log
+
+    editButtons.forEach(button => {
+      console.log('Binding event to edit button with data-id:', button.getAttribute('data-id')); // Debug log
+      button.addEventListener('click', () => {
+        const cityId = parseInt(button.getAttribute('data-id'));
+        toast.info('Abrindo formulário de edição...');
+        this.openEditModal(cityId);
+      });
+    });
+
+    districtsButtons.forEach(button => {
+      console.log('Binding event to districts button with data-id:', button.getAttribute('data-id')); // Debug log
+      button.addEventListener('click', () => {
+        const cityId = parseInt(button.getAttribute('data-id'));
+        this.openDistrictsModal(cityId);
+      });
+    });
+  }
+
+  /**
    * Gera dados simulados para a tabela
    */
   getMockData() {
     const cidades = [
-      { codigo: 50005, cidade: 'ÁGUA BOA', estado: 'Mato Grosso', ativo: 'Não', brasao: '/images/brasao-agua-boa.png' },
-      { codigo: 50006, cidade: 'ALTA FLORESTA', estado: 'Mato Grosso', ativo: 'Não', brasao: '/images/brasao-alta-floresta.png' },
+      { codigo: 50002, cidade: 'ACORIZAL', estado: 'Mato Grosso', ativo: 'Não', brasao: '/images/brasao-acorizal.png' },
+      { codigo: 10006, cidade: 'ÁGUA BOA', estado: 'Mato Grosso', ativo: 'Não', brasao: '/images/brasao-agua-boa.png' },
+      { codigo: 15008, cidade: 'ALTA FLORESTA', estado: 'Mato Grosso', ativo: 'Não', brasao: '/images/brasao-alta-floresta.png' },
       { codigo: 20001, cidade: 'ALTO ARAGUAIA', estado: 'Mato Grosso', ativo: 'Não', brasao: '/images/brasao-alto-araguaia.png' },
-      { codigo: 20003, cidade: 'ALTO GARÇAS', estado: 'Mato Grosso', ativo: 'Não', brasao: '/images/brasao-alto-garcas.png' },
-      { codigo: 20007, cidade: 'ALTO PARAGUAI', estado: 'Mato Grosso', ativo: 'Não', brasao: '/images/brasao-alto-paraguai.png' },
-      { codigo: 20006, cidade: 'ALTO TAQUARI', estado: 'Mato Grosso', ativo: 'Não', brasao: '/images/brasao-alto-taquari.png' },
-      { codigo: 24002, cidade: 'APIACÁS', estado: 'Mato Grosso', ativo: 'Não', brasao: '/images/brasao-apiacas.png' },
-      { codigo: 24009, cidade: 'ARAGUAINHA', estado: 'Mato Grosso', ativo: 'Não', brasao: '/images/brasao-araguainha.png' },
-      { codigo: 24002, cidade: 'ARAPUTANGA', estado: 'Mato Grosso', ativo: 'Não', brasao: '/images/brasao-araputanga.png' },
-      { codigo: 50005, cidade: 'ARENAPOLIS', estado: 'Mato Grosso', ativo: 'Não', brasao: '/images/brasao-arenapolis.png' },
-      { codigo: 50006, cidade: 'ARIQUEMES', estado: 'Rondônia', ativo: 'Não', brasao: '/images/brasao-ariquemes.png' }
+      { codigo: 23000, cidade: 'ALTO BOA VISTA', estado: 'Mato Grosso', ativo: 'Não', brasao: '/images/brasao-alto-boa-vista.png' },
+      { codigo: 25003, cidade: 'ALTO GARÇAS', estado: 'Mato Grosso', ativo: 'Não', brasao: '/images/brasao-alto-garcas.png' },
+      { codigo: 30007, cidade: 'ALTO PARAGUAI', estado: 'Mato Grosso', ativo: 'Não', brasao: '/images/brasao-alto-paraguai.png' },
+      { codigo: 32000, cidade: 'ALTO TAQUARI', estado: 'Mato Grosso', ativo: 'Não', brasao: '/images/brasao-alto-taquari.png' },
+      { codigo: 33006, cidade: 'APIACÁS', estado: 'Mato Grosso', ativo: 'Não', brasao: '/images/brasao-apiacas.png' },
+      { codigo: 34002, cidade: 'ARAGUAINHA', estado: 'Mato Grosso', ativo: 'Não', brasao: '/images/brasao-araguainha.png' }
     ];
 
     return cidades.map((item, index) => ({
