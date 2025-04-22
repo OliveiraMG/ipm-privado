@@ -8,10 +8,13 @@ import EditUsuarioComponent from '/pages/acessos/edit/EditUsuarioComponent.js';
 import ModalComponent from '/components/common/ModalComponent.js';
 import SincronizarPerfisUsuarioComponent from '/pages/acessos/edit/SincronizarPerfisUsuarioComponent.js';
 import SincronizarPermissoesUsuarioComponent from '/pages/acessos/edit/SincronizarPermissoesUsuarioComponent.js';
+import SearchUsuarioComponent from '/pages/acessos/search/SearchUsuarioComponent.js';
+import ExportUsuarioComponent from '/pages/acessos/print/ExportUsuarioComponent.js';
 
 class UsuariosPage {
   constructor() {
     this.tableData = [];
+    this.originalTableData = []; // To store the original data for resetting after search
     this.modal = null;
     this.initialize();
   }
@@ -104,14 +107,13 @@ class UsuariosPage {
 
     if (exportBtn) {
       exportBtn.addEventListener('click', () => {
-        console.log('Exportando dados dos usuários:', this.tableData);
-        toast.success('Exportação simulada com sucesso! Verifique o console.');
+        this.openExportModal();
       });
     }
 
     if (searchBtn) {
       searchBtn.addEventListener('click', () => {
-        toast.info('Funcionalidade de pesquisa ainda não implementada.');
+        this.openSearchModal();
       });
     }
 
@@ -138,6 +140,7 @@ class UsuariosPage {
           foto: data.foto || ''
         };
         this.tableData.unshift(newUser);
+        this.originalTableData.unshift(newUser); // Update original data as well
         this.renderTable();
         this.modal.close();
       },
@@ -205,6 +208,9 @@ class UsuariosPage {
         this.tableData = this.tableData.map(item =>
           item.id === userId ? { ...item, perfil: data.profile, tipoUsuario: data.profile } : item
         );
+        this.originalTableData = this.originalTableData.map(item =>
+          item.id === userId ? { ...item, perfil: data.profile, tipoUsuario: data.profile } : item
+        );
         this.renderTable();
         this.modal.close();
         toast.success(`Perfil de ${usuarioData.nome} sincronizado com sucesso!`);
@@ -261,8 +267,89 @@ class UsuariosPage {
     this.modal.open();
   }
 
+  openSearchModal() {
+    const searchComponent = new SearchUsuarioComponent({
+      onSearch: (filters) => {
+        this.filterTableData(filters);
+        this.modal.close();
+        toast.success('Pesquisa realizada com sucesso!');
+      },
+      onBack: () => {
+        this.modal.close();
+        toast.info('Retornado à lista de usuários');
+      }
+    });
+
+    this.modal = new ModalComponent({
+      id: 'search-usuario-modal',
+      title: 'Pesquisar',
+      titleClass: 'text-blue-dark font-semibold text-xl',
+      content: searchComponent.element,
+      contentClass: 'p-0',
+      onClose: () => {
+        this.modal = null;
+      }
+    });
+    this.modal.open();
+  }
+
+  openExportModal() {
+    const exportComponent = new ExportUsuarioComponent({
+      onExportPDF: () => {
+        // Botão está desabilitado, mas mantemos a callback para consistência
+        console.log('Exportação para PDF solicitada (desabilitada).');
+      },
+      onExportExcel: () => {
+        // Botão está desabilitado, mas mantemos a callback para consistência
+        console.log('Exportação para Excel solicitada (desabilitada).');
+      }
+    });
+
+    this.modal = new ModalComponent({
+      id: 'export-usuario-modal',
+      title: 'Exportar',
+      titleClass: 'text-blue-dark font-semibold text-xl',
+      content: exportComponent.element,
+      contentClass: 'p-0',
+      onClose: () => {
+        this.modal = null;
+      }
+    });
+    this.modal.open();
+  }
+
+  filterTableData(filters) {
+    this.tableData = this.originalTableData.filter(user => {
+      let matches = true;
+
+      if (filters.nomeOuEmail) {
+        const searchTerm = filters.nomeOuEmail.toLowerCase();
+        matches = matches && (
+          (user.nome && user.nome.toLowerCase().includes(searchTerm)) ||
+          (user.email && user.email.toLowerCase().includes(searchTerm))
+        );
+      }
+
+      if (filters.crcContabilista) {
+        matches = matches && user.crcContabilista === filters.crcContabilista;
+      }
+
+      if (filters.situacao !== null) {
+        const isActive = filters.situacao;
+        matches = matches && (user.ativo === (isActive ? 'Sim' : 'Não'));
+      }
+
+      return matches;
+    });
+
+    this.renderTable();
+  }
+
   updateData(updatedData) {
     this.tableData = this.tableData.map(item =>
+      item.id === updatedData.id ? { ...item, ...updatedData } : item
+    );
+    this.originalTableData = this.originalTableData.map(item =>
       item.id === updatedData.id ? { ...item, ...updatedData } : item
     );
     this.renderTable();
@@ -273,6 +360,7 @@ class UsuariosPage {
     console.log("Carregando dados...");
     setTimeout(() => {
       this.tableData = this.getMockData();
+      this.originalTableData = [...this.tableData]; // Store a copy of the original data
       console.log("Loaded tableData:", this.tableData);
       this.renderTable();
     }, 300);
@@ -302,7 +390,7 @@ class UsuariosPage {
               <th class="text-white font-medium text-sm uppercase tracking-wider text-left py-2 px-4" style="width: 15%">NOME</th>
               <th class="text-white font-medium text-sm uppercase tracking-wider text-center py-2 px-4" style="width: 10%">CRC CONTABILISTA</th>
               <th class="text-white font-medium text-sm uppercase tracking-wider text-center py-2 px-4" style="width: 10%">INSCRIÇÃO</th>
-              <th class="text-white font-medium text-sm uppercase tracking-wider text-left py-2 px-4" style="width: 20%">E-MAIL</th>
+              <th class="text-white font-medium text.sm uppercase tracking-wider text-left py-2 px-4" style="width: 20%">E-MAIL</th>
               <th class="text-white font-medium text-sm uppercase tracking-wider text-center py-2 px-4" style="width: 10%">TIPO USUÁRIO</th>
               <th class="text-white font-medium text-sm uppercase tracking-wider text-center py-2 px-4" style="width: 10%">PERFIL</th>
               <th class="text-white font-medium text-sm uppercase tracking-wider text-center py-2 px-4" style="width: 5%">ATIVO</th>
