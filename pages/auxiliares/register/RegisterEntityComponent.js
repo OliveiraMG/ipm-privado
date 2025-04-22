@@ -29,21 +29,20 @@ class RegisterEntityComponent {
    */
   render() {
     const container = document.createElement('div');
-    container.className = 'flex-1 bg-gray-light w-full';
+    container.className = 'flex-1 bg-white w-full';
     container.id = this.containerId;
 
-    // Card principal
-    const card = document.createElement('div');
-    card.className = 'bg-white rounded-2xl shadow-[6px_6px_12px_rgba(0,0,0,0.25)] mx-24 my-20 p-12';
-
     // Título
-    card.innerHTML = `
-      <h2 class="text-2xl font-semibold text-blue-dark mb-6">Cadastrar Entidade</h2>
+    const title = document.createElement('div');
+    title.className = 'p-4';
+    title.innerHTML = `
+
     `;
+    container.appendChild(title);
 
     // Abas
     const tabs = document.createElement('div');
-    tabs.className = 'flex space-x-4 mb-6';
+    tabs.className = 'flex space-x-4 mb-6 px-4';
     tabs.innerHTML = `
       <button data-tab="entidade" class="tab-btn px-4 py-2 rounded-full text-white bg-blue-dark">Entidade</button>
       <button data-tab="responsavel" class="tab-btn px-4 py-2 rounded-full text-gray-700 bg-gray-200">Responsável</button>
@@ -51,17 +50,18 @@ class RegisterEntityComponent {
       <button data-tab="relatorio" class="tab-btn px-4 py-2 rounded-full text-gray-700 bg-gray-200">Conteúdo do Relatório</button>
       <button data-tab="auxiliares" class="tab-btn px-4 py-2 rounded-full text-gray-700 bg-gray-200">Auxiliares</button>
     `;
-    card.appendChild(tabs);
+    container.appendChild(tabs);
 
     // Container do formulário
     const formContainer = document.createElement('div');
     formContainer.id = 'form-container';
+    formContainer.className = 'px-4';
     formContainer.innerHTML = this.renderEntityForm();
-    card.appendChild(formContainer);
+    container.appendChild(formContainer);
 
     // Botões de ação
     const actions = document.createElement('div');
-    actions.className = 'flex justify-end space-x-4 mt-6';
+    actions.className = 'flex justify-end space-x-4 mt-6 px-4';
     actions.innerHTML = `
       <button id="back-btn" class="px-4 py-2 border border-gray-300 rounded-full text-gray-700 hover:bg-gray-100">
         Voltar
@@ -70,9 +70,8 @@ class RegisterEntityComponent {
         Cadastrar
       </button>
     `;
-    card.appendChild(actions);
+    container.appendChild(actions);
 
-    container.appendChild(card);
     return container;
   }
 
@@ -86,27 +85,27 @@ class RegisterEntityComponent {
         <div class="col-span-1">
           <label for="entidade" class="block text-sm font-medium text-gray-700">Entidade*:</label>
           <input type="text" id="entidade" name="entidade" required
-                 class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-light focus:border-blue-light">
+                 class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-light focus:border-blue-light">
         </div>
         <div class="col-span-1">
           <label for="cnpj" class="block text-sm font-medium text-gray-700">CNPJ*:</label>
           <input type="text" id="cnpj" name="cnpj" required
-                 class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-light focus:border-blue-light">
+                 class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-light focus:border-blue-light">
         </div>
         <div class="col-span-1">
           <label for="telefone" class="block text-sm font-medium text-gray-700">Telefone*:</label>
           <input type="tel" id="telefone" name="telefone" required
-                 class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-light focus:border-blue-light">
+                 class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-light focus:border-blue-light">
         </div>
         <div class="col-span-1">
           <label for="fax" class="block text-sm font-medium text-gray-700">Fax:</label>
           <input type="tel" id="fax" name="fax"
-                 class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-light focus:border-blue-light">
+                 class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-light focus:border-blue-light">
         </div>
         <div class="col-span-1">
           <label for="cidade" class="block text-sm font-medium text-gray-700">Cidade*:</label>
           <select id="cidade" name="cidade" required
-                  class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-light focus:border-blue-light">
+                  class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-light focus:border-blue-light">
             <option value="">Selecione uma cidade</option>
             <option value="Pontes e Lacerda">Pontes e Lacerda</option>
             <option value="Várzea Grande">Várzea Grande</option>
@@ -115,17 +114,17 @@ class RegisterEntityComponent {
         <div class="col-span-1">
           <label for="endereco" class="block text-sm font-medium text-gray-700">Endereço*:</label>
           <input type="text" id="endereco" name="endereco" required
-                 class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-light focus:border-blue-light">
+                 class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-light focus:border-blue-light">
         </div>
         <div class="col-span-1">
           <label for="email" class="block text-sm font-medium text-gray-700">E-mail*:</label>
           <input type="email" id="email" name="email" required
-                 class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-light focus:border-blue-light">
+                 class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-light focus:border-blue-light">
         </div>
         <div class="col-span-1">
           <label for="site" class="block text-sm font-medium text-gray-700">Site:</label>
           <input type="url" id="site" name="site"
-                 class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-blue-light focus:border-blue-light">
+                 class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-light focus:border-blue-light">
         </div>
       </form>
     `;
