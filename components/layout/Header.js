@@ -124,11 +124,11 @@ class Header {
         targetElement: document.getElementById('nav-importacao'),
         items: [
           { title: 'IMPORTAR', icon: 'file-import', url: '/pages/imports/import.html' },
-          { title: 'IMPORTADOS', icon: 'list', url: '/pages/imports/imported/ImportedPage.html' },
-          { title: 'REMESSAS', icon: 'box', url: '/remessas' },
-          { title: 'PUBLICAÇÕES', icon: 'newspaper', url: '/publicacoes' },
-          { title: 'EXERCÍCIOS', icon: 'dumbbell', url: '/exercicios' },
-          { title: 'FILAS', icon: 'list-ol', url: '/filas' },
+          { title: 'IMPORTADOS', icon: 'list', url: '/pages/imports/ImportedPage.html' },
+          { title: 'REMESSAS', icon: 'box', url: '/pages/imports/remessas.html' },
+          { title: 'PUBLICAÇÕES', icon: 'newspaper', url: '/pages/imports/publicacoes.html' },
+          { title: 'EXERCÍCIOS', icon: 'dumbbell', url: '/pages/imports/exercicios.html' },
+          { title: 'FILAS', icon: 'list-ol', url: '/pages/imports/' },
           { title: 'FALHAS', icon: 'triangle-exclamation', url: '/falhas' }
         ]
       })
@@ -247,12 +247,12 @@ class Header {
       HeaderDropdown.create({
         targetElement: document.getElementById('nav-auxiliares'),
         items: [
-          { title: 'ENTIDADES', icon: 'building', url: '/auxiliares/entidades' },
-          { title: 'CIDADES', icon: 'city', url: '/auxiliares/cidades' },
-          { title: 'CFOP', icon: 'tag', url: '/auxiliares/cfop' },
-          { title: 'PORTARIAS', icon: 'file-contract', url: '/auxiliares/portarias' },
-          { title: 'GRUPO ATIVIDADES', icon: 'layer-group', url: '/auxiliares/grupo-atividades' },
-          { title: 'INFORMATIVOS', icon: 'info-circle', url: '/auxiliares/informativos' }
+          { title: 'ENTIDADES', icon: 'building', url: '/pages/auxiliares/entidades.html' },
+          { title: 'CIDADES', icon: 'city', url: '/pages/auxiliares/Cidades.html' },
+          { title: 'CFOP', icon: 'tag', url: '/pages/auxiliares/cfop.html' },
+          { title: 'PORTARIAS', icon: 'file-contract', url: '/pages/auxiliares/portarias.html' },
+          { title: 'GRUPO ATIVIDADES', icon: 'layer-group', url: '/pages/auxiliares/grupo-atividades.html' },
+          { title: 'INFORMATIVOS', icon: 'info-circle', url: '/pages/auxiliares/informativos.html' }
         ]
       })
     );
