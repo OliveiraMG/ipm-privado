@@ -247,11 +247,11 @@ class Header {
       HeaderDropdown.create({
         targetElement: document.getElementById('nav-auxiliares'),
         items: [
-          { title: 'ENTIDADES', icon: 'building', url: '/pages/auxiliares/entidades.html' },
+          { title: 'ENTIDADES', icon: 'building', url: '/pages/auxiliares/entities.html' },
           { title: 'CIDADES', icon: 'city', url: '/pages/auxiliares/Cidades.html' },
           { title: 'CFOP', icon: 'tag', url: '/pages/auxiliares/cfop.html' },
           { title: 'PORTARIAS', icon: 'file-contract', url: '/pages/auxiliares/portarias.html' },
-          { title: 'GRUPO ATIVIDADES', icon: 'layer-group', url: '/pages/auxiliares/grupo-atividades.html' },
+          { title: 'GRUPO ATIVIDADES', icon: 'layer-group', url: '/pages/auxiliares/grupoatividade.html' },
           { title: 'INFORMATIVOS', icon: 'info-circle', url: '/pages/auxiliares/informativos.html' }
         ]
       })
@@ -266,10 +266,10 @@ class Header {
       HeaderDropdown.create({
         targetElement: document.getElementById('nav-acessos'),
         items: [
-          { title: 'USUÁRIOS', icon: 'users', url: '/acessos/usuarios' },
-          { title: 'PERFIL', icon: 'user-tag', url: '/acessos/perfil' },
-          { title: 'PERMISSÕES', icon: 'key', url: '/acessos/permissoes' },
-          { title: 'MÓDULOS', icon: 'puzzle-piece', url: '/acessos/modulos' }
+          { title: 'USUÁRIOS', icon: 'users', url: '/pages/acessos/usuarios.html' },
+          { title: 'PERFIL', icon: 'user-tag', url: '/pages/acessos/perfil.html' },
+          { title: 'PERMISSÕES', icon: 'key', url: '/pages/acessos/permissoes.html' },
+          { title: 'MÓDULOS', icon: 'puzzle-piece', url: '/pages/acessos/modulos.html' }
         ]
       })
     );
