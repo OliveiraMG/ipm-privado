@@ -1,12 +1,12 @@
 /**
  * RemessasPage.js - Página de listagem de remessas
  */
-import { Header } from '/components/layout/Header.js';
-import { toast } from '/js/Utilities.js';
-import RegisterRemessaComponent from '/pages/imports/register/RegisterRemessaComponent.js';
-import EditRemessaComponent from '/pages/imports/edit/EditRemessaComponent.js';
-import DeleteRemessaComponent from '/pages/imports/edit/DeleteRemessaComponent.js';
-import ModalComponent from '/components/common/ModalComponent.js';
+import { Header } from "/components/layout/Header.js";
+import { toast } from "/js/Utilities.js";
+import RegisterRemessaComponent from "/pages/imports/register/RegisterRemessaComponent.js";
+import EditRemessaComponent from "/pages/imports/edit/EditRemessaComponent.js";
+import DeleteRemessaComponent from "/pages/imports/edit/DeleteRemessaComponent.js";
+import ModalComponent from "/components/common/ModalComponent.js";
 
 class RemessasPage {
   constructor() {
@@ -40,31 +40,32 @@ class RemessasPage {
   }
 
   renderContent() {
-    const mainContent = document.querySelector('main');
+    const mainContent = document.querySelector("main");
     if (!mainContent) {
       console.error("Elemento main não encontrado!");
       return;
     }
 
-    mainContent.innerHTML = '';
+    mainContent.innerHTML = "";
 
-    const card = document.createElement('div');
-    card.className = 'bg-white rounded-2xl shadow-[6px_6px_12px_rgba(0,0,0,0.25)] mx-24 my-20 p-12';
+    const card = document.createElement("div");
+    card.className =
+      "bg-white rounded-2xl shadow-[6px_6px_12px_rgba(0,0,0,0.25)] mx-24 my-20 p-12";
 
-    const header = document.createElement('div');
-    header.className = 'flex justify-between items-center mb-6';
+    const header = document.createElement("div");
+    header.className = "flex justify-between items-center mb-6";
     header.innerHTML = `
       <h2 class="text-2xl font-semibold text-blue-dark">Listagem</h2>
     `;
     card.appendChild(header);
 
-    const tableContainer = document.createElement('div');
-    tableContainer.id = 'remessas-table';
-    tableContainer.className = 'w-full px-2';
+    const tableContainer = document.createElement("div");
+    tableContainer.id = "remessas-table";
+    tableContainer.className = "w-full px-2";
     card.appendChild(tableContainer);
 
-    const buttonContainer = document.createElement('div');
-    buttonContainer.className = 'flex justify-center space-x-4 mt-6';
+    const buttonContainer = document.createElement("div");
+    buttonContainer.className = "flex justify-center space-x-4 mt-6";
     buttonContainer.innerHTML = `
       <button id="register-btn" class="px-4 py-2 bg-blue-dark text-white rounded-full hover:bg-blue-medium">
         <i class="fa-solid fa-plus mr-2"></i>Cadastrar
@@ -80,10 +81,10 @@ class RemessasPage {
   }
 
   setupButtonEvents() {
-    const registerBtn = document.getElementById('register-btn');
+    const registerBtn = document.getElementById("register-btn");
 
     if (registerBtn) {
-      registerBtn.addEventListener('click', () => {
+      registerBtn.addEventListener("click", () => {
         this.openRegisterModal();
       });
     }
@@ -93,37 +94,37 @@ class RemessasPage {
     const registerComponent = new RegisterRemessaComponent({
       onSubmit: (data) => {
         const newRemessa = {
-          id: Math.max(...this.tableData.map(d => d.id), 0) + 1,
-          denominacao: data.denominacao
+          id: Math.max(...this.tableData.map((d) => d.id), 0) + 1,
+          denominacao: data.denominacao,
         };
         this.tableData.unshift(newRemessa);
         this.renderTable();
         this.modal.close();
-        toast.success('Remessa cadastrada com sucesso!');
+        toast.success("Remessa cadastrada com sucesso!");
       },
       onBack: () => {
         this.modal.close();
-        toast.info('Retornado à lista de remessas');
-      }
+        toast.info("Retornado à lista de remessas");
+      },
     });
 
     this.modal = new ModalComponent({
-      id: 'register-remessa-modal',
-      title: 'Cadastrar Remessas',
-      titleClass: 'text-blue-dark font-semibold text-xl',
+      id: "register-remessa-modal",
+      title: "Cadastrar Remessas",
+      titleClass: "text-blue-dark font-semibold text-xl",
       content: registerComponent.element,
-      contentClass: 'p-0',
+      contentClass: "p-0",
       onClose: () => {
         this.modal = null;
-      }
+      },
     });
     this.modal.open();
   }
 
   openEditModal(remessaId) {
-    const remessaData = this.tableData.find(item => item.id === remessaId);
+    const remessaData = this.tableData.find((item) => item.id === remessaId);
     if (!remessaData) {
-      toast.error('Remessa não encontrada!');
+      toast.error("Remessa não encontrada!");
       return;
     }
 
@@ -135,27 +136,27 @@ class RemessasPage {
       },
       onBack: () => {
         this.modal.close();
-        toast.info('Retornado à lista de remessas');
-      }
+        toast.info("Retornado à lista de remessas");
+      },
     });
 
     this.modal = new ModalComponent({
-      id: 'edit-remessa-modal',
-      title: 'Editar Remessas',
-      titleClass: 'text-blue-dark font-semibold text-xl',
+      id: "edit-remessa-modal",
+      title: "Editar Remessas",
+      titleClass: "text-blue-dark font-semibold text-xl",
       content: editComponent.element,
-      contentClass: 'p-0',
+      contentClass: "p-0",
       onClose: () => {
         this.modal = null;
-      }
+      },
     });
     this.modal.open();
   }
 
   openDeleteModal(remessaId) {
-    const remessaData = this.tableData.find(item => item.id === remessaId);
+    const remessaData = this.tableData.find((item) => item.id === remessaId);
     if (!remessaData) {
-      toast.error('Remessa não encontrada!');
+      toast.error("Remessa não encontrada!");
       return;
     }
 
@@ -167,35 +168,35 @@ class RemessasPage {
       },
       onBack: () => {
         this.modal.close();
-        toast.info('Retornado à lista de remessas');
-      }
+        toast.info("Retornado à lista de remessas");
+      },
     });
 
     this.modal = new ModalComponent({
-      id: 'delete-remessa-modal',
-      title: 'Remover',
-      titleClass: 'text-blue-dark font-semibold text-xl',
+      id: "delete-remessa-modal",
+      title: "Remover",
+      titleClass: "text-blue-dark font-semibold text-xl",
       content: deleteComponent.element,
-      contentClass: 'p-0',
+      contentClass: "p-0",
       onClose: () => {
         this.modal = null;
-      }
+      },
     });
     this.modal.open();
   }
 
   updateData(updatedData) {
-    this.tableData = this.tableData.map(item =>
+    this.tableData = this.tableData.map((item) =>
       item.id === updatedData.id ? { ...item, ...updatedData } : item
     );
     this.renderTable();
-    toast.success('Remessa atualizada com sucesso!');
+    toast.success("Remessa atualizada com sucesso!");
   }
 
   deleteData(remessaId) {
-    this.tableData = this.tableData.filter(item => item.id !== remessaId);
+    this.tableData = this.tableData.filter((item) => item.id !== remessaId);
     this.renderTable();
-    toast.success('Remessa excluída com sucesso!');
+    toast.success("Remessa excluída com sucesso!");
   }
 
   loadData() {
@@ -208,16 +209,17 @@ class RemessasPage {
   }
 
   renderTable() {
-    const tableContainer = document.getElementById('remessas-table');
+    const tableContainer = document.getElementById("remessas-table");
     if (!tableContainer) {
       console.error("Container da tabela não encontrado!");
       return;
     }
 
-    console.log('tableData before rendering:', this.tableData);
+    console.log("tableData before rendering:", this.tableData);
 
     if (!this.tableData || !this.tableData.length) {
-      tableContainer.innerHTML = '<p class="text-center py-4">Nenhum dado disponível</p>';
+      tableContainer.innerHTML =
+        '<p class="text-center py-4">Nenhum dado disponível</p>';
       return;
     }
 
@@ -234,15 +236,19 @@ class RemessasPage {
       `;
 
       this.tableData.forEach((row, index) => {
-        const rowClass = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+        const rowClass = index % 2 === 0 ? "bg-white" : "bg-gray-50";
         tableHTML += `
           <tr class="${rowClass}">
             <td class="text-center py-2 px-4">
               <div class="flex space-x-2 justify-center">
-                <button class="edit-btn bg-blue-dark text-white text-xs rounded px-2 py-1 hover:bg-blue-medium" data-id="${row.id || ''}" style="display: inline-block !important;">
+                <button class="edit-btn bg-blue-dark text-white text-xs rounded px-2 py-1 hover:bg-blue-medium" data-id="${
+                  row.id || ""
+                }" style="display: inline-block !important;">
                   <i class="fa-solid fa-pencil-alt"></i>Editar
                 </button>
-                <button class="delete-btn bg-red-600 text-white text-xs rounded px-2 py-1 hover:bg-red-700" data-id="${row.id || ''}" style="display: inline-block !important;">
+                <button class="delete-btn bg-red-600 text-white text-xs rounded px-2 py-1 hover:bg-red-700" data-id="${
+                  row.id || ""
+                }" style="display: inline-block !important;">
                   <i class="fa-solid fa-trash"></i>Excluir
                 </button>
               </div>
@@ -267,19 +273,19 @@ class RemessasPage {
   }
 
   setupTableButtonEvents() {
-    const editButtons = document.querySelectorAll('.edit-btn');
-    const deleteButtons = document.querySelectorAll('.delete-btn');
+    const editButtons = document.querySelectorAll(".edit-btn");
+    const deleteButtons = document.querySelectorAll(".delete-btn");
 
-    editButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const remessaId = parseInt(button.getAttribute('data-id'));
+    editButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const remessaId = parseInt(button.getAttribute("data-id"));
         this.openEditModal(remessaId);
       });
     });
 
-    deleteButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const remessaId = parseInt(button.getAttribute('data-id'));
+    deleteButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const remessaId = parseInt(button.getAttribute("data-id"));
         this.openDeleteModal(remessaId);
       });
     });
@@ -287,15 +293,15 @@ class RemessasPage {
 
   getMockData() {
     return [
-      { id: 1, denominacao: 'AVULSOS' },
-      { id: 2, denominacao: 'R7 - PRELIMINAR' },
-      { id: 3, denominacao: 'R6 - PRELIMINAR' },
-      { id: 4, denominacao: 'R5 - PRELIMINAR' },
-      { id: 5, denominacao: 'R4 - PRELIMINAR' },
-      { id: 6, denominacao: 'R3 - PRELIMINAR' },
-      { id: 7, denominacao: 'R2 - PRELIMINAR' },
-      { id: 8, denominacao: 'R1 - PRELIMINAR' },
-      { id: 9, denominacao: 'DEFINITIVO' }
+      { id: 1, denominacao: "AVULSOS" },
+      { id: 2, denominacao: "R7 - PRELIMINAR" },
+      { id: 3, denominacao: "R6 - PRELIMINAR" },
+      { id: 4, denominacao: "R5 - PRELIMINAR" },
+      { id: 5, denominacao: "R4 - PRELIMINAR" },
+      { id: 6, denominacao: "R3 - PRELIMINAR" },
+      { id: 7, denominacao: "R2 - PRELIMINAR" },
+      { id: 8, denominacao: "R1 - PRELIMINAR" },
+      { id: 9, denominacao: "DEFINITIVO" },
     ];
   }
 
@@ -304,7 +310,7 @@ class RemessasPage {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   RemessasPage.initialize();
 });
 

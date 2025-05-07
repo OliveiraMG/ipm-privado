@@ -1,9 +1,9 @@
 /**
  * SearchUsuarioComponent.js - Componente para a página de pesquisa de usuários
  */
-import { Header } from '/components/layout/Header.js';
-import { toast } from '/js/Utilities.js';
-import ModalComponent from '/components/common/ModalComponent.js';
+import { Header } from "/components/layout/Header.js";
+import { toast } from "/js/Utilities.js";
+import ModalComponent from "/components/common/ModalComponent.js";
 
 class SearchUsuarioComponent {
   /**
@@ -13,7 +13,7 @@ class SearchUsuarioComponent {
    * @param {Function} config.onBack - Função chamada ao clicar em Voltar
    */
   constructor(config) {
-    this.containerId = config.containerId || 'search-usuario-container';
+    this.containerId = config.containerId || "search-usuario-container";
     this.onSearch = config.onSearch || (() => {});
     this.onBack = config.onBack || (() => {});
     this.element = this.render();
@@ -25,13 +25,13 @@ class SearchUsuarioComponent {
    * @returns {HTMLElement} - Elemento do componente
    */
   render() {
-    const container = document.createElement('div');
-    container.className = 'w-full';
+    const container = document.createElement("div");
+    container.className = "w-full";
     container.id = this.containerId;
 
     // Formulário
-    const form = document.createElement('div');
-    form.className = 'p-4';
+    const form = document.createElement("div");
+    form.className = "p-4";
 
     // Campos do formulário
     form.innerHTML = `
@@ -59,8 +59,8 @@ class SearchUsuarioComponent {
     `;
 
     // Botões de ação
-    const actions = document.createElement('div');
-    actions.className = 'flex justify-end space-x-4 mt-6';
+    const actions = document.createElement("div");
+    actions.className = "flex justify-end space-x-4 mt-6";
     actions.innerHTML = `
       <button id="back-btn" class="px-4 py-2 border border-gray-300 rounded-full text-gray-700 text-sm hover:bg-gray-100">
         Voltar
@@ -82,26 +82,26 @@ class SearchUsuarioComponent {
    * Configura os eventos dos botões
    */
   setupEventListeners() {
-    const backBtn = this.element.querySelector('#back-btn');
-    const clearBtn = this.element.querySelector('#clear-btn');
-    const searchBtn = this.element.querySelector('#search-btn');
+    const backBtn = this.element.querySelector("#back-btn");
+    const clearBtn = this.element.querySelector("#clear-btn");
+    const searchBtn = this.element.querySelector("#search-btn");
 
     if (backBtn) {
-      backBtn.addEventListener('click', () => {
-        toast.info('Retornando à lista de usuários...');
+      backBtn.addEventListener("click", () => {
+        toast.info("Retornando à lista de usuários...");
         this.onBack();
       });
     }
 
     if (clearBtn) {
-      clearBtn.addEventListener('click', () => {
+      clearBtn.addEventListener("click", () => {
         this.clearForm();
-        toast.info('Filtros limpos.');
+        toast.info("Filtros limpos.");
       });
     }
 
     if (searchBtn) {
-      searchBtn.addEventListener('click', () => {
+      searchBtn.addEventListener("click", () => {
         this.submitForm();
       });
     }
@@ -111,30 +111,30 @@ class SearchUsuarioComponent {
    * Limpa o formulário
    */
   clearForm() {
-    const nomeOuEmailInput = this.element.querySelector('#nomeOuEmail');
-    const crcContabilistaInput = this.element.querySelector('#crcContabilista');
-    const situacaoInput = this.element.querySelector('#situacao');
+    const nomeOuEmailInput = this.element.querySelector("#nomeOuEmail");
+    const crcContabilistaInput = this.element.querySelector("#crcContabilista");
+    const situacaoInput = this.element.querySelector("#situacao");
 
-    nomeOuEmailInput.value = '';
-    crcContabilistaInput.value = '';
-    situacaoInput.value = '';
+    nomeOuEmailInput.value = "";
+    crcContabilistaInput.value = "";
+    situacaoInput.value = "";
   }
 
   /**
    * Processa o envio do formulário
    */
   submitForm() {
-    const nomeOuEmailInput = this.element.querySelector('#nomeOuEmail');
-    const crcContabilistaInput = this.element.querySelector('#crcContabilista');
-    const situacaoInput = this.element.querySelector('#situacao');
+    const nomeOuEmailInput = this.element.querySelector("#nomeOuEmail");
+    const crcContabilistaInput = this.element.querySelector("#crcContabilista");
+    const situacaoInput = this.element.querySelector("#situacao");
 
     const filters = {
       nomeOuEmail: nomeOuEmailInput.value || null,
       crcContabilista: crcContabilistaInput.value || null,
-      situacao: situacaoInput.value ? situacaoInput.value === 'true' : null
+      situacao: situacaoInput.value ? situacaoInput.value === "true" : null,
     };
 
-    toast.info('Pesquisando...');
+    toast.info("Pesquisando...");
     setTimeout(() => {
       this.onSearch(filters);
     }, 500);

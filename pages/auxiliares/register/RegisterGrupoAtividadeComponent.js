@@ -1,7 +1,7 @@
 /**
  * RegisterGrupoAtividadeComponent.js - Componente para o formulário de cadastro de grupos de atividades
  */
-import { toast } from '/js/Utilities.js';
+import { toast } from "/js/Utilities.js";
 
 class RegisterGrupoAtividadeComponent {
   constructor({ onSubmit, onBack }) {
@@ -12,11 +12,11 @@ class RegisterGrupoAtividadeComponent {
   }
 
   render() {
-    const container = document.createElement('div');
-    container.className = 'w-full';
+    const container = document.createElement("div");
+    container.className = "w-full";
 
-    const form = document.createElement('div');
-    form.className = 'p-4';
+    const form = document.createElement("div");
+    form.className = "p-4";
 
     form.innerHTML = `
       <div class="grid grid-cols-3 gap-4">
@@ -66,48 +66,48 @@ class RegisterGrupoAtividadeComponent {
   }
 
   setupEventListeners() {
-    const cancelBtn = this.element.querySelector('#cancel-btn');
-    const submitBtn = this.element.querySelector('#submit-btn');
+    const cancelBtn = this.element.querySelector("#cancel-btn");
+    const submitBtn = this.element.querySelector("#submit-btn");
 
     if (cancelBtn) {
-      cancelBtn.addEventListener('click', () => {
-        toast.info('Cadastro cancelado.');
+      cancelBtn.addEventListener("click", () => {
+        toast.info("Cadastro cancelado.");
         this.onBack();
       });
     }
 
     if (submitBtn) {
-      submitBtn.addEventListener('click', () => {
+      submitBtn.addEventListener("click", () => {
         this.submitForm();
       });
     }
   }
 
   submitForm() {
-    const porcentagem = this.element.querySelector('#porcentagem').value;
-    const denominacao = this.element.querySelector('#denominacao').value;
-    const ativo = this.element.querySelector('#ativo').value;
-    const cnaesSelect = this.element.querySelector('#cnaes');
-    const cnaes = Array.from(cnaesSelect.selectedOptions).map(option => ({
+    const porcentagem = this.element.querySelector("#porcentagem").value;
+    const denominacao = this.element.querySelector("#denominacao").value;
+    const ativo = this.element.querySelector("#ativo").value;
+    const cnaesSelect = this.element.querySelector("#cnaes");
+    const cnaes = Array.from(cnaesSelect.selectedOptions).map((option) => ({
       id: option.value,
-      descricao: option.text
+      descricao: option.text,
     }));
 
     // Basic validation
     if (!porcentagem || !denominacao) {
-      toast.error('Os campos Porcentagem e Denominação são obrigatórios!');
+      toast.error("Os campos Porcentagem e Denominação são obrigatórios!");
       return;
     }
 
     const data = {
       percentualCalculo: porcentagem,
       atividade: denominacao,
-      ativo: ativo || 'Sim',
+      ativo: ativo || "Sim",
       cnaesCadastradas: cnaes.length.toString(),
-      cnaesList: cnaes
+      cnaesList: cnaes,
     };
 
-    toast.success('Atividade econômica cadastrada com sucesso!');
+    toast.success("Atividade econômica cadastrada com sucesso!");
     this.onSubmit(data);
   }
 }

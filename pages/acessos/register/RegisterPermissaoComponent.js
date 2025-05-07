@@ -1,7 +1,7 @@
 /**
  * RegisterPermissaoComponent.js - Componente para cadastro de permissão
  */
-import { toast } from '/js/Utilities.js';
+import { toast } from "/js/Utilities.js";
 
 class RegisterPermissaoComponent {
   /**
@@ -17,11 +17,11 @@ class RegisterPermissaoComponent {
   }
 
   render() {
-    const container = document.createElement('div');
-    container.className = 'p-4';
+    const container = document.createElement("div");
+    container.className = "p-4";
 
-    const form = document.createElement('div');
-    form.className = 'space-y-4';
+    const form = document.createElement("div");
+    form.className = "space-y-4";
 
     form.innerHTML = `
       <div>
@@ -44,8 +44,8 @@ class RegisterPermissaoComponent {
       </div>
     `;
 
-    const actions = document.createElement('div');
-    actions.className = 'flex justify-end space-x-4 mt-6';
+    const actions = document.createElement("div");
+    actions.className = "flex justify-end space-x-4 mt-6";
     actions.innerHTML = `
       <button id="back-btn" class="px-4 py-2 border border-gray-300 rounded-full text-gray-700 text-sm hover:bg-gray-100">
         Voltar
@@ -61,46 +61,46 @@ class RegisterPermissaoComponent {
   }
 
   setupEventListeners() {
-    const backBtn = this.element.querySelector('#back-btn');
-    const submitBtn = this.element.querySelector('#submit-btn');
+    const backBtn = this.element.querySelector("#back-btn");
+    const submitBtn = this.element.querySelector("#submit-btn");
 
     if (backBtn) {
-      backBtn.addEventListener('click', () => {
-        toast.info('Retornando à lista de permissões...');
+      backBtn.addEventListener("click", () => {
+        toast.info("Retornando à lista de permissões...");
         this.onBack();
       });
     }
 
     if (submitBtn) {
-      submitBtn.addEventListener('click', () => {
+      submitBtn.addEventListener("click", () => {
         this.submitForm();
       });
     }
   }
 
   submitForm() {
-    const descricaoInput = this.element.querySelector('#descricao');
-    const moduloInput = this.element.querySelector('#modulo');
+    const descricaoInput = this.element.querySelector("#descricao");
+    const moduloInput = this.element.querySelector("#modulo");
 
     const descricao = descricaoInput.value.trim();
     const modulo = moduloInput.value;
 
     if (!descricao) {
-      toast.error('O campo Descrição é obrigatório!');
+      toast.error("O campo Descrição é obrigatório!");
       return;
     }
 
     if (!modulo) {
-      toast.error('O campo Módulo é obrigatório!');
+      toast.error("O campo Módulo é obrigatório!");
       return;
     }
 
     const data = {
       descricao: descricao,
-      modulo: modulo
+      modulo: modulo,
     };
 
-    toast.success('Permissão cadastrada com sucesso!');
+    toast.success("Permissão cadastrada com sucesso!");
     this.onSubmit(data);
   }
 }

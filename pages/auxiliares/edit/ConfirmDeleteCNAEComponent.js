@@ -1,7 +1,7 @@
 /**
  * ConfirmDeleteCNAEComponent.js - Componente para confirmação de exclusão de CNAE
  */
-import { toast } from '/js/Utilities.js';
+import { toast } from "/js/Utilities.js";
 
 class ConfirmDeleteCNAEComponent {
   constructor({ cnae, onConfirm, onCancel }) {
@@ -13,8 +13,8 @@ class ConfirmDeleteCNAEComponent {
   }
 
   render() {
-    const container = document.createElement('div');
-    container.className = 'w-full text-center p-4';
+    const container = document.createElement("div");
+    container.className = "w-full text-center p-4";
 
     container.innerHTML = `
       <p class="text-lg font-medium text-gray-700 mb-4">Deseja remover esse CNAE?</p>
@@ -33,19 +33,19 @@ class ConfirmDeleteCNAEComponent {
   }
 
   setupEventListeners() {
-    const cancelBtn = this.element.querySelector('#cancel-btn');
-    const confirmBtn = this.element.querySelector('#confirm-btn');
+    const cancelBtn = this.element.querySelector("#cancel-btn");
+    const confirmBtn = this.element.querySelector("#confirm-btn");
 
     if (cancelBtn) {
-      cancelBtn.addEventListener('click', () => {
-        toast.info('Exclusão cancelada.');
+      cancelBtn.addEventListener("click", () => {
+        toast.info("Exclusão cancelada.");
         this.onCancel();
       });
     }
 
     if (confirmBtn) {
-      confirmBtn.addEventListener('click', () => {
-        toast.success('CNAE removido com sucesso!');
+      confirmBtn.addEventListener("click", () => {
+        toast.success("CNAE removido com sucesso!");
         this.onConfirm();
       });
     }

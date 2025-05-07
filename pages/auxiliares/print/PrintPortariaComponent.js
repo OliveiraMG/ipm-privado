@@ -1,7 +1,7 @@
 /**
  * PrintPortariaComponent.js - Componente para o formulário de impressão de portarias
  */
-import { toast } from '/js/Utilities.js';
+import { toast } from "/js/Utilities.js";
 
 class PrintPortariaComponent {
   constructor({ onPrint, onCancel }) {
@@ -12,11 +12,11 @@ class PrintPortariaComponent {
   }
 
   render() {
-    const container = document.createElement('div');
-    container.className = 'w-full';
+    const container = document.createElement("div");
+    container.className = "w-full";
 
-    const form = document.createElement('div');
-    form.className = 'p-4';
+    const form = document.createElement("div");
+    form.className = "p-4";
 
     form.innerHTML = `
       <div class="grid grid-cols-3 gap-4">
@@ -58,50 +58,50 @@ class PrintPortariaComponent {
   }
 
   setupEventListeners() {
-    const cancelBtn = this.element.querySelector('#cancel-btn');
-    const clearBtn = this.element.querySelector('#clear-btn');
-    const printBtn = this.element.querySelector('#print-btn');
+    const cancelBtn = this.element.querySelector("#cancel-btn");
+    const clearBtn = this.element.querySelector("#clear-btn");
+    const printBtn = this.element.querySelector("#print-btn");
 
     if (cancelBtn) {
-      cancelBtn.addEventListener('click', () => {
-        toast.info('Impressão cancelada.');
+      cancelBtn.addEventListener("click", () => {
+        toast.info("Impressão cancelada.");
         this.onCancel();
       });
     }
 
     if (clearBtn) {
-      clearBtn.addEventListener('click', () => {
+      clearBtn.addEventListener("click", () => {
         this.clearForm();
-        toast.info('Filtros limpos.');
+        toast.info("Filtros limpos.");
       });
     }
 
     if (printBtn) {
-      printBtn.addEventListener('click', () => {
+      printBtn.addEventListener("click", () => {
         this.submitForm();
       });
     }
   }
 
   clearForm() {
-    this.element.querySelector('#vigente').value = '';
-    this.element.querySelector('#numero').value = '';
-    this.element.querySelector('#ano').value = '';
-    this.onPrint({ vigente: '', numero: '', ano: '' });
+    this.element.querySelector("#vigente").value = "";
+    this.element.querySelector("#numero").value = "";
+    this.element.querySelector("#ano").value = "";
+    this.onPrint({ vigente: "", numero: "", ano: "" });
   }
 
   submitForm() {
-    const vigente = this.element.querySelector('#vigente').value;
-    const numero = this.element.querySelector('#numero').value;
-    const ano = this.element.querySelector('#ano').value;
+    const vigente = this.element.querySelector("#vigente").value;
+    const numero = this.element.querySelector("#numero").value;
+    const ano = this.element.querySelector("#ano").value;
 
     const filters = {
-      vigente: vigente || '',
-      numero: numero || '',
-      ano: ano || ''
+      vigente: vigente || "",
+      numero: numero || "",
+      ano: ano || "",
     };
 
-    toast.success('Impressão solicitada com sucesso!');
+    toast.success("Impressão solicitada com sucesso!");
     this.onPrint(filters);
   }
 }

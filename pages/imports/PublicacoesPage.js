@@ -1,14 +1,14 @@
 /**
  * PublicacoesPage.js - Página de listagem de publicações
  */
-import { Header } from '/components/layout/Header.js';
-import { toast } from '/js/Utilities.js';
-import RegisterPublicacaoComponent from '/pages/imports/register/RegisterPublicacaoComponent.js';
-import EditPublicacaoComponent from '/pages/imports/edit/EditPublicacaoComponent.js';
-import DeletePublicacaoComponent from '/pages/imports/edit/DeletePublicacaoComponent.js';
-import SearchPublicacaoComponent from '/pages/imports/search/SearchPublicacaoComponent.js';
-import PrintPublicacaoComponent from '/pages/imports/print/PrintPublicacaoComponent.js';
-import ModalComponent from '/components/common/ModalComponent.js';
+import { Header } from "/components/layout/Header.js";
+import { toast } from "/js/Utilities.js";
+import RegisterPublicacaoComponent from "/pages/imports/register/RegisterPublicacaoComponent.js";
+import EditPublicacaoComponent from "/pages/imports/edit/EditPublicacaoComponent.js";
+import DeletePublicacaoComponent from "/pages/imports/edit/DeletePublicacaoComponent.js";
+import SearchPublicacaoComponent from "/pages/imports/search/SearchPublicacaoComponent.js";
+import PrintPublicacaoComponent from "/pages/imports/print/PrintPublicacaoComponent.js";
+import ModalComponent from "/components/common/ModalComponent.js";
 
 class PublicacoesPage {
   constructor() {
@@ -42,31 +42,32 @@ class PublicacoesPage {
   }
 
   renderContent() {
-    const mainContent = document.querySelector('main');
+    const mainContent = document.querySelector("main");
     if (!mainContent) {
       console.error("Elemento main não encontrado!");
       return;
     }
 
-    mainContent.innerHTML = '';
+    mainContent.innerHTML = "";
 
-    const card = document.createElement('div');
-    card.className = 'bg-white rounded-2xl shadow-[6px_6px_12px_rgba(0,0,0,0.25)] mx-24 my-20 p-12';
+    const card = document.createElement("div");
+    card.className =
+      "bg-white rounded-2xl shadow-[6px_6px_12px_rgba(0,0,0,0.25)] mx-24 my-20 p-12";
 
-    const header = document.createElement('div');
-    header.className = 'flex justify-between items-center mb-6';
+    const header = document.createElement("div");
+    header.className = "flex justify-between items-center mb-6";
     header.innerHTML = `
       <h2 class="text-2xl font-semibold text-blue-dark">Listagem</h2>
     `;
     card.appendChild(header);
 
-    const tableContainer = document.createElement('div');
-    tableContainer.id = 'publicacoes-table';
-    tableContainer.className = 'w-full px-2';
+    const tableContainer = document.createElement("div");
+    tableContainer.id = "publicacoes-table";
+    tableContainer.className = "w-full px-2";
     card.appendChild(tableContainer);
 
-    const buttonContainer = document.createElement('div');
-    buttonContainer.className = 'flex justify-center space-x-4 mt-6';
+    const buttonContainer = document.createElement("div");
+    buttonContainer.className = "flex justify-center space-x-4 mt-6";
     buttonContainer.innerHTML = `
       <button id="print-btn" class="px-4 py-2 border border-gray-300 rounded-full text-gray-700 hover:bg-gray-100">
         <i class="fa-solid fa-print mr-2"></i>Imprimir
@@ -88,24 +89,24 @@ class PublicacoesPage {
   }
 
   setupButtonEvents() {
-    const registerBtn = document.getElementById('register-btn');
-    const searchBtn = document.getElementById('search-btn');
-    const printBtn = document.getElementById('print-btn');
+    const registerBtn = document.getElementById("register-btn");
+    const searchBtn = document.getElementById("search-btn");
+    const printBtn = document.getElementById("print-btn");
 
     if (registerBtn) {
-      registerBtn.addEventListener('click', () => {
+      registerBtn.addEventListener("click", () => {
         this.openRegisterModal();
       });
     }
 
     if (searchBtn) {
-      searchBtn.addEventListener('click', () => {
+      searchBtn.addEventListener("click", () => {
         this.openSearchModal();
       });
     }
 
     if (printBtn) {
-      printBtn.addEventListener('click', () => {
+      printBtn.addEventListener("click", () => {
         this.openPrintModal();
       });
     }
@@ -115,38 +116,40 @@ class PublicacoesPage {
     const registerComponent = new RegisterPublicacaoComponent({
       onSubmit: (data) => {
         const newPublicacao = {
-          id: Math.max(...this.tableData.map(d => d.id), 0) + 1,
+          id: Math.max(...this.tableData.map((d) => d.id), 0) + 1,
           descricao: data.descricao,
-          sigla: data.sigla
+          sigla: data.sigla,
         };
         this.tableData.unshift(newPublicacao);
         this.renderTable();
         this.modal.close();
-        toast.success('Publicação cadastrada com sucesso!');
+        toast.success("Publicação cadastrada com sucesso!");
       },
       onBack: () => {
         this.modal.close();
-        toast.info('Retornado à lista de publicações');
-      }
+        toast.info("Retornado à lista de publicações");
+      },
     });
 
     this.modal = new ModalComponent({
-      id: 'register-publicacao-modal',
-      title: 'Cadastrar Publicações',
-      titleClass: 'text-blue-dark font-semibold text-xl',
+      id: "register-publicacao-modal",
+      title: "Cadastrar Publicações",
+      titleClass: "text-blue-dark font-semibold text-xl",
       content: registerComponent.element,
-      contentClass: 'p-0',
+      contentClass: "p-0",
       onClose: () => {
         this.modal = null;
-      }
+      },
     });
     this.modal.open();
   }
 
   openEditModal(publicacaoId) {
-    const publicacaoData = this.tableData.find(item => item.id === publicacaoId);
+    const publicacaoData = this.tableData.find(
+      (item) => item.id === publicacaoId
+    );
     if (!publicacaoData) {
-      toast.error('Publicação não encontrada!');
+      toast.error("Publicação não encontrada!");
       return;
     }
 
@@ -158,27 +161,29 @@ class PublicacoesPage {
       },
       onBack: () => {
         this.modal.close();
-        toast.info('Retornado à lista de publicações');
-      }
+        toast.info("Retornado à lista de publicações");
+      },
     });
 
     this.modal = new ModalComponent({
-      id: 'edit-publicacao-modal',
-      title: 'Editar Publicações',
-      titleClass: 'text-blue-dark font-semibold text-xl',
+      id: "edit-publicacao-modal",
+      title: "Editar Publicações",
+      titleClass: "text-blue-dark font-semibold text-xl",
       content: editComponent.element,
-      contentClass: 'p-0',
+      contentClass: "p-0",
       onClose: () => {
         this.modal = null;
-      }
+      },
     });
     this.modal.open();
   }
 
   openDeleteModal(publicacaoId) {
-    const publicacaoData = this.tableData.find(item => item.id === publicacaoId);
+    const publicacaoData = this.tableData.find(
+      (item) => item.id === publicacaoId
+    );
     if (!publicacaoData) {
-      toast.error('Publicação não encontrada!');
+      toast.error("Publicação não encontrada!");
       return;
     }
 
@@ -190,19 +195,19 @@ class PublicacoesPage {
       },
       onBack: () => {
         this.modal.close();
-        toast.info('Retornado à lista de publicações');
-      }
+        toast.info("Retornado à lista de publicações");
+      },
     });
 
     this.modal = new ModalComponent({
-      id: 'delete-publicacao-modal',
-      title: 'Remover',
-      titleClass: 'text-blue-dark font-semibold text-xl',
+      id: "delete-publicacao-modal",
+      title: "Remover",
+      titleClass: "text-blue-dark font-semibold text-xl",
       content: deleteComponent.element,
-      contentClass: 'p-0',
+      contentClass: "p-0",
       onClose: () => {
         this.modal = null;
-      }
+      },
     });
     this.modal.open();
   }
@@ -216,23 +221,23 @@ class PublicacoesPage {
       onClear: () => {
         this.loadData();
         this.modal.close();
-        toast.info('Filtros limpos');
+        toast.info("Filtros limpos");
       },
       onBack: () => {
         this.modal.close();
-        toast.info('Retornado à lista de publicações');
-      }
+        toast.info("Retornado à lista de publicações");
+      },
     });
 
     this.modal = new ModalComponent({
-      id: 'search-publicacao-modal',
-      title: 'Pesquisar',
-      titleClass: 'text-blue-dark font-semibold text-xl',
+      id: "search-publicacao-modal",
+      title: "Pesquisar",
+      titleClass: "text-blue-dark font-semibold text-xl",
       content: searchComponent.element,
-      contentClass: 'p-0',
+      contentClass: "p-0",
       onClose: () => {
         this.modal = null;
-      }
+      },
     });
     this.modal.open();
   }
@@ -244,49 +249,53 @@ class PublicacoesPage {
         this.modal.close();
       },
       onClear: () => {
-        toast.info('Filtros de impressão limpos');
+        toast.info("Filtros de impressão limpos");
       },
       onBack: () => {
         this.modal.close();
-        toast.info('Retornado à lista de publicações');
-      }
+        toast.info("Retornado à lista de publicações");
+      },
     });
 
     this.modal = new ModalComponent({
-      id: 'print-publicacao-modal',
-      title: 'Imprimir',
-      titleClass: 'text-blue-dark font-semibold text-xl',
+      id: "print-publicacao-modal",
+      title: "Imprimir",
+      titleClass: "text-blue-dark font-semibold text-xl",
       content: printComponent.element,
-      contentClass: 'p-0',
+      contentClass: "p-0",
       onClose: () => {
         this.modal = null;
-      }
+      },
     });
     this.modal.open();
   }
 
   applyFilters(filters) {
     const originalData = this.getMockData();
-    this.tableData = originalData.filter(item => {
-      const matchesDescricao = filters.descricao ? item.descricao.toLowerCase().includes(filters.descricao.toLowerCase()) : true;
+    this.tableData = originalData.filter((item) => {
+      const matchesDescricao = filters.descricao
+        ? item.descricao.toLowerCase().includes(filters.descricao.toLowerCase())
+        : true;
       return matchesDescricao;
     });
     this.renderTable();
-    toast.success('Filtros aplicados com sucesso!');
+    toast.success("Filtros aplicados com sucesso!");
   }
 
   handlePrint(filters) {
-    const filteredData = this.tableData.filter(item => {
-      const matchesDescricao = filters.descricao ? item.descricao.toLowerCase().includes(filters.descricao.toLowerCase()) : true;
+    const filteredData = this.tableData.filter((item) => {
+      const matchesDescricao = filters.descricao
+        ? item.descricao.toLowerCase().includes(filters.descricao.toLowerCase())
+        : true;
       return matchesDescricao;
     });
 
     if (filteredData.length === 0) {
-      toast.error('Nenhum dado para imprimir com os filtros aplicados!');
+      toast.error("Nenhum dado para imprimir com os filtros aplicados!");
       return;
     }
 
-    const printWindow = window.open('', '_blank');
+    const printWindow = window.open("", "_blank");
     printWindow.document.write(`
       <html>
         <head>
@@ -307,12 +316,16 @@ class PublicacoesPage {
               </tr>
             </thead>
             <tbody>
-              ${filteredData.map(item => `
+              ${filteredData
+                .map(
+                  (item) => `
                 <tr>
                   <td>${item.descricao}</td>
                   <td>${item.sigla}</td>
                 </tr>
-              `).join('')}
+              `
+                )
+                .join("")}
             </tbody>
           </table>
           <script>window.print(); window.close();</script>
@@ -323,17 +336,17 @@ class PublicacoesPage {
   }
 
   updateData(updatedData) {
-    this.tableData = this.tableData.map(item =>
+    this.tableData = this.tableData.map((item) =>
       item.id === updatedData.id ? { ...item, ...updatedData } : item
     );
     this.renderTable();
-    toast.success('Publicação atualizada com sucesso!');
+    toast.success("Publicação atualizada com sucesso!");
   }
 
   deleteData(publicacaoId) {
-    this.tableData = this.tableData.filter(item => item.id !== publicacaoId);
+    this.tableData = this.tableData.filter((item) => item.id !== publicacaoId);
     this.renderTable();
-    toast.success('Publicação excluída com sucesso!');
+    toast.success("Publicação excluída com sucesso!");
   }
 
   loadData() {
@@ -346,16 +359,17 @@ class PublicacoesPage {
   }
 
   renderTable() {
-    const tableContainer = document.getElementById('publicacoes-table');
+    const tableContainer = document.getElementById("publicacoes-table");
     if (!tableContainer) {
       console.error("Container da tabela não encontrado!");
       return;
     }
 
-    console.log('tableData before rendering:', this.tableData);
+    console.log("tableData before rendering:", this.tableData);
 
     if (!this.tableData || !this.tableData.length) {
-      tableContainer.innerHTML = '<p class="text-center py-4">Nenhum dado disponível</p>';
+      tableContainer.innerHTML =
+        '<p class="text-center py-4">Nenhum dado disponível</p>';
       return;
     }
 
@@ -373,15 +387,19 @@ class PublicacoesPage {
       `;
 
       this.tableData.forEach((row, index) => {
-        const rowClass = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+        const rowClass = index % 2 === 0 ? "bg-white" : "bg-gray-50";
         tableHTML += `
           <tr class="${rowClass}">
             <td class="text-center py-2 px-4">
               <div class="flex space-x-2 justify-center">
-                <button class="edit-btn bg-blue-dark text-white text-xs rounded px-2 py-1 hover:bg-blue-medium" data-id="${row.id || ''}" style="display: inline-block !important;">
+                <button class="edit-btn bg-blue-dark text-white text-xs rounded px-2 py-1 hover:bg-blue-medium" data-id="${
+                  row.id || ""
+                }" style="display: inline-block !important;">
                   <i class="fa-solid fa-pencil-alt"></i>Editar
                 </button>
-                <button class="delete-btn bg-red-600 text-white text-xs rounded px-2 py-1 hover:bg-red-700" data-id="${row.id || ''}" style="display: inline-block !important;">
+                <button class="delete-btn bg-red-600 text-white text-xs rounded px-2 py-1 hover:bg-red-700" data-id="${
+                  row.id || ""
+                }" style="display: inline-block !important;">
                   <i class="fa-solid fa-trash"></i>Excluir
                 </button>
               </div>
@@ -407,19 +425,19 @@ class PublicacoesPage {
   }
 
   setupTableButtonEvents() {
-    const editButtons = document.querySelectorAll('.edit-btn');
-    const deleteButtons = document.querySelectorAll('.delete-btn');
+    const editButtons = document.querySelectorAll(".edit-btn");
+    const deleteButtons = document.querySelectorAll(".delete-btn");
 
-    editButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const publicacaoId = parseInt(button.getAttribute('data-id'));
+    editButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const publicacaoId = parseInt(button.getAttribute("data-id"));
         this.openEditModal(publicacaoId);
       });
     });
 
-    deleteButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const publicacaoId = parseInt(button.getAttribute('data-id'));
+    deleteButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const publicacaoId = parseInt(button.getAttribute("data-id"));
         this.openDeleteModal(publicacaoId);
       });
     });
@@ -427,21 +445,67 @@ class PublicacoesPage {
 
   getMockData() {
     return [
-      { id: 1, descricao: 'NFE-Eletrônica: Relatório de Notas Fiscais de entrada eletrônicas', sigla: 'ACGPT109' },
-      { id: 2, descricao: 'NFE-EFD: Relatório de Notas Fiscais de entrada eletrônicas EFD', sigla: 'ACGPT415' },
-      { id: 3, descricao: 'EFD - OMISSO', sigla: 'ACGPT420' },
-      { id: 4, descricao: 'EFD - SEM MOVIMENTO', sigla: 'ACGPT425' },
-      { id: 5, descricao: 'EFD-ESCRITURAÇÃO FISCAL DIGITAL – registros por CFOPs', sigla: 'ACGPT430' },
-      { id: 6, descricao: 'Notas de Produtor e Avulsa (NFPA) – eletrônicas', sigla: 'ACGPR812' },
-      { id: 7, descricao: 'Receitas dos contribuintes Simples Nacional', sigla: 'PGDAS' },
-      { id: 8, descricao: 'Valores adicionados por contribuinte (positivos)', sigla: 'DHRPR555' },
-      { id: 9, descricao: 'Valores adicionados por contribuinte (negativos e nulos)', sigla: 'DHRPR557' },
-      { id: 10, descricao: 'Catálogo de contribuintes (CAP)', sigla: 'ACDPR535 ou ACDPR552' },
-      { id: 11, descricao: 'Catálogo de contribuintes (CCI)', sigla: 'ACEPR572' },
-      { id: 12, descricao: 'IEs Simples Nacional', sigla: 'MEI' },
-      { id: 13, descricao: 'GIA-ICMS Sem movimento (entradas e saídas zeradas)', sigla: 'DHRPR098' },
-      { id: 14, descricao: 'GIA-ICMS Omissos', sigla: 'DHRPR278' },
-      { id: 15, descricao: 'GIA-ICMS – Registros por CFOPs (entradas e saídas)', sigla: 'DHRPR296' }
+      {
+        id: 1,
+        descricao:
+          "NFE-Eletrônica: Relatório de Notas Fiscais de entrada eletrônicas",
+        sigla: "ACGPT109",
+      },
+      {
+        id: 2,
+        descricao:
+          "NFE-EFD: Relatório de Notas Fiscais de entrada eletrônicas EFD",
+        sigla: "ACGPT415",
+      },
+      { id: 3, descricao: "EFD - OMISSO", sigla: "ACGPT420" },
+      { id: 4, descricao: "EFD - SEM MOVIMENTO", sigla: "ACGPT425" },
+      {
+        id: 5,
+        descricao: "EFD-ESCRITURAÇÃO FISCAL DIGITAL – registros por CFOPs",
+        sigla: "ACGPT430",
+      },
+      {
+        id: 6,
+        descricao: "Notas de Produtor e Avulsa (NFPA) – eletrônicas",
+        sigla: "ACGPR812",
+      },
+      {
+        id: 7,
+        descricao: "Receitas dos contribuintes Simples Nacional",
+        sigla: "PGDAS",
+      },
+      {
+        id: 8,
+        descricao: "Valores adicionados por contribuinte (positivos)",
+        sigla: "DHRPR555",
+      },
+      {
+        id: 9,
+        descricao: "Valores adicionados por contribuinte (negativos e nulos)",
+        sigla: "DHRPR557",
+      },
+      {
+        id: 10,
+        descricao: "Catálogo de contribuintes (CAP)",
+        sigla: "ACDPR535 ou ACDPR552",
+      },
+      {
+        id: 11,
+        descricao: "Catálogo de contribuintes (CCI)",
+        sigla: "ACEPR572",
+      },
+      { id: 12, descricao: "IEs Simples Nacional", sigla: "MEI" },
+      {
+        id: 13,
+        descricao: "GIA-ICMS Sem movimento (entradas e saídas zeradas)",
+        sigla: "DHRPR098",
+      },
+      { id: 14, descricao: "GIA-ICMS Omissos", sigla: "DHRPR278" },
+      {
+        id: 15,
+        descricao: "GIA-ICMS – Registros por CFOPs (entradas e saídas)",
+        sigla: "DHRPR296",
+      },
     ];
   }
 
@@ -450,7 +514,7 @@ class PublicacoesPage {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   PublicacoesPage.initialize();
 });
 

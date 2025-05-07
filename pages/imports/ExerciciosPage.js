@@ -1,12 +1,12 @@
 /**
  * ExerciciosPage.js - Página de listagem de exercícios
  */
-import { Header } from '/components/layout/Header.js';
-import { toast } from '/js/Utilities.js';
-import RegisterExercicioComponent from '/pages/imports/register/RegisterExercicioComponent.js';
-import EditExercicioComponent from '/pages/imports/edit/EditExercicioComponent.js';
-import DeleteExercicioComponent from '/pages/imports/edit/DeleteExercicioComponent.js';
-import ModalComponent from '/components/common/ModalComponent.js';
+import { Header } from "/components/layout/Header.js";
+import { toast } from "/js/Utilities.js";
+import RegisterExercicioComponent from "/pages/imports/register/RegisterExercicioComponent.js";
+import EditExercicioComponent from "/pages/imports/edit/EditExercicioComponent.js";
+import DeleteExercicioComponent from "/pages/imports/edit/DeleteExercicioComponent.js";
+import ModalComponent from "/components/common/ModalComponent.js";
 
 class ExerciciosPage {
   constructor() {
@@ -40,31 +40,32 @@ class ExerciciosPage {
   }
 
   renderContent() {
-    const mainContent = document.querySelector('main');
+    const mainContent = document.querySelector("main");
     if (!mainContent) {
       console.error("Elemento main não encontrado!");
       return;
     }
 
-    mainContent.innerHTML = '';
+    mainContent.innerHTML = "";
 
-    const card = document.createElement('div');
-    card.className = 'bg-white rounded-2xl shadow-[6px_6px_12px_rgba(0,0,0,0.25)] mx-24 my-20 p-12';
+    const card = document.createElement("div");
+    card.className =
+      "bg-white rounded-2xl shadow-[6px_6px_12px_rgba(0,0,0,0.25)] mx-24 my-20 p-12";
 
-    const header = document.createElement('div');
-    header.className = 'flex justify-between items-center mb-6';
+    const header = document.createElement("div");
+    header.className = "flex justify-between items-center mb-6";
     header.innerHTML = `
       <h2 class="text-2xl font-semibold text-blue-dark">Listagem</h2>
     `;
     card.appendChild(header);
 
-    const tableContainer = document.createElement('div');
-    tableContainer.id = 'exercicios-table';
-    tableContainer.className = 'w-full px-2';
+    const tableContainer = document.createElement("div");
+    tableContainer.id = "exercicios-table";
+    tableContainer.className = "w-full px-2";
     card.appendChild(tableContainer);
 
-    const buttonContainer = document.createElement('div');
-    buttonContainer.className = 'flex justify-center space-x-4 mt-6';
+    const buttonContainer = document.createElement("div");
+    buttonContainer.className = "flex justify-center space-x-4 mt-6";
     buttonContainer.innerHTML = `
       <button id="register-btn" class="px-4 py-2 bg-blue-dark text-white rounded-full hover:bg-blue-medium">
         <i class="fa-solid fa-plus mr-2"></i>Cadastrar
@@ -80,10 +81,10 @@ class ExerciciosPage {
   }
 
   setupButtonEvents() {
-    const registerBtn = document.getElementById('register-btn');
+    const registerBtn = document.getElementById("register-btn");
 
     if (registerBtn) {
-      registerBtn.addEventListener('click', () => {
+      registerBtn.addEventListener("click", () => {
         this.openRegisterModal();
       });
     }
@@ -93,39 +94,41 @@ class ExerciciosPage {
     const registerComponent = new RegisterExercicioComponent({
       onSubmit: (data) => {
         const newExercicio = {
-          id: Math.max(...this.tableData.map(d => d.id), 0) + 1,
+          id: Math.max(...this.tableData.map((d) => d.id), 0) + 1,
           base: data.exercicio,
           apuracao: data.exercicio,
-          aplicacao: data.exercicio
+          aplicacao: data.exercicio,
         };
         this.tableData.unshift(newExercicio);
         this.renderTable();
         this.modal.close();
-        toast.success('Exercício cadastrado com sucesso!');
+        toast.success("Exercício cadastrado com sucesso!");
       },
       onBack: () => {
         this.modal.close();
-        toast.info('Retornado à lista de exercícios');
-      }
+        toast.info("Retornado à lista de exercícios");
+      },
     });
 
     this.modal = new ModalComponent({
-      id: 'register-exercicio-modal',
-      title: 'Cadastrar Exercícios',
-      titleClass: 'text-blue-dark font-semibold text-xl',
+      id: "register-exercicio-modal",
+      title: "Cadastrar Exercícios",
+      titleClass: "text-blue-dark font-semibold text-xl",
       content: registerComponent.element,
-      contentClass: 'p-0',
+      contentClass: "p-0",
       onClose: () => {
         this.modal = null;
-      }
+      },
     });
     this.modal.open();
   }
 
   openEditModal(exercicioId) {
-    const exercicioData = this.tableData.find(item => item.id === exercicioId);
+    const exercicioData = this.tableData.find(
+      (item) => item.id === exercicioId
+    );
     if (!exercicioData) {
-      toast.error('Exercício não encontrado!');
+      toast.error("Exercício não encontrado!");
       return;
     }
 
@@ -137,27 +140,29 @@ class ExerciciosPage {
       },
       onBack: () => {
         this.modal.close();
-        toast.info('Retornado à lista de exercícios');
-      }
+        toast.info("Retornado à lista de exercícios");
+      },
     });
 
     this.modal = new ModalComponent({
-      id: 'edit-exercicio-modal',
-      title: 'Editar Exercícios',
-      titleClass: 'text-blue-dark font-semibold text-xl',
+      id: "edit-exercicio-modal",
+      title: "Editar Exercícios",
+      titleClass: "text-blue-dark font-semibold text-xl",
       content: editComponent.element,
-      contentClass: 'p-0',
+      contentClass: "p-0",
       onClose: () => {
         this.modal = null;
-      }
+      },
     });
     this.modal.open();
   }
 
   openDeleteModal(exercicioId) {
-    const exercicioData = this.tableData.find(item => item.id === exercicioId);
+    const exercicioData = this.tableData.find(
+      (item) => item.id === exercicioId
+    );
     if (!exercicioData) {
-      toast.error('Exercício não encontrado!');
+      toast.error("Exercício não encontrado!");
       return;
     }
 
@@ -169,35 +174,35 @@ class ExerciciosPage {
       },
       onBack: () => {
         this.modal.close();
-        toast.info('Retornado à lista de exercícios');
-      }
+        toast.info("Retornado à lista de exercícios");
+      },
     });
 
     this.modal = new ModalComponent({
-      id: 'delete-exercicio-modal',
-      title: 'Remover',
-      titleClass: 'text-blue-dark font-semibold text-xl',
+      id: "delete-exercicio-modal",
+      title: "Remover",
+      titleClass: "text-blue-dark font-semibold text-xl",
       content: deleteComponent.element,
-      contentClass: 'p-0',
+      contentClass: "p-0",
       onClose: () => {
         this.modal = null;
-      }
+      },
     });
     this.modal.open();
   }
 
   updateData(updatedData) {
-    this.tableData = this.tableData.map(item =>
+    this.tableData = this.tableData.map((item) =>
       item.id === updatedData.id ? { ...item, ...updatedData } : item
     );
     this.renderTable();
-    toast.success('Exercício atualizado com sucesso!');
+    toast.success("Exercício atualizado com sucesso!");
   }
 
   deleteData(exercicioId) {
-    this.tableData = this.tableData.filter(item => item.id !== exercicioId);
+    this.tableData = this.tableData.filter((item) => item.id !== exercicioId);
     this.renderTable();
-    toast.success('Exercício excluído com sucesso!');
+    toast.success("Exercício excluído com sucesso!");
   }
 
   loadData() {
@@ -210,16 +215,17 @@ class ExerciciosPage {
   }
 
   renderTable() {
-    const tableContainer = document.getElementById('exercicios-table');
+    const tableContainer = document.getElementById("exercicios-table");
     if (!tableContainer) {
       console.error("Container da tabela não encontrado!");
       return;
     }
 
-    console.log('tableData before rendering:', this.tableData);
+    console.log("tableData before rendering:", this.tableData);
 
     if (!this.tableData || !this.tableData.length) {
-      tableContainer.innerHTML = '<p class="text-center py-4">Nenhum dado disponível</p>';
+      tableContainer.innerHTML =
+        '<p class="text-center py-4">Nenhum dado disponível</p>';
       return;
     }
 
@@ -238,15 +244,19 @@ class ExerciciosPage {
       `;
 
       this.tableData.forEach((row, index) => {
-        const rowClass = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+        const rowClass = index % 2 === 0 ? "bg-white" : "bg-gray-50";
         tableHTML += `
           <tr class="${rowClass}">
             <td class="text-center py-2 px-4">
               <div class="flex space-x-2 justify-center">
-                <button class="edit-btn bg-blue-dark text-white text-xs rounded px-2 py-1 hover:bg-blue-medium" data-id="${row.id || ''}" style="display: inline-block !important;">
+                <button class="edit-btn bg-blue-dark text-white text-xs rounded px-2 py-1 hover:bg-blue-medium" data-id="${
+                  row.id || ""
+                }" style="display: inline-block !important;">
                   <i class="fa-solid fa-pencil-alt"></i>Editar
                 </button>
-                <button class="delete-btn bg-red-600 text-white text-xs rounded px-2 py-1 hover:bg-red-700" data-id="${row.id || ''}" style="display: inline-block !important;">
+                <button class="delete-btn bg-red-600 text-white text-xs rounded px-2 py-1 hover:bg-red-700" data-id="${
+                  row.id || ""
+                }" style="display: inline-block !important;">
                   <i class="fa-solid fa-trash"></i>Excluir
                 </button>
               </div>
@@ -273,19 +283,19 @@ class ExerciciosPage {
   }
 
   setupTableButtonEvents() {
-    const editButtons = document.querySelectorAll('.edit-btn');
-    const deleteButtons = document.querySelectorAll('.delete-btn');
+    const editButtons = document.querySelectorAll(".edit-btn");
+    const deleteButtons = document.querySelectorAll(".delete-btn");
 
-    editButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const exercicioId = parseInt(button.getAttribute('data-id'));
+    editButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const exercicioId = parseInt(button.getAttribute("data-id"));
         this.openEditModal(exercicioId);
       });
     });
 
-    deleteButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const exercicioId = parseInt(button.getAttribute('data-id'));
+    deleteButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const exercicioId = parseInt(button.getAttribute("data-id"));
         this.openDeleteModal(exercicioId);
       });
     });
@@ -293,21 +303,21 @@ class ExerciciosPage {
 
   getMockData() {
     return [
-      { id: 1, base: '2025', apuracao: '2026', aplicacao: '2027' },
-      { id: 2, base: '2024', apuracao: '2025', aplicacao: '2026' },
-      { id: 3, base: '2023', apuracao: '2024', aplicacao: '2025' },
-      { id: 4, base: '2022', apuracao: '2023', aplicacao: '2024' },
-      { id: 5, base: '2021', apuracao: '2022', aplicacao: '2023' },
-      { id: 6, base: '2020', apuracao: '2021', aplicacao: '2022' },
-      { id: 7, base: '2019', apuracao: '2020', aplicacao: '2021' },
-      { id: 8, base: '2018', apuracao: '2019', aplicacao: '2020' },
-      { id: 9, base: '2017', apuracao: '2018', aplicacao: '2019' },
-      { id: 10, base: '2016', apuracao: '2017', aplicacao: '2018' },
-      { id: 11, base: '2015', apuracao: '2016', aplicacao: '2017' },
-      { id: 12, base: '2014', apuracao: '2015', aplicacao: '2016' },
-      { id: 13, base: '2013', apuracao: '2014', aplicacao: '2015' },
-      { id: 14, base: '2012', apuracao: '2013', aplicacao: '2014' },
-      { id: 15, base: '2011', apuracao: '2012', aplicacao: '2013' }
+      { id: 1, base: "2025", apuracao: "2026", aplicacao: "2027" },
+      { id: 2, base: "2024", apuracao: "2025", aplicacao: "2026" },
+      { id: 3, base: "2023", apuracao: "2024", aplicacao: "2025" },
+      { id: 4, base: "2022", apuracao: "2023", aplicacao: "2024" },
+      { id: 5, base: "2021", apuracao: "2022", aplicacao: "2023" },
+      { id: 6, base: "2020", apuracao: "2021", aplicacao: "2022" },
+      { id: 7, base: "2019", apuracao: "2020", aplicacao: "2021" },
+      { id: 8, base: "2018", apuracao: "2019", aplicacao: "2020" },
+      { id: 9, base: "2017", apuracao: "2018", aplicacao: "2019" },
+      { id: 10, base: "2016", apuracao: "2017", aplicacao: "2018" },
+      { id: 11, base: "2015", apuracao: "2016", aplicacao: "2017" },
+      { id: 12, base: "2014", apuracao: "2015", aplicacao: "2016" },
+      { id: 13, base: "2013", apuracao: "2014", aplicacao: "2015" },
+      { id: 14, base: "2012", apuracao: "2013", aplicacao: "2014" },
+      { id: 15, base: "2011", apuracao: "2012", aplicacao: "2013" },
     ];
   }
 
@@ -316,7 +326,7 @@ class ExerciciosPage {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   ExerciciosPage.initialize();
 });
 

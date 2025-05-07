@@ -1,7 +1,7 @@
 /**
  * EditGrupoAtividadeComponent.js - Componente para o formulário de edição de grupos de atividades
  */
-import { toast } from '/js/Utilities.js';
+import { toast } from "/js/Utilities.js";
 
 class EditGrupoAtividadeComponent {
   constructor({ atividadeData, onUpdate, onBack }) {
@@ -13,11 +13,11 @@ class EditGrupoAtividadeComponent {
   }
 
   render() {
-    const container = document.createElement('div');
-    container.className = 'w-full';
+    const container = document.createElement("div");
+    container.className = "w-full";
 
-    const form = document.createElement('div');
-    form.className = 'p-4';
+    const form = document.createElement("div");
+    form.className = "p-4";
 
     form.innerHTML = `
       <div class="grid grid-cols-3 gap-4">
@@ -25,20 +25,24 @@ class EditGrupoAtividadeComponent {
           <label for="porcentagem" class="block text-sm font-medium text-gray-700">Porcentagem</label>
           <input type="text" id="porcentagem" name="porcentagem"
                  class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-light focus:border-blue-light"
-                 value="${this.atividadeData.percentualCalculo || ''}">
+                 value="${this.atividadeData.percentualCalculo || ""}">
         </div>
         <div class="col-span-1">
           <label for="denominacao" class="block text-sm font-medium text-gray-700">Denominação</label>
           <input type="text" id="denominacao" name="denominacao"
                  class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-light focus:border-blue-light"
-                 value="${this.atividadeData.atividade || ''}">
+                 value="${this.atividadeData.atividade || ""}">
         </div>
         <div class="col-span-1">
           <label for="ativo" class="block text-sm font-medium text-gray-700">Ativo?</label>
           <select id="ativo" name="ativo"
                   class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-light focus:border-blue-light">
-            <option value="Sim" ${this.atividadeData.ativo === 'Sim' ? 'selected' : ''}>Sim</option>
-            <option value="Não" ${this.atividadeData.ativo === 'Não' ? 'selected' : ''}>Não</option>
+            <option value="Sim" ${
+              this.atividadeData.ativo === "Sim" ? "selected" : ""
+            }>Sim</option>
+            <option value="Não" ${
+              this.atividadeData.ativo === "Não" ? "selected" : ""
+            }>Não</option>
           </select>
         </div>
       </div>
@@ -57,31 +61,31 @@ class EditGrupoAtividadeComponent {
   }
 
   setupEventListeners() {
-    const cancelBtn = this.element.querySelector('#cancel-btn');
-    const submitBtn = this.element.querySelector('#submit-btn');
+    const cancelBtn = this.element.querySelector("#cancel-btn");
+    const submitBtn = this.element.querySelector("#submit-btn");
 
     if (cancelBtn) {
-      cancelBtn.addEventListener('click', () => {
-        toast.info('Edição cancelada.');
+      cancelBtn.addEventListener("click", () => {
+        toast.info("Edição cancelada.");
         this.onBack();
       });
     }
 
     if (submitBtn) {
-      submitBtn.addEventListener('click', () => {
+      submitBtn.addEventListener("click", () => {
         this.submitForm();
       });
     }
   }
 
   submitForm() {
-    const porcentagem = this.element.querySelector('#porcentagem').value;
-    const denominacao = this.element.querySelector('#denominacao').value;
-    const ativo = this.element.querySelector('#ativo').value;
+    const porcentagem = this.element.querySelector("#porcentagem").value;
+    const denominacao = this.element.querySelector("#denominacao").value;
+    const ativo = this.element.querySelector("#ativo").value;
 
     // Basic validation
     if (!porcentagem || !denominacao) {
-      toast.error('Os campos Porcentagem e Denominação são obrigatórios!');
+      toast.error("Os campos Porcentagem e Denominação são obrigatórios!");
       return;
     }
 
@@ -89,12 +93,12 @@ class EditGrupoAtividadeComponent {
       id: this.atividadeData.id,
       percentualCalculo: porcentagem,
       atividade: denominacao,
-      ativo: ativo || 'Sim',
+      ativo: ativo || "Sim",
       cnaesCadastradas: this.atividadeData.cnaesCadastradas,
-      cnaesList: this.atividadeData.cnaesList || []
+      cnaesList: this.atividadeData.cnaesList || [],
     };
 
-    toast.success('Atividade econômica atualizada com sucesso!');
+    toast.success("Atividade econômica atualizada com sucesso!");
     this.onUpdate(updatedData);
   }
 }

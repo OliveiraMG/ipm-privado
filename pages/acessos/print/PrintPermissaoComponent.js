@@ -1,7 +1,7 @@
 /**
  * PrintPermissaoComponent.js - Componente para impressão de permissões
  */
-import { toast } from '/js/Utilities.js';
+import { toast } from "/js/Utilities.js";
 
 class PrintPermissaoComponent {
   /**
@@ -17,11 +17,11 @@ class PrintPermissaoComponent {
   }
 
   render() {
-    const container = document.createElement('div');
-    container.className = 'p-4';
+    const container = document.createElement("div");
+    container.className = "p-4";
 
-    const form = document.createElement('div');
-    form.className = 'space-y-4';
+    const form = document.createElement("div");
+    form.className = "space-y-4";
 
     form.innerHTML = `
       <div>
@@ -31,8 +31,8 @@ class PrintPermissaoComponent {
       </div>
     `;
 
-    const actions = document.createElement('div');
-    actions.className = 'flex justify-end space-x-4 mt-6';
+    const actions = document.createElement("div");
+    actions.className = "flex justify-end space-x-4 mt-6";
     actions.innerHTML = `
       <button id="back-btn" class="px-4 py-2 border border-gray-300 rounded-full text-gray-700 text-sm hover:bg-gray-100">
         Voltar
@@ -51,43 +51,43 @@ class PrintPermissaoComponent {
   }
 
   setupEventListeners() {
-    const backBtn = this.element.querySelector('#back-btn');
-    const clearBtn = this.element.querySelector('#clear-btn');
-    const printBtn = this.element.querySelector('#print-btn');
+    const backBtn = this.element.querySelector("#back-btn");
+    const clearBtn = this.element.querySelector("#clear-btn");
+    const printBtn = this.element.querySelector("#print-btn");
 
     if (backBtn) {
-      backBtn.addEventListener('click', () => {
-        toast.info('Retornando à lista de permissões...');
+      backBtn.addEventListener("click", () => {
+        toast.info("Retornando à lista de permissões...");
         this.onBack();
       });
     }
 
     if (clearBtn) {
-      clearBtn.addEventListener('click', () => {
+      clearBtn.addEventListener("click", () => {
         this.clearForm();
-        toast.info('Filtros limpos.');
+        toast.info("Filtros limpos.");
       });
     }
 
     if (printBtn) {
-      printBtn.addEventListener('click', () => {
+      printBtn.addEventListener("click", () => {
         this.submitForm();
       });
     }
   }
 
   clearForm() {
-    const descricaoInput = this.element.querySelector('#descricao');
-    descricaoInput.value = '';
+    const descricaoInput = this.element.querySelector("#descricao");
+    descricaoInput.value = "";
   }
 
   submitForm() {
-    const descricaoInput = this.element.querySelector('#descricao');
+    const descricaoInput = this.element.querySelector("#descricao");
     const filters = {
-      descricao: descricaoInput.value || null
+      descricao: descricaoInput.value || null,
     };
 
-    toast.info('Preparando impressão...');
+    toast.info("Preparando impressão...");
     setTimeout(() => {
       this.onPrint(filters);
     }, 500);

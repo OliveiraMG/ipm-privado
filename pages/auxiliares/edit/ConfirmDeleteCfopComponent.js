@@ -1,8 +1,8 @@
 /**
  * ConfirmDeleteCfopComponent.js - Componente para confirmar a exclusão de um CFOP
  */
-import { toast } from '/js/Utilities.js';
-import ModalComponent from '/components/common/ModalComponent.js';
+import { toast } from "/js/Utilities.js";
+import ModalComponent from "/components/common/ModalComponent.js";
 
 class ConfirmDeleteCfopComponent {
   constructor({ cfopData, onConfirm, onCancel }) {
@@ -14,11 +14,11 @@ class ConfirmDeleteCfopComponent {
   }
 
   render() {
-    const container = document.createElement('div');
-    container.className = 'w-full';
+    const container = document.createElement("div");
+    container.className = "w-full";
 
-    const content = document.createElement('div');
-    content.className = 'p-4 text-center';
+    const content = document.createElement("div");
+    content.className = "p-4 text-center";
 
     content.innerHTML = `
       <h2 class="text-lg font-semibold text-gray-700 mb-2">Deseja remover esse CFOP?</h2>
@@ -39,19 +39,19 @@ class ConfirmDeleteCfopComponent {
   }
 
   setupEventListeners() {
-    const cancelBtn = this.element.querySelector('#cancel-btn');
-    const confirmBtn = this.element.querySelector('#confirm-btn');
+    const cancelBtn = this.element.querySelector("#cancel-btn");
+    const confirmBtn = this.element.querySelector("#confirm-btn");
 
     if (cancelBtn) {
-      cancelBtn.addEventListener('click', () => {
-        toast.info('Ação cancelada.');
+      cancelBtn.addEventListener("click", () => {
+        toast.info("Ação cancelada.");
         this.onCancel();
       });
     }
 
     if (confirmBtn) {
-      confirmBtn.addEventListener('click', () => {
-        toast.success('CFOP removido com sucesso!');
+      confirmBtn.addEventListener("click", () => {
+        toast.success("CFOP removido com sucesso!");
         this.onConfirm();
       });
     }

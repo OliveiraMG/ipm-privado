@@ -1,9 +1,9 @@
 /**
  * RegisterCityComponent.js - Componente para a página de cadastro de cidade
  */
-import { Header } from '/components/layout/Header.js';
-import { toast } from '/js/Utilities.js';
-import ModalComponent from '/components/common/ModalComponent.js';
+import { Header } from "/components/layout/Header.js";
+import { toast } from "/js/Utilities.js";
+import ModalComponent from "/components/common/ModalComponent.js";
 
 class RegisterCityComponent {
   /**
@@ -13,7 +13,7 @@ class RegisterCityComponent {
    * @param {Function} config.onBack - Função chamada ao clicar em Voltar
    */
   constructor(config) {
-    this.containerId = config.containerId || 'register-city-container';
+    this.containerId = config.containerId || "register-city-container";
     this.onSubmit = config.onSubmit || (() => {});
     this.onBack = config.onBack || (() => {});
     this.element = this.render();
@@ -25,13 +25,13 @@ class RegisterCityComponent {
    * @returns {HTMLElement} - Elemento do componente
    */
   render() {
-    const container = document.createElement('div');
-    container.className = 'w-full';
+    const container = document.createElement("div");
+    container.className = "w-full";
     container.id = this.containerId;
 
     // Formulário (sem card extra para evitar camadas desnecessárias)
-    const form = document.createElement('div');
-    form.className = 'p-4';
+    const form = document.createElement("div");
+    form.className = "p-4";
 
     // Campos do formulário
     form.innerHTML = `
@@ -81,8 +81,8 @@ class RegisterCityComponent {
     `;
 
     // Botões de ação
-    const actions = document.createElement('div');
-    actions.className = 'flex justify-end space-x-4 mt-6';
+    const actions = document.createElement("div");
+    actions.className = "flex justify-end space-x-4 mt-6";
     actions.innerHTML = `
       <button id="back-btn" class="px-4 py-2 border border-gray-300 rounded-full text-gray-700 text-sm hover:bg-gray-100">
         Voltar
@@ -101,35 +101,35 @@ class RegisterCityComponent {
    * Configura os eventos dos botões
    */
   setupEventListeners() {
-    const backBtn = this.element.querySelector('#back-btn');
-    const submitBtn = this.element.querySelector('#submit-btn');
-    const chooseBrasaoBtn = this.element.querySelector('#choose-brasao-btn');
-    const brasaoInput = this.element.querySelector('#brasao');
-    const brasaoFileName = this.element.querySelector('#brasao-file-name');
+    const backBtn = this.element.querySelector("#back-btn");
+    const submitBtn = this.element.querySelector("#submit-btn");
+    const chooseBrasaoBtn = this.element.querySelector("#choose-brasao-btn");
+    const brasaoInput = this.element.querySelector("#brasao");
+    const brasaoFileName = this.element.querySelector("#brasao-file-name");
 
     if (backBtn) {
-      backBtn.addEventListener('click', () => {
-        toast.info('Retornando à lista de cidades...');
+      backBtn.addEventListener("click", () => {
+        toast.info("Retornando à lista de cidades...");
         this.onBack();
       });
     }
 
     if (submitBtn) {
-      submitBtn.addEventListener('click', () => {
+      submitBtn.addEventListener("click", () => {
         this.submitForm();
       });
     }
 
     if (chooseBrasaoBtn && brasaoInput) {
-      chooseBrasaoBtn.addEventListener('click', () => {
+      chooseBrasaoBtn.addEventListener("click", () => {
         brasaoInput.click();
       });
 
-      brasaoInput.addEventListener('change', () => {
+      brasaoInput.addEventListener("change", () => {
         if (brasaoInput.files && brasaoInput.files.length > 0) {
           brasaoFileName.textContent = brasaoInput.files[0].name;
         } else {
-          brasaoFileName.textContent = 'Escolher Brasão';
+          brasaoFileName.textContent = "Escolher Brasão";
         }
       });
     }
@@ -139,28 +139,36 @@ class RegisterCityComponent {
    * Processa o envio do formulário
    */
   submitForm() {
-    const codigoInput = this.element.querySelector('#codigo');
-    const descricaoInput = this.element.querySelector('#descricao');
-    const estadoInput = this.element.querySelector('#estado');
-    const ativoInput = this.element.querySelector('#ativo');
-    const brasaoInput = this.element.querySelector('#brasao');
+    const codigoInput = this.element.querySelector("#codigo");
+    const descricaoInput = this.element.querySelector("#descricao");
+    const estadoInput = this.element.querySelector("#estado");
+    const ativoInput = this.element.querySelector("#ativo");
+    const brasaoInput = this.element.querySelector("#brasao");
 
-    if (codigoInput.checkValidity() && descricaoInput.checkValidity() && estadoInput.checkValidity() && ativoInput.checkValidity()) {
+    if (
+      codigoInput.checkValidity() &&
+      descricaoInput.checkValidity() &&
+      estadoInput.checkValidity() &&
+      ativoInput.checkValidity()
+    ) {
       const data = {
         codigo: parseInt(codigoInput.value),
         cidade: descricaoInput.value,
         estado: estadoInput.value,
-        ativo: ativoInput.value === 'true' ? 'Sim' : 'Não',
-        brasao: brasaoInput.files && brasaoInput.files.length > 0 ? URL.createObjectURL(brasaoInput.files[0]) : ''
+        ativo: ativoInput.value === "true" ? "Sim" : "Não",
+        brasao:
+          brasaoInput.files && brasaoInput.files.length > 0
+            ? URL.createObjectURL(brasaoInput.files[0])
+            : "",
       };
 
-      toast.info('Processando cadastro...');
+      toast.info("Processando cadastro...");
       setTimeout(() => {
         toast.success(`Cidade "${data.cidade}" cadastrada com sucesso!`);
         this.onSubmit(data);
       }, 1000);
     } else {
-      toast.error('Por favor, preencha todos os campos obrigatórios.');
+      toast.error("Por favor, preencha todos os campos obrigatórios.");
       codigoInput.reportValidity();
       descricaoInput.reportValidity();
       estadoInput.reportValidity();

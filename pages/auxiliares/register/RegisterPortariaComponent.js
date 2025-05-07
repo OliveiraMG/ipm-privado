@@ -1,8 +1,8 @@
 /**
  * RegisterPortariaComponent.js - Componente para o formulário de cadastro de portarias
  */
-import { toast } from '/js/Utilities.js';
-import ModalComponent from '/components/common/ModalComponent.js';
+import { toast } from "/js/Utilities.js";
+import ModalComponent from "/components/common/ModalComponent.js";
 
 class RegisterPortariaComponent {
   constructor({ onSubmit, onBack }) {
@@ -13,11 +13,11 @@ class RegisterPortariaComponent {
   }
 
   render() {
-    const container = document.createElement('div');
-    container.className = 'w-full';
+    const container = document.createElement("div");
+    container.className = "w-full";
 
-    const form = document.createElement('div');
-    form.className = 'p-4';
+    const form = document.createElement("div");
+    form.className = "p-4";
 
     form.innerHTML = `
       <div class="grid grid-cols-5 gap-4">
@@ -93,36 +93,44 @@ class RegisterPortariaComponent {
   }
 
   setupEventListeners() {
-    const backBtn = this.element.querySelector('#back-btn');
-    const submitBtn = this.element.querySelector('#submit-btn');
+    const backBtn = this.element.querySelector("#back-btn");
+    const submitBtn = this.element.querySelector("#submit-btn");
 
     if (backBtn) {
-      backBtn.addEventListener('click', () => {
-        toast.info('Retornando à lista de portarias...');
+      backBtn.addEventListener("click", () => {
+        toast.info("Retornando à lista de portarias...");
         this.onBack();
       });
     }
 
     if (submitBtn) {
-      submitBtn.addEventListener('click', () => {
+      submitBtn.addEventListener("click", () => {
         this.submitForm();
       });
     }
   }
 
   submitForm() {
-    const emVigor = this.element.querySelector('#emVigor').value;
-    const numero = this.element.querySelector('#numero').value;
-    const ano = this.element.querySelector('#ano').value;
-    const dataAssinatura = this.element.querySelector('#dataAssinatura').value;
-    const dataPublicacao = this.element.querySelector('#dataPublicacao').value;
-    const descricao = this.element.querySelector('#descricao').value;
-    const cfopSelect = this.element.querySelector('#cfopSelect').value;
-    const ementa = this.element.querySelector('#ementa').value;
-    const cfop = this.element.querySelector('#cfop').value;
+    const emVigor = this.element.querySelector("#emVigor").value;
+    const numero = this.element.querySelector("#numero").value;
+    const ano = this.element.querySelector("#ano").value;
+    const dataAssinatura = this.element.querySelector("#dataAssinatura").value;
+    const dataPublicacao = this.element.querySelector("#dataPublicacao").value;
+    const descricao = this.element.querySelector("#descricao").value;
+    const cfopSelect = this.element.querySelector("#cfopSelect").value;
+    const ementa = this.element.querySelector("#ementa").value;
+    const cfop = this.element.querySelector("#cfop").value;
 
-    if (!numero || !ano || !dataAssinatura || !dataPublicacao || !descricao || !ementa || !cfop) {
-      toast.error('Por favor, preencha todos os campos obrigatórios (*).');
+    if (
+      !numero ||
+      !ano ||
+      !dataAssinatura ||
+      !dataPublicacao ||
+      !descricao ||
+      !ementa ||
+      !cfop
+    ) {
+      toast.error("Por favor, preencha todos os campos obrigatórios (*).");
       return;
     }
 
@@ -135,10 +143,10 @@ class RegisterPortariaComponent {
       descricao: descricao,
       cfopSelect: cfopSelect || null,
       ementa: ementa,
-      cfop: cfop
+      cfop: cfop,
     };
 
-    toast.success('Portaria cadastrada com sucesso!');
+    toast.success("Portaria cadastrada com sucesso!");
     this.onSubmit(formData);
   }
 }

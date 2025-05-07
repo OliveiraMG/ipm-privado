@@ -1,14 +1,14 @@
 /**
  * GrupoAtividadePage.js - Página de listagem de Grupos de Atividades
  */
-import { Header } from '/components/layout/Header.js';
-import { toast } from '/js/Utilities.js';
-import RegisterGrupoAtividadeComponent from '/pages/auxiliares/register/RegisterGrupoAtividadeComponent.js';
-import EditGrupoAtividadeComponent from '/pages/auxiliares/edit/EditGrupoAtividadeComponent.js';
-import CadastrarCNAEGrupoAtividadeComponent from '/pages/auxiliares/register/CadastrarCNAEGrupoAtividadeComponent.js';
-import SearchGrupoAtividadeComponent from '/pages/auxiliares/search/SearchGrupoAtividadeComponent.js';
-import PrintGrupoAtividadeComponent from '/pages/auxiliares/print/PrintGrupoAtividadeComponent.js';
-import ModalComponent from '/components/common/ModalComponent.js';
+import { Header } from "/components/layout/Header.js";
+import { toast } from "/js/Utilities.js";
+import RegisterGrupoAtividadeComponent from "/pages/auxiliares/register/RegisterGrupoAtividadeComponent.js";
+import EditGrupoAtividadeComponent from "/pages/auxiliares/edit/EditGrupoAtividadeComponent.js";
+import CadastrarCNAEGrupoAtividadeComponent from "/pages/auxiliares/register/CadastrarCNAEGrupoAtividadeComponent.js";
+import SearchGrupoAtividadeComponent from "/pages/auxiliares/search/SearchGrupoAtividadeComponent.js";
+import PrintGrupoAtividadeComponent from "/pages/auxiliares/print/PrintGrupoAtividadeComponent.js";
+import ModalComponent from "/components/common/ModalComponent.js";
 
 class GrupoAtividadePage {
   constructor() {
@@ -43,31 +43,32 @@ class GrupoAtividadePage {
   }
 
   renderContent() {
-    const mainContent = document.querySelector('main');
+    const mainContent = document.querySelector("main");
     if (!mainContent) {
       console.error("Elemento main não encontrado!");
       return;
     }
 
-    mainContent.innerHTML = '';
+    mainContent.innerHTML = "";
 
-    const card = document.createElement('div');
-    card.className = 'bg-white rounded-2xl shadow-[6px_6px_12px_rgba(0,0,0,0.25)] mx-24 my-20 p-12';
+    const card = document.createElement("div");
+    card.className =
+      "bg-white rounded-2xl shadow-[6px_6px_12px_rgba(0,0,0,0.25)] mx-24 my-20 p-12";
 
-    const header = document.createElement('div');
-    header.className = 'flex justify-between items-center mb-6';
+    const header = document.createElement("div");
+    header.className = "flex justify-between items-center mb-6";
     header.innerHTML = `
       <h2 class="text-2xl font-semibold text-blue-dark">Listagem</h2>
     `;
     card.appendChild(header);
 
-    const tableContainer = document.createElement('div');
-    tableContainer.id = 'grupo-atividade-table';
-    tableContainer.className = 'w-full px-2';
+    const tableContainer = document.createElement("div");
+    tableContainer.id = "grupo-atividade-table";
+    tableContainer.className = "w-full px-2";
     card.appendChild(tableContainer);
 
-    const buttonContainer = document.createElement('div');
-    buttonContainer.className = 'flex justify-center space-x-4 mt-6';
+    const buttonContainer = document.createElement("div");
+    buttonContainer.className = "flex justify-center space-x-4 mt-6";
     buttonContainer.innerHTML = `
       <button id="print-btn" class="px-4 py-2 bg-blue-dark text-white rounded-full hover:bg-blue-medium">
         <i class="fa-solid fa-print mr-2"></i>Imprimir
@@ -89,25 +90,25 @@ class GrupoAtividadePage {
   }
 
   setupButtonEvents() {
-    const registerBtn = document.getElementById('register-btn');
-    const searchBtn = document.getElementById('search-btn');
-    const printBtn = document.getElementById('print-btn');
+    const registerBtn = document.getElementById("register-btn");
+    const searchBtn = document.getElementById("search-btn");
+    const printBtn = document.getElementById("print-btn");
 
     if (registerBtn) {
-      registerBtn.addEventListener('click', () => {
-        toast.info('Abrindo formulário de cadastro...');
+      registerBtn.addEventListener("click", () => {
+        toast.info("Abrindo formulário de cadastro...");
         this.openRegisterModal();
       });
     }
 
     if (searchBtn) {
-      searchBtn.addEventListener('click', () => {
+      searchBtn.addEventListener("click", () => {
         this.openSearchModal();
       });
     }
 
     if (printBtn) {
-      printBtn.addEventListener('click', () => {
+      printBtn.addEventListener("click", () => {
         this.openPrintModal();
       });
     }
@@ -116,10 +117,10 @@ class GrupoAtividadePage {
   openRegisterModal() {
     const registerComponent = new RegisterGrupoAtividadeComponent({
       onSubmit: (data) => {
-        console.log('Formulário submetido:', data);
+        console.log("Formulário submetido:", data);
         this.tableData.unshift({
-          id: Math.max(...this.tableData.map(d => d.id), 0) + 1,
-          ...data
+          id: Math.max(...this.tableData.map((d) => d.id), 0) + 1,
+          ...data,
         });
         this.filteredData = [...this.tableData];
         this.renderTable();
@@ -127,27 +128,29 @@ class GrupoAtividadePage {
       },
       onBack: () => {
         this.modal.close();
-        toast.info('Retornado à lista de atividades');
-      }
+        toast.info("Retornado à lista de atividades");
+      },
     });
 
     this.modal = new ModalComponent({
-      id: 'register-grupo-atividade-modal',
-      title: 'Cadastrar Atividade Econômica',
-      titleClass: 'text-blue-dark font-semibold text-xl',
+      id: "register-grupo-atividade-modal",
+      title: "Cadastrar Atividade Econômica",
+      titleClass: "text-blue-dark font-semibold text-xl",
       content: registerComponent.element,
-      contentClass: 'p-0',
+      contentClass: "p-0",
       onClose: () => {
         this.modal = null;
-      }
+      },
     });
     this.modal.open();
   }
 
   openEditModal(atividadeId) {
-    const atividadeData = this.tableData.find(item => item.id === atividadeId);
+    const atividadeData = this.tableData.find(
+      (item) => item.id === atividadeId
+    );
     if (!atividadeData) {
-      toast.error('Atividade não encontrada!');
+      toast.error("Atividade não encontrada!");
       return;
     }
 
@@ -159,27 +162,29 @@ class GrupoAtividadePage {
       },
       onBack: () => {
         this.modal.close();
-        toast.info('Retornado à lista de atividades');
-      }
+        toast.info("Retornado à lista de atividades");
+      },
     });
 
     this.modal = new ModalComponent({
-      id: 'edit-grupo-atividade-modal',
-      title: 'Editar Atividade',
-      titleClass: 'text-blue-dark font-semibold text-xl',
+      id: "edit-grupo-atividade-modal",
+      title: "Editar Atividade",
+      titleClass: "text-blue-dark font-semibold text-xl",
       content: editComponent.element,
-      contentClass: 'p-0',
+      contentClass: "p-0",
       onClose: () => {
         this.modal = null;
-      }
+      },
     });
     this.modal.open();
   }
 
   openCNAEModal(atividadeId) {
-    const atividadeData = this.tableData.find(item => item.id === atividadeId);
+    const atividadeData = this.tableData.find(
+      (item) => item.id === atividadeId
+    );
     if (!atividadeData) {
-      toast.error('Atividade não encontrada!');
+      toast.error("Atividade não encontrada!");
       return;
     }
 
@@ -190,23 +195,23 @@ class GrupoAtividadePage {
         atividadeData.cnaesCadastradas = updatedCNAEs.length.toString();
         this.renderTable();
         this.modal.close();
-        toast.success('CNAEs atualizados com sucesso!');
+        toast.success("CNAEs atualizados com sucesso!");
       },
       onBack: () => {
         this.modal.close();
-        toast.info('Retornado à lista de atividades');
-      }
+        toast.info("Retornado à lista de atividades");
+      },
     });
 
     this.modal = new ModalComponent({
-      id: 'cnae-grupo-atividade-modal',
-      title: 'Cadastrar CNAE',
-      titleClass: 'text-blue-dark font-semibold text-xl',
+      id: "cnae-grupo-atividade-modal",
+      title: "Cadastrar CNAE",
+      titleClass: "text-blue-dark font-semibold text-xl",
       content: cnaeComponent.element,
-      contentClass: 'p-0',
+      contentClass: "p-0",
       onClose: () => {
         this.modal = null;
-      }
+      },
     });
     this.modal.open();
   }
@@ -219,18 +224,18 @@ class GrupoAtividadePage {
       },
       onCancel: () => {
         this.modal.close();
-      }
+      },
     });
 
     this.modal = new ModalComponent({
-      id: 'search-grupo-atividade-modal',
-      title: 'Pesquisar',
-      titleClass: 'text-blue-dark font-semibold text-xl',
+      id: "search-grupo-atividade-modal",
+      title: "Pesquisar",
+      titleClass: "text-blue-dark font-semibold text-xl",
       content: searchComponent.element,
-      contentClass: 'p-0',
+      contentClass: "p-0",
       onClose: () => {
         this.modal = null;
-      }
+      },
     });
     this.modal.open();
   }
@@ -243,18 +248,18 @@ class GrupoAtividadePage {
       },
       onCancel: () => {
         this.modal.close();
-      }
+      },
     });
 
     this.modal = new ModalComponent({
-      id: 'print-grupo-atividade-modal',
-      title: 'Imprimir',
-      titleClass: 'text-blue-dark font-semibold text-xl',
+      id: "print-grupo-atividade-modal",
+      title: "Imprimir",
+      titleClass: "text-blue-dark font-semibold text-xl",
       content: printComponent.element,
-      contentClass: 'p-0',
+      contentClass: "p-0",
       onClose: () => {
         this.modal = null;
-      }
+      },
     });
     this.modal.open();
   }
@@ -263,9 +268,10 @@ class GrupoAtividadePage {
     const ativo = filters.ativo.toLowerCase();
     const atividade = filters.atividade.toLowerCase();
 
-    this.filteredData = this.tableData.filter(item => {
+    this.filteredData = this.tableData.filter((item) => {
       const matchesAtivo = !ativo || item.ativo.toLowerCase() === ativo;
-      const matchesAtividade = !atividade || item.atividade.toLowerCase().includes(atividade);
+      const matchesAtividade =
+        !atividade || item.atividade.toLowerCase().includes(atividade);
       return matchesAtivo && matchesAtividade;
     });
 
@@ -275,37 +281,40 @@ class GrupoAtividadePage {
   handlePrint(filters) {
     const ativo = filters.ativo.toLowerCase();
     const atividade = filters.atividade.toLowerCase();
-    const imprimirCNAEs = filters.imprimirCNAEs.toLowerCase() === 'sim';
+    const imprimirCNAEs = filters.imprimirCNAEs.toLowerCase() === "sim";
 
-    const dataToPrint = this.tableData.filter(item => {
+    const dataToPrint = this.tableData.filter((item) => {
       const matchesAtivo = !ativo || item.ativo.toLowerCase() === ativo;
-      const matchesAtividade = !atividade || item.atividade.toLowerCase().includes(atividade);
+      const matchesAtividade =
+        !atividade || item.atividade.toLowerCase().includes(atividade);
       return matchesAtivo && matchesAtividade;
     });
 
     // Simulate printing (log to console for now)
-    console.log('Dados para impressão:', {
+    console.log("Dados para impressão:", {
       filters: { ativo, atividade, imprimirCNAEs },
-      data: dataToPrint.map(item => ({
+      data: dataToPrint.map((item) => ({
         id: item.id,
         atividade: item.atividade,
         percentualCalculo: item.percentualCalculo,
         ativo: item.ativo,
         cnaesCadastradas: item.cnaesCadastradas,
-        ...(imprimirCNAEs && { cnaesList: item.cnaesList })
-      }))
+        ...(imprimirCNAEs && { cnaesList: item.cnaesList }),
+      })),
     });
 
-    toast.success('Impressão simulada com sucesso! Verifique o console para os dados.');
+    toast.success(
+      "Impressão simulada com sucesso! Verifique o console para os dados."
+    );
   }
 
   updateData(updatedData) {
-    this.tableData = this.tableData.map(item =>
+    this.tableData = this.tableData.map((item) =>
       item.id === updatedData.id ? { ...item, ...updatedData } : item
     );
     this.filteredData = [...this.tableData];
     this.renderTable();
-    toast.success('Atividade atualizada com sucesso!');
+    toast.success("Atividade atualizada com sucesso!");
   }
 
   loadData() {
@@ -319,16 +328,17 @@ class GrupoAtividadePage {
   }
 
   renderTable() {
-    const tableContainer = document.getElementById('grupo-atividade-table');
+    const tableContainer = document.getElementById("grupo-atividade-table");
     if (!tableContainer) {
       console.error("Container da tabela não encontrado!");
       return;
     }
 
-    console.log('filteredData before rendering:', this.filteredData);
+    console.log("filteredData before rendering:", this.filteredData);
 
     if (!this.filteredData || !this.filteredData.length) {
-      tableContainer.innerHTML = '<p class="text-center py-4">Nenhum dado disponível</p>';
+      tableContainer.innerHTML =
+        '<p class="text-center py-4">Nenhum dado disponível</p>';
       return;
     }
 
@@ -348,16 +358,20 @@ class GrupoAtividadePage {
           <tbody>
       `;
 
-      this.filteredData.forEach(row => {
-        console.log('Rendering row:', row);
+      this.filteredData.forEach((row) => {
+        console.log("Rendering row:", row);
         tableHTML += `
           <tr class="bg-white">
             <td class="text-center py-2 px-4">
               <div class="flex space-x-2 justify-center">
-                <button class="edit-btn bg-blue-dark text-white text-xs rounded px-2 py-1 hover:bg-blue-medium" data-id="${row.id || ''}" style="display: inline-block !important;">
+                <button class="edit-btn bg-blue-dark text-white text-xs rounded px-2 py-1 hover:bg-blue-medium" data-id="${
+                  row.id || ""
+                }" style="display: inline-block !important;">
                   <i class="fa-solid fa-edit mr-1"></i> Editar
                 </button>
-                <button class="cnaes-btn bg-blue-dark text-white text-xs rounded px-2 py-1 hover:bg-blue-medium" data-id="${row.id || ''}" style="display: inline-block !important;">
+                <button class="cnaes-btn bg-blue-dark text-white text-xs rounded px-2 py-1 hover:bg-blue-medium" data-id="${
+                  row.id || ""
+                }" style="display: inline-block !important;">
                   <i class="fa-solid fa-copy mr-1"></i> CNAEs
                 </button>
               </div>
@@ -386,21 +400,21 @@ class GrupoAtividadePage {
   }
 
   setupTableButtonEvents() {
-    const editButtons = document.querySelectorAll('.edit-btn');
-    const cnaeButtons = document.querySelectorAll('.cnaes-btn');
+    const editButtons = document.querySelectorAll(".edit-btn");
+    const cnaeButtons = document.querySelectorAll(".cnaes-btn");
 
-    editButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const atividadeId = parseInt(button.getAttribute('data-id'));
-        toast.info('Abrindo formulário de edição...');
+    editButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const atividadeId = parseInt(button.getAttribute("data-id"));
+        toast.info("Abrindo formulário de edição...");
         this.openEditModal(atividadeId);
       });
     });
 
-    cnaeButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const atividadeId = parseInt(button.getAttribute('data-id'));
-        toast.info('Abrindo formulário de gerenciamento de CNAEs...');
+    cnaeButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const atividadeId = parseInt(button.getAttribute("data-id"));
+        toast.info("Abrindo formulário de gerenciamento de CNAEs...");
         this.openCNAEModal(atividadeId);
       });
     });
@@ -410,79 +424,85 @@ class GrupoAtividadePage {
     return [
       {
         id: 1,
-        atividade: 'Pecuária',
-        percentualCalculo: '20%',
-        ativo: 'Sim',
-        cnaesCadastradas: '10',
+        atividade: "Pecuária",
+        percentualCalculo: "20%",
+        ativo: "Sim",
+        cnaesCadastradas: "10",
         cnaesList: [
-          { id: '151201', descricao: 'Criação de bovinos para corte' },
-          { id: '151202', descricao: 'Criação de bovinos para leite' },
-          { id: '151203', descricao: 'Criação de bovinos, exceto para corte e leite' },
-          { id: '152101', descricao: 'Criação de bufalinos' },
-          { id: '152102', descricao: 'Criação de equinos' },
-          { id: '152103', descricao: 'Criação de asininos e muares' },
-          { id: '153901', descricao: 'Criação de caprinos' },
-          { id: '153902', descricao: 'Criação de ovinos, inclusive para produção de lã' },
-          { id: '154900', descricao: 'Criação de suínos' },
-          { id: '190801', descricao: 'Apicultura' }
-        ]
+          { id: "151201", descricao: "Criação de bovinos para corte" },
+          { id: "151202", descricao: "Criação de bovinos para leite" },
+          {
+            id: "151203",
+            descricao: "Criação de bovinos, exceto para corte e leite",
+          },
+          { id: "152101", descricao: "Criação de bufalinos" },
+          { id: "152102", descricao: "Criação de equinos" },
+          { id: "152103", descricao: "Criação de asininos e muares" },
+          { id: "153901", descricao: "Criação de caprinos" },
+          {
+            id: "153902",
+            descricao: "Criação de ovinos, inclusive para produção de lã",
+          },
+          { id: "154900", descricao: "Criação de suínos" },
+          { id: "190801", descricao: "Apicultura" },
+        ],
       },
       {
         id: 2,
-        atividade: 'Comércio e Indústria de Telecomunicação',
-        percentualCalculo: '35%',
-        ativo: 'Sim',
-        cnaesCadastradas: '258',
-        cnaesList: []
+        atividade: "Comércio e Indústria de Telecomunicação",
+        percentualCalculo: "35%",
+        ativo: "Sim",
+        cnaesCadastradas: "258",
+        cnaesList: [],
       },
       {
         id: 3,
-        atividade: 'Prestadores de Serviços de Transporte e Telecomunicação',
-        percentualCalculo: '35%',
-        ativo: 'Sim',
-        cnaesCadastradas: '49',
-        cnaesList: []
+        atividade: "Prestadores de Serviços de Transporte e Telecomunicação",
+        percentualCalculo: "35%",
+        ativo: "Sim",
+        cnaesCadastradas: "49",
+        cnaesList: [],
       },
       {
         id: 4,
-        atividade: 'Outras Atividades',
-        percentualCalculo: '35%',
-        ativo: 'Sim',
-        cnaesCadastradas: '35',
-        cnaesList: []
+        atividade: "Outras Atividades",
+        percentualCalculo: "35%",
+        ativo: "Sim",
+        cnaesCadastradas: "35",
+        cnaesList: [],
       },
       {
         id: 5,
-        atividade: 'Arbitramento de Valores Mínimos de Entrada',
-        percentualCalculo: '0%',
-        ativo: 'Sim',
-        cnaesCadastradas: '3',
-        cnaesList: []
+        atividade: "Arbitramento de Valores Mínimos de Entrada",
+        percentualCalculo: "0%",
+        ativo: "Sim",
+        cnaesCadastradas: "3",
+        cnaesList: [],
       },
       {
         id: 6,
-        atividade: 'Agricultura',
-        percentualCalculo: '50%',
-        ativo: 'Sim',
-        cnaesCadastradas: '59',
-        cnaesList: []
+        atividade: "Agricultura",
+        percentualCalculo: "50%",
+        ativo: "Sim",
+        cnaesCadastradas: "59",
+        cnaesList: [],
       },
       {
         id: 7,
-        atividade: 'Extração Mineral e Vegetal',
-        percentualCalculo: '35%',
-        ativo: 'Sim',
-        cnaesCadastradas: '39',
-        cnaesList: []
+        atividade: "Extração Mineral e Vegetal",
+        percentualCalculo: "35%",
+        ativo: "Sim",
+        cnaesCadastradas: "39",
+        cnaesList: [],
       },
       {
         id: 8,
-        atividade: 'Construção e Serviços',
-        percentualCalculo: '35%',
-        ativo: 'Sim',
-        cnaesCadastradas: '45',
-        cnaesList: []
-      }
+        atividade: "Construção e Serviços",
+        percentualCalculo: "35%",
+        ativo: "Sim",
+        cnaesCadastradas: "45",
+        cnaesList: [],
+      },
     ];
   }
 
@@ -491,7 +511,7 @@ class GrupoAtividadePage {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   GrupoAtividadePage.initialize();
 });
 

@@ -1,15 +1,15 @@
 /**
  * EditCfopPortariaComponent.js - Componente para o formulário de edição de CFOPs de uma portaria
  */
-import { toast } from '/js/Utilities.js';
-import ModalComponent from '/components/common/ModalComponent.js';
-import ConfirmDeleteCfopComponent from '/pages/auxiliares/edit/ConfirmDeleteCfopComponent.js';
-import UpdateRepercuteComponent from '/pages/auxiliares/edit/UpdateRepercuteComponent.js';
+import { toast } from "/js/Utilities.js";
+import ModalComponent from "/components/common/ModalComponent.js";
+import ConfirmDeleteCfopComponent from "/pages/auxiliares/edit/ConfirmDeleteCfopComponent.js";
+import UpdateRepercuteComponent from "/pages/auxiliares/edit/UpdateRepercuteComponent.js";
 
 class EditCfopPortariaComponent {
   constructor({ cfopData, cfopSelect, onUpdate, onBack }) {
     this.cfopData = cfopData || [];
-    this.cfopSelect = cfopSelect || '';
+    this.cfopSelect = cfopSelect || "";
     this.onUpdate = onUpdate || (() => {});
     this.onBack = onBack || (() => {});
     this.currentPage = 1;
@@ -20,19 +20,23 @@ class EditCfopPortariaComponent {
   }
 
   render() {
-    const container = document.createElement('div');
-    container.className = 'w-full';
+    const container = document.createElement("div");
+    container.className = "w-full";
 
-    const form = document.createElement('div');
-    form.className = 'p-4';
+    const form = document.createElement("div");
+    form.className = "p-4";
 
     form.innerHTML = `
       <div class="mb-4">
         <label for="cfopSelect" class="block text-sm font-medium text-gray-700">CFOP</label>
         <select id="cfopSelect" name="cfopSelect"
                 class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-light focus:border-blue-light">
-          <option value="" ${!this.cfopSelect ? 'selected' : ''}>Selecione</option>
-          <option value="repercute" ${this.cfopSelect === 'repercute' ? 'selected' : ''}>repercute no cálculo do Demonstrativo (Relatório)</option>
+          <option value="" ${
+            !this.cfopSelect ? "selected" : ""
+          }>Selecione</option>
+          <option value="repercute" ${
+            this.cfopSelect === "repercute" ? "selected" : ""
+          }>repercute no cálculo do Demonstrativo (Relatório)</option>
         </select>
       </div>
       <div id="cfop-table" class="w-full px-2 mb-4">
@@ -88,7 +92,7 @@ class EditCfopPortariaComponent {
           <td class="text-left py-2 px-4">${row.descricao}</td>
           <td class="text-center py-2 px-4">
             <span class="repercute-btn cursor-pointer text-blue-600 hover:underline" data-id="${globalIndex}">
-              ${row.repercute ? 'Sim' : 'Não'}
+              ${row.repercute ? "Sim" : "Não"}
             </span>
           </td>
         </tr>
@@ -103,11 +107,21 @@ class EditCfopPortariaComponent {
     if (totalPages > 1) {
       tableHTML += `
         <div class="flex justify-center mt-4">
-          <button id="prev-page" class="px-3 py-1 border rounded-l ${this.currentPage === 1 ? 'bg-gray-200 cursor-not-allowed' : 'bg-white hover:bg-gray-100'}" ${this.currentPage === 1 ? 'disabled' : ''}>
+          <button id="prev-page" class="px-3 py-1 border rounded-l ${
+            this.currentPage === 1
+              ? "bg-gray-200 cursor-not-allowed"
+              : "bg-white hover:bg-gray-100"
+          }" ${this.currentPage === 1 ? "disabled" : ""}>
             <i class="fa-solid fa-chevron-left"></i>
           </button>
-          <span class="px-3 py-1 border-t border-b">${this.currentPage} de ${totalPages}</span>
-          <button id="next-page" class="px-3 py-1 border rounded-r ${this.currentPage === totalPages ? 'bg-gray-200 cursor-not-allowed' : 'bg-white hover:bg-gray-100'}" ${this.currentPage === totalPages ? 'disabled' : ''}>
+          <span class="px-3 py-1 border-t border-b">${
+            this.currentPage
+          } de ${totalPages}</span>
+          <button id="next-page" class="px-3 py-1 border rounded-r ${
+            this.currentPage === totalPages
+              ? "bg-gray-200 cursor-not-allowed"
+              : "bg-white hover:bg-gray-100"
+          }" ${this.currentPage === totalPages ? "disabled" : ""}>
             <i class="fa-solid fa-chevron-right"></i>
           </button>
         </div>
@@ -118,26 +132,26 @@ class EditCfopPortariaComponent {
   }
 
   setupEventListeners() {
-    const backBtn = this.element.querySelector('#back-btn');
-    const submitBtn = this.element.querySelector('#submit-btn');
-    const prevPageBtn = this.element.querySelector('#prev-page');
-    const nextPageBtn = this.element.querySelector('#next-page');
+    const backBtn = this.element.querySelector("#back-btn");
+    const submitBtn = this.element.querySelector("#submit-btn");
+    const prevPageBtn = this.element.querySelector("#prev-page");
+    const nextPageBtn = this.element.querySelector("#next-page");
 
     if (backBtn) {
-      backBtn.addEventListener('click', () => {
-        toast.info('Retornando à lista de portarias...');
+      backBtn.addEventListener("click", () => {
+        toast.info("Retornando à lista de portarias...");
         this.onBack();
       });
     }
 
     if (submitBtn) {
-      submitBtn.addEventListener('click', () => {
+      submitBtn.addEventListener("click", () => {
         this.submitForm();
       });
     }
 
     if (prevPageBtn) {
-      prevPageBtn.addEventListener('click', () => {
+      prevPageBtn.addEventListener("click", () => {
         if (this.currentPage > 1) {
           this.currentPage--;
           this.updateTable();
@@ -146,7 +160,7 @@ class EditCfopPortariaComponent {
     }
 
     if (nextPageBtn) {
-      nextPageBtn.addEventListener('click', () => {
+      nextPageBtn.addEventListener("click", () => {
         const totalPages = Math.ceil(this.cfopData.length / this.itemsPerPage);
         if (this.currentPage < totalPages) {
           this.currentPage++;
@@ -159,19 +173,19 @@ class EditCfopPortariaComponent {
   }
 
   setupTableButtonEvents() {
-    const deleteButtons = this.element.querySelectorAll('.delete-btn');
-    const repercuteButtons = this.element.querySelectorAll('.repercute-btn');
+    const deleteButtons = this.element.querySelectorAll(".delete-btn");
+    const repercuteButtons = this.element.querySelectorAll(".repercute-btn");
 
-    deleteButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const index = parseInt(button.getAttribute('data-id'));
+    deleteButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const index = parseInt(button.getAttribute("data-id"));
         this.openConfirmDeleteModal(index);
       });
     });
 
-    repercuteButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const index = parseInt(button.getAttribute('data-id'));
+    repercuteButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const index = parseInt(button.getAttribute("data-id"));
         this.openUpdateRepercuteModal(index);
       });
     });
@@ -180,7 +194,7 @@ class EditCfopPortariaComponent {
   openConfirmDeleteModal(index) {
     const cfopData = this.cfopData[index];
     if (!cfopData) {
-      toast.error('CFOP não encontrado!');
+      toast.error("CFOP não encontrado!");
       return;
     }
 
@@ -192,18 +206,18 @@ class EditCfopPortariaComponent {
       },
       onCancel: () => {
         this.subModal.close();
-      }
+      },
     });
 
     this.subModal = new ModalComponent({
-      id: 'confirm-delete-cfop-modal',
-      title: 'REMOVER',
-      titleClass: 'text-blue-dark font-semibold text-xl',
+      id: "confirm-delete-cfop-modal",
+      title: "REMOVER",
+      titleClass: "text-blue-dark font-semibold text-xl",
       content: confirmDeleteComponent.element,
-      contentClass: 'p-0',
+      contentClass: "p-0",
       onClose: () => {
         this.subModal = null;
-      }
+      },
     });
     this.subModal.open();
   }
@@ -211,7 +225,7 @@ class EditCfopPortariaComponent {
   openUpdateRepercuteModal(index) {
     const cfopData = this.cfopData[index];
     if (!cfopData) {
-      toast.error('CFOP não encontrado!');
+      toast.error("CFOP não encontrado!");
       return;
     }
 
@@ -224,31 +238,34 @@ class EditCfopPortariaComponent {
       },
       onCancel: () => {
         this.subModal.close();
-      }
+      },
     });
 
     this.subModal = new ModalComponent({
-      id: 'update-repercute-modal',
-      title: 'ATUALIZAR',
-      titleClass: 'text-blue-dark font-semibold text-xl',
+      id: "update-repercute-modal",
+      title: "ATUALIZAR",
+      titleClass: "text-blue-dark font-semibold text-xl",
       content: updateRepercuteComponent.element,
-      contentClass: 'p-0',
+      contentClass: "p-0",
       onClose: () => {
         this.subModal = null;
-      }
+      },
     });
     this.subModal.open();
   }
 
   deleteRow(index) {
     this.cfopData.splice(index, 1);
-    this.currentPage = Math.min(this.currentPage, Math.ceil(this.cfopData.length / this.itemsPerPage) || 1);
+    this.currentPage = Math.min(
+      this.currentPage,
+      Math.ceil(this.cfopData.length / this.itemsPerPage) || 1
+    );
     this.updateTable();
-    toast.success('CFOP removido com sucesso!');
+    toast.success("CFOP removido com sucesso!");
   }
 
   updateTable() {
-    const tableContainer = this.element.querySelector('#cfop-table');
+    const tableContainer = this.element.querySelector("#cfop-table");
     if (tableContainer) {
       tableContainer.innerHTML = this.renderTable();
       this.setupTableButtonEvents();
@@ -256,12 +273,12 @@ class EditCfopPortariaComponent {
   }
 
   submitForm() {
-    const cfopSelect = this.element.querySelector('#cfopSelect').value;
+    const cfopSelect = this.element.querySelector("#cfopSelect").value;
     const updatedData = {
       cfopSelect: cfopSelect || null,
-      cfopList: this.cfopData
+      cfopList: this.cfopData,
     };
-    toast.success('CFOPs atualizados com sucesso!');
+    toast.success("CFOPs atualizados com sucesso!");
     this.onUpdate(updatedData);
   }
 }

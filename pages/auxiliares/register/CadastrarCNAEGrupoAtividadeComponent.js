@@ -1,10 +1,10 @@
 /**
  * CadastrarCNAEGrupoAtividadeComponent.js - Componente para gerenciamento de CNAEs de uma atividade
  */
-import { toast } from '/js/Utilities.js';
-import ConfirmDeleteCNAEComponent from '/pages/auxiliares/edit/ConfirmDeleteCNAEComponent.js';
-import SearchCNAEGrupoAtividadeComponent from '/pages/auxiliares/search/SearchCNAEGrupoAtividadeComponent.js';
-import ModalComponent from '/components/common/ModalComponent.js';
+import { toast } from "/js/Utilities.js";
+import ConfirmDeleteCNAEComponent from "/pages/auxiliares/edit/ConfirmDeleteCNAEComponent.js";
+import SearchCNAEGrupoAtividadeComponent from "/pages/auxiliares/search/SearchCNAEGrupoAtividadeComponent.js";
+import ModalComponent from "/components/common/ModalComponent.js";
 
 class CadastrarCNAEGrupoAtividadeComponent {
   constructor({ cnaeData, onUpdate, onBack }) {
@@ -14,37 +14,50 @@ class CadastrarCNAEGrupoAtividadeComponent {
     this.onBack = onBack || (() => {});
     this.modal = null;
     this.availableCNAEs = [
-      { id: '111301', descricao: 'Cultivo de Arroz' },
-      { id: '111302', descricao: 'Cultivo de Milho' },
-      { id: '111303', descricao: 'Cultivo de Trigo' },
-      { id: '111299', descricao: 'Cultivo de outras fibras de lavoura temporária não especificadas anteriormente' },
-      { id: '114800', descricao: 'Cultivo de Fumo' },
-      { id: '151201', descricao: 'Criação de bovinos para corte' },
-      { id: '151202', descricao: 'Criação de bovinos para leite' },
-      { id: '151203', descricao: 'Criação de bovinos, exceto para corte e leite' },
-      { id: '152101', descricao: 'Criação de bufalinos' },
-      { id: '152102', descricao: 'Criação de equinos' },
-      { id: '152103', descricao: 'Criação de asininos e muares' },
-      { id: '153901', descricao: 'Criação de caprinos' },
-      { id: '153902', descricao: 'Criação de ovinos, inclusive para produção de lã' },
-      { id: '154900', descricao: 'Criação de suínos' },
-      { id: '155501', descricao: 'Criação de frangos para corte' },
-      { id: '155502', descricao: 'Produção de pintos de um dia' },
-      { id: '155503', descricao: 'Criação de outros galináceos, exceto para corte' },
-      { id: '155504', descricao: 'Criação de aves, exceto galináceos' },
-      { id: '155505', descricao: 'Produção de ovos' },
-      { id: '190801', descricao: 'Apicultura' }
+      { id: "111301", descricao: "Cultivo de Arroz" },
+      { id: "111302", descricao: "Cultivo de Milho" },
+      { id: "111303", descricao: "Cultivo de Trigo" },
+      {
+        id: "111299",
+        descricao:
+          "Cultivo de outras fibras de lavoura temporária não especificadas anteriormente",
+      },
+      { id: "114800", descricao: "Cultivo de Fumo" },
+      { id: "151201", descricao: "Criação de bovinos para corte" },
+      { id: "151202", descricao: "Criação de bovinos para leite" },
+      {
+        id: "151203",
+        descricao: "Criação de bovinos, exceto para corte e leite",
+      },
+      { id: "152101", descricao: "Criação de bufalinos" },
+      { id: "152102", descricao: "Criação de equinos" },
+      { id: "152103", descricao: "Criação de asininos e muares" },
+      { id: "153901", descricao: "Criação de caprinos" },
+      {
+        id: "153902",
+        descricao: "Criação de ovinos, inclusive para produção de lã",
+      },
+      { id: "154900", descricao: "Criação de suínos" },
+      { id: "155501", descricao: "Criação de frangos para corte" },
+      { id: "155502", descricao: "Produção de pintos de um dia" },
+      {
+        id: "155503",
+        descricao: "Criação de outros galináceos, exceto para corte",
+      },
+      { id: "155504", descricao: "Criação de aves, exceto galináceos" },
+      { id: "155505", descricao: "Produção de ovos" },
+      { id: "190801", descricao: "Apicultura" },
     ];
     this.element = this.render();
     this.setupEventListeners();
   }
 
   render() {
-    const container = document.createElement('div');
-    container.className = 'w-full';
+    const container = document.createElement("div");
+    container.className = "w-full";
 
-    const form = document.createElement('div');
-    form.className = 'p-4';
+    const form = document.createElement("div");
+    form.className = "p-4";
 
     form.innerHTML = `
       <div class="mb-4">
@@ -52,7 +65,12 @@ class CadastrarCNAEGrupoAtividadeComponent {
         <select id="cnaes" name="cnaes"
                 class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-light focus:border-blue-light">
           <option value="">Selecione um CNAE para adicionar</option>
-          ${this.availableCNAEs.map(cnae => `<option value="${cnae.id}">${cnae.id} - ${cnae.descricao}</option>`).join('')}
+          ${this.availableCNAEs
+            .map(
+              (cnae) =>
+                `<option value="${cnae.id}">${cnae.id} - ${cnae.descricao}</option>`
+            )
+            .join("")}
         </select>
       </div>
       <div class="mt-4">
@@ -98,7 +116,9 @@ class CadastrarCNAEGrupoAtividadeComponent {
       return '<tr><td colspan="3" class="text-center py-4">Nenhum CNAE associado</td></tr>';
     }
 
-    return this.filteredCNAEs.map((cnae, index) => `
+    return this.filteredCNAEs
+      .map(
+        (cnae, index) => `
       <tr class="bg-white">
         <td class="text-center py-2 px-4">
           <button class="delete-btn bg-red-500 text-white text-xs rounded px-2 py-1 hover:bg-red-600" data-index="${index}">
@@ -108,22 +128,24 @@ class CadastrarCNAEGrupoAtividadeComponent {
         <td class="text-center py-2 px-4">${cnae.id}</td>
         <td class="text-left py-2 px-4">${cnae.descricao}</td>
       </tr>
-    `).join('');
+    `
+      )
+      .join("");
   }
 
   setupEventListeners() {
-    const cancelBtn = this.element.querySelector('#cancel-btn');
-    const searchBtn = this.element.querySelector('#search-btn');
+    const cancelBtn = this.element.querySelector("#cancel-btn");
+    const searchBtn = this.element.querySelector("#search-btn");
 
     if (cancelBtn) {
-      cancelBtn.addEventListener('click', () => {
-        toast.info('Gerenciamento de CNAEs cancelado.');
+      cancelBtn.addEventListener("click", () => {
+        toast.info("Gerenciamento de CNAEs cancelado.");
         this.onBack();
       });
     }
 
     if (searchBtn) {
-      searchBtn.addEventListener('click', () => {
+      searchBtn.addEventListener("click", () => {
         this.openSearchModal();
       });
     }
@@ -139,18 +161,18 @@ class CadastrarCNAEGrupoAtividadeComponent {
       },
       onCancel: () => {
         this.modal.close();
-      }
+      },
     });
 
     this.modal = new ModalComponent({
-      id: 'search-cnae-modal',
-      title: 'Pesquisar',
-      titleClass: 'text-blue-dark font-semibold text-xl',
+      id: "search-cnae-modal",
+      title: "Pesquisar",
+      titleClass: "text-blue-dark font-semibold text-xl",
       content: searchComponent.element,
-      contentClass: 'p-0',
+      contentClass: "p-0",
       onClose: () => {
         this.modal = null;
-      }
+      },
     });
     this.modal.open();
   }
@@ -160,19 +182,20 @@ class CadastrarCNAEGrupoAtividadeComponent {
     if (!searchTerm) {
       this.filteredCNAEs = [...this.cnaeData];
     } else {
-      this.filteredCNAEs = this.cnaeData.filter(cnae =>
-        cnae.id.toLowerCase().includes(searchTerm) ||
-        cnae.descricao.toLowerCase().includes(searchTerm)
+      this.filteredCNAEs = this.cnaeData.filter(
+        (cnae) =>
+          cnae.id.toLowerCase().includes(searchTerm) ||
+          cnae.descricao.toLowerCase().includes(searchTerm)
       );
     }
     this.updateTable();
   }
 
   setupDeleteButtons() {
-    const deleteButtons = this.element.querySelectorAll('.delete-btn');
-    deleteButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const index = parseInt(button.getAttribute('data-index'));
+    const deleteButtons = this.element.querySelectorAll(".delete-btn");
+    deleteButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const index = parseInt(button.getAttribute("data-index"));
         const cnaeToDelete = this.filteredCNAEs[index];
         this.openConfirmDeleteModal(index, cnaeToDelete);
       });
@@ -183,31 +206,34 @@ class CadastrarCNAEGrupoAtividadeComponent {
     const confirmComponent = new ConfirmDeleteCNAEComponent({
       cnae: cnae,
       onConfirm: () => {
-        this.cnaeData.splice(this.cnaeData.findIndex(item => item.id === cnae.id), 1);
+        this.cnaeData.splice(
+          this.cnaeData.findIndex((item) => item.id === cnae.id),
+          1
+        );
         this.filteredCNAEs.splice(index, 1);
         this.updateTable();
         this.modal.close();
       },
       onCancel: () => {
         this.modal.close();
-      }
+      },
     });
 
     this.modal = new ModalComponent({
-      id: 'confirm-delete-cnae-modal',
-      title: 'Remover',
-      titleClass: 'text-blue-dark font-semibold text-xl',
+      id: "confirm-delete-cnae-modal",
+      title: "Remover",
+      titleClass: "text-blue-dark font-semibold text-xl",
       content: confirmComponent.element,
-      contentClass: 'p-0',
+      contentClass: "p-0",
       onClose: () => {
         this.modal = null;
-      }
+      },
     });
     this.modal.open();
   }
 
   updateTable() {
-    const tableBody = this.element.querySelector('#cnae-table-body');
+    const tableBody = this.element.querySelector("#cnae-table-body");
     tableBody.innerHTML = this.renderCNAETable();
     this.setupDeleteButtons();
   }

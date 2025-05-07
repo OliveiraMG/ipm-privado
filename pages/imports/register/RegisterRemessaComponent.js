@@ -1,7 +1,7 @@
 /**
  * RegisterRemessaComponent.js - Componente para cadastro de remessa
  */
-import { toast } from '/js/Utilities.js';
+import { toast } from "/js/Utilities.js";
 
 class RegisterRemessaComponent {
   /**
@@ -17,11 +17,11 @@ class RegisterRemessaComponent {
   }
 
   render() {
-    const container = document.createElement('div');
-    container.className = 'p-4';
+    const container = document.createElement("div");
+    container.className = "p-4";
 
-    const form = document.createElement('div');
-    form.className = 'space-y-4';
+    const form = document.createElement("div");
+    form.className = "space-y-4";
 
     form.innerHTML = `
       <div>
@@ -31,8 +31,8 @@ class RegisterRemessaComponent {
       </div>
     `;
 
-    const actions = document.createElement('div');
-    actions.className = 'flex justify-end space-x-4 mt-6';
+    const actions = document.createElement("div");
+    actions.className = "flex justify-end space-x-4 mt-6";
     actions.innerHTML = `
       <button id="back-btn" class="px-4 py-2 border border-gray-300 rounded-full text-gray-700 text-sm hover:bg-gray-100">
         Voltar
@@ -48,34 +48,34 @@ class RegisterRemessaComponent {
   }
 
   setupEventListeners() {
-    const backBtn = this.element.querySelector('#back-btn');
-    const submitBtn = this.element.querySelector('#submit-btn');
+    const backBtn = this.element.querySelector("#back-btn");
+    const submitBtn = this.element.querySelector("#submit-btn");
 
     if (backBtn) {
-      backBtn.addEventListener('click', () => {
-        toast.info('Retornando à lista de remessas...');
+      backBtn.addEventListener("click", () => {
+        toast.info("Retornando à lista de remessas...");
         this.onBack();
       });
     }
 
     if (submitBtn) {
-      submitBtn.addEventListener('click', () => {
+      submitBtn.addEventListener("click", () => {
         this.submitForm();
       });
     }
   }
 
   submitForm() {
-    const denominacaoInput = this.element.querySelector('#denominacao');
+    const denominacaoInput = this.element.querySelector("#denominacao");
     const denominacao = denominacaoInput.value.trim();
 
     if (!denominacao) {
-      toast.error('O campo Denominação é obrigatório!');
+      toast.error("O campo Denominação é obrigatório!");
       return;
     }
 
     const data = {
-      denominacao: denominacao
+      denominacao: denominacao,
     };
 
     this.onSubmit(data);

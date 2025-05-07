@@ -1,7 +1,7 @@
 /**
  * RegisterUsuarioComponent.js - Componente para cadastro de usuário
  */
-import { toast } from '/js/Utilities.js';
+import { toast } from "/js/Utilities.js";
 
 class RegisterUsuarioComponent {
   constructor({ onSubmit, onBack }) {
@@ -12,11 +12,11 @@ class RegisterUsuarioComponent {
   }
 
   render() {
-    const container = document.createElement('div');
-    container.className = 'w-full';
+    const container = document.createElement("div");
+    container.className = "w-full";
 
-    const form = document.createElement('div');
-    form.className = 'p-4';
+    const form = document.createElement("div");
+    form.className = "p-4";
 
     form.innerHTML = `
       <div class="grid grid-cols-2 gap-4 mb-4">
@@ -102,44 +102,53 @@ class RegisterUsuarioComponent {
   }
 
   setupEventListeners() {
-    const cancelBtn = this.element.querySelector('#cancel-btn');
-    const submitBtn = this.element.querySelector('#submit-btn');
+    const cancelBtn = this.element.querySelector("#cancel-btn");
+    const submitBtn = this.element.querySelector("#submit-btn");
 
     if (cancelBtn) {
-      cancelBtn.addEventListener('click', () => {
-        toast.info('Cadastro cancelado.');
+      cancelBtn.addEventListener("click", () => {
+        toast.info("Cadastro cancelado.");
         this.onBack();
       });
     }
 
     if (submitBtn) {
-      submitBtn.addEventListener('click', () => {
+      submitBtn.addEventListener("click", () => {
         this.submitForm();
       });
     }
   }
 
   submitForm() {
-    const tipo = this.element.querySelector('#tipo').value;
-    const nome = this.element.querySelector('#nome').value;
-    const email = this.element.querySelector('#email').value;
-    const crcContabilista = this.element.querySelector('#crcContabilista').value;
-    const inscricao = this.element.querySelector('#inscricao').value;
-    const ativo = this.element.querySelector('#ativo').value;
-    const cidade = this.element.querySelector('#cidade').value;
-    const senha = this.element.querySelector('#senha').value;
-    const foto = this.element.querySelector('#foto').files[0];
+    const tipo = this.element.querySelector("#tipo").value;
+    const nome = this.element.querySelector("#nome").value;
+    const email = this.element.querySelector("#email").value;
+    const crcContabilista =
+      this.element.querySelector("#crcContabilista").value;
+    const inscricao = this.element.querySelector("#inscricao").value;
+    const ativo = this.element.querySelector("#ativo").value;
+    const cidade = this.element.querySelector("#cidade").value;
+    const senha = this.element.querySelector("#senha").value;
+    const foto = this.element.querySelector("#foto").files[0];
 
     // Basic validation for required fields
-    if (!tipo || !nome || !email || !crcContabilista || !inscricao || !ativo || !cidade) {
-      toast.error('Por favor, preencha todos os campos obrigatórios (*).');
+    if (
+      !tipo ||
+      !nome ||
+      !email ||
+      !crcContabilista ||
+      !inscricao ||
+      !ativo ||
+      !cidade
+    ) {
+      toast.error("Por favor, preencha todos os campos obrigatórios (*).");
       return;
     }
 
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      toast.error('Por favor, insira um e-mail válido.');
+      toast.error("Por favor, insira um e-mail válido.");
       return;
     }
 
@@ -151,11 +160,11 @@ class RegisterUsuarioComponent {
       inscricao,
       ativo,
       cidade,
-      senha: senha || '',
-      foto: foto ? URL.createObjectURL(foto) : ''
+      senha: senha || "",
+      foto: foto ? URL.createObjectURL(foto) : "",
     };
 
-    toast.success('Usuário cadastrado com sucesso!');
+    toast.success("Usuário cadastrado com sucesso!");
     this.onSubmit(userData);
   }
 }

@@ -1,7 +1,7 @@
 /**
  * PrintPublicacaoComponent.js - Componente para impressão de publicações
  */
-import { toast } from '/js/Utilities.js';
+import { toast } from "/js/Utilities.js";
 
 class PrintPublicacaoComponent {
   constructor(config) {
@@ -13,11 +13,11 @@ class PrintPublicacaoComponent {
   }
 
   render() {
-    const container = document.createElement('div');
-    container.className = 'p-4';
+    const container = document.createElement("div");
+    container.className = "p-4";
 
-    const form = document.createElement('div');
-    form.className = 'space-y-4';
+    const form = document.createElement("div");
+    form.className = "space-y-4";
 
     form.innerHTML = `
       <div>
@@ -27,8 +27,8 @@ class PrintPublicacaoComponent {
       </div>
     `;
 
-    const actions = document.createElement('div');
-    actions.className = 'flex justify-end space-x-4 mt-6';
+    const actions = document.createElement("div");
+    actions.className = "flex justify-end space-x-4 mt-6";
     actions.innerHTML = `
       <button id="back-btn" class="px-4 py-2 border border-gray-300 rounded-full text-gray-700 text-sm hover:bg-gray-100">
         Voltar
@@ -47,37 +47,37 @@ class PrintPublicacaoComponent {
   }
 
   setupEventListeners() {
-    const backBtn = this.element.querySelector('#back-btn');
-    const clearBtn = this.element.querySelector('#clear-btn');
-    const printBtn = this.element.querySelector('#print-btn');
+    const backBtn = this.element.querySelector("#back-btn");
+    const clearBtn = this.element.querySelector("#clear-btn");
+    const printBtn = this.element.querySelector("#print-btn");
 
     if (backBtn) {
-      backBtn.addEventListener('click', () => {
-        toast.info('Retornando à lista de publicações...');
+      backBtn.addEventListener("click", () => {
+        toast.info("Retornando à lista de publicações...");
         this.onBack();
       });
     }
 
     if (clearBtn) {
-      clearBtn.addEventListener('click', () => {
-        this.element.querySelector('#descricao').value = '';
+      clearBtn.addEventListener("click", () => {
+        this.element.querySelector("#descricao").value = "";
         this.onClear();
       });
     }
 
     if (printBtn) {
-      printBtn.addEventListener('click', () => {
+      printBtn.addEventListener("click", () => {
         this.submitForm();
       });
     }
   }
 
   submitForm() {
-    const descricaoInput = this.element.querySelector('#descricao');
+    const descricaoInput = this.element.querySelector("#descricao");
     const descricao = descricaoInput.value.trim();
 
     const filters = {
-      descricao: descricao
+      descricao: descricao,
     };
 
     this.onPrint(filters);

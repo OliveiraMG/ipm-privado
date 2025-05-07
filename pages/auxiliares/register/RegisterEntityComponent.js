@@ -1,9 +1,9 @@
 /**
  * RegisterEntityComponent.js - Componente para a página de cadastro de entidade
  */
-import { Header } from '/components/layout/Header.js';
-import { toast } from '/js/Utilities.js';
-import RichTextEditorComponent from '/components/forms/RichTextEditorComponent.js';
+import { Header } from "/components/layout/Header.js";
+import { toast } from "/js/Utilities.js";
+import RichTextEditorComponent from "/components/forms/RichTextEditorComponent.js";
 
 class RegisterEntityComponent {
   /**
@@ -13,10 +13,10 @@ class RegisterEntityComponent {
    * @param {Function} config.onBack - Função chamada ao clicar em Voltar
    */
   constructor(config) {
-    this.containerId = config.containerId || 'register-entity-container';
+    this.containerId = config.containerId || "register-entity-container";
     this.onSubmit = config.onSubmit || (() => {});
     this.onBack = config.onBack || (() => {});
-    this.currentTab = 'entidade';
+    this.currentTab = "entidade";
     this.richTextEditor = null;
 
     this.element = this.render();
@@ -28,21 +28,21 @@ class RegisterEntityComponent {
    * @returns {HTMLElement} - Elemento do componente
    */
   render() {
-    const container = document.createElement('div');
-    container.className = 'flex-1 bg-white w-full';
+    const container = document.createElement("div");
+    container.className = "flex-1 bg-white w-full";
     container.id = this.containerId;
 
     // Título
-    const title = document.createElement('div');
-    title.className = 'p-4';
+    const title = document.createElement("div");
+    title.className = "p-4";
     title.innerHTML = `
 
     `;
     container.appendChild(title);
 
     // Abas
-    const tabs = document.createElement('div');
-    tabs.className = 'flex space-x-4 mb-6 px-4';
+    const tabs = document.createElement("div");
+    tabs.className = "flex space-x-4 mb-6 px-4";
     tabs.innerHTML = `
       <button data-tab="entidade" class="tab-btn px-4 py-2 rounded-full text-white bg-blue-dark">Entidade</button>
       <button data-tab="responsavel" class="tab-btn px-4 py-2 rounded-full text-gray-700 bg-gray-200">Responsável</button>
@@ -53,15 +53,15 @@ class RegisterEntityComponent {
     container.appendChild(tabs);
 
     // Container do formulário
-    const formContainer = document.createElement('div');
-    formContainer.id = 'form-container';
-    formContainer.className = 'px-4';
+    const formContainer = document.createElement("div");
+    formContainer.id = "form-container";
+    formContainer.className = "px-4";
     formContainer.innerHTML = this.renderEntityForm();
     container.appendChild(formContainer);
 
     // Botões de ação
-    const actions = document.createElement('div');
-    actions.className = 'flex justify-end space-x-4 mt-6 px-4';
+    const actions = document.createElement("div");
+    actions.className = "flex justify-end space-x-4 mt-6 px-4";
     actions.innerHTML = `
       <button id="back-btn" class="px-4 py-2 border border-gray-300 rounded-full text-gray-700 hover:bg-gray-100">
         Voltar
@@ -135,26 +135,26 @@ class RegisterEntityComponent {
    */
   setupEventListeners() {
     // Abas
-    const tabButtons = this.element.querySelectorAll('.tab-btn');
-    tabButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        this.switchTab(btn.getAttribute('data-tab'));
+    const tabButtons = this.element.querySelectorAll(".tab-btn");
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        this.switchTab(btn.getAttribute("data-tab"));
       });
     });
 
     // Botão Voltar
-    const backBtn = this.element.querySelector('#back-btn');
+    const backBtn = this.element.querySelector("#back-btn");
     if (backBtn) {
-      backBtn.addEventListener('click', () => {
-        toast.info('Retornando à lista de entidades...');
+      backBtn.addEventListener("click", () => {
+        toast.info("Retornando à lista de entidades...");
         this.onBack();
       });
     }
 
     // Botão Cadastrar
-    const submitBtn = this.element.querySelector('#submit-btn');
+    const submitBtn = this.element.querySelector("#submit-btn");
     if (submitBtn) {
-      submitBtn.addEventListener('click', () => {
+      submitBtn.addEventListener("click", () => {
         this.submitForm();
       });
     }
@@ -168,29 +168,29 @@ class RegisterEntityComponent {
     if (this.currentTab === tab) return;
 
     // Atualizar estilo dos botões de aba
-    const tabButtons = this.element.querySelectorAll('.tab-btn');
-    tabButtons.forEach(btn => {
-      if (btn.getAttribute('data-tab') === tab) {
-        btn.classList.remove('text-gray-700', 'bg-gray-200');
-        btn.classList.add('text-white', 'bg-blue-dark');
+    const tabButtons = this.element.querySelectorAll(".tab-btn");
+    tabButtons.forEach((btn) => {
+      if (btn.getAttribute("data-tab") === tab) {
+        btn.classList.remove("text-gray-700", "bg-gray-200");
+        btn.classList.add("text-white", "bg-blue-dark");
       } else {
-        btn.classList.remove('text-white', 'bg-blue-dark');
-        btn.classList.add('text-gray-700', 'bg-gray-200');
+        btn.classList.remove("text-white", "bg-blue-dark");
+        btn.classList.add("text-gray-700", "bg-gray-200");
       }
     });
 
     // Atualizar conteúdo do formulário
-    const formContainer = this.element.querySelector('#form-container');
+    const formContainer = this.element.querySelector("#form-container");
     if (formContainer) {
-      formContainer.innerHTML = '';
-      if (tab === 'entidade') {
+      formContainer.innerHTML = "";
+      if (tab === "entidade") {
         formContainer.innerHTML = this.renderEntityForm();
-      } else if (tab === 'relatorio') {
+      } else if (tab === "relatorio") {
         this.richTextEditor = new RichTextEditorComponent({
-          id: 'report-content',
+          id: "report-content",
           onChange: (data) => {
-            console.log('Conteúdo atualizado:', data);
-          }
+            console.log("Conteúdo atualizado:", data);
+          },
         });
         formContainer.appendChild(this.richTextEditor.element);
       } else {
@@ -208,51 +208,51 @@ class RegisterEntityComponent {
    * Processa o envio do formulário
    */
   submitForm() {
-    if (this.currentTab === 'entidade') {
-      const form = this.element.querySelector('#entity-form');
+    if (this.currentTab === "entidade") {
+      const form = this.element.querySelector("#entity-form");
       if (!form) return;
 
       if (form.checkValidity()) {
         const formData = new FormData(form);
         const data = {
-          entidade: formData.get('entidade'),
-          cnpj: formData.get('cnpj'),
-          telefone: formData.get('telefone'),
-          fax: formData.get('fax'),
-          cidade: formData.get('cidade'),
-          endereco: formData.get('endereco'),
-          email: formData.get('email'),
-          site: formData.get('site')
+          entidade: formData.get("entidade"),
+          cnpj: formData.get("cnpj"),
+          telefone: formData.get("telefone"),
+          fax: formData.get("fax"),
+          cidade: formData.get("cidade"),
+          endereco: formData.get("endereco"),
+          email: formData.get("email"),
+          site: formData.get("site"),
         };
 
-        toast.info('Processando cadastro...');
+        toast.info("Processando cadastro...");
         setTimeout(() => {
           toast.success(`Entidade "${data.entidade}" cadastrada com sucesso!`);
           form.reset();
           this.onSubmit(data);
         }, 1000);
       } else {
-        toast.error('Por favor, preencha todos os campos obrigatórios.');
+        toast.error("Por favor, preencha todos os campos obrigatórios.");
         form.reportValidity();
       }
-    } else if (this.currentTab === 'relatorio') {
+    } else if (this.currentTab === "relatorio") {
       if (!this.richTextEditor) return;
 
       const data = this.richTextEditor.getFormData();
       if (data.conteudoSuperior && data.conteudoInferior) {
-        toast.info('Processando conteúdo do relatório...');
+        toast.info("Processando conteúdo do relatório...");
         setTimeout(() => {
-          toast.success('Conteúdo do relatório salvo com sucesso!');
+          toast.success("Conteúdo do relatório salvo com sucesso!");
           this.richTextEditor.reset();
           this.onSubmit(data);
         }, 1000);
       } else {
-        toast.error('Por favor, preencha ambos os campos de conteúdo.');
-        const form = this.element.querySelector('#report-content-form');
+        toast.error("Por favor, preencha ambos os campos de conteúdo.");
+        const form = this.element.querySelector("#report-content-form");
         if (form) form.reportValidity();
       }
     } else {
-      toast.error('Aba não suportada para cadastro.');
+      toast.error("Aba não suportada para cadastro.");
     }
   }
 

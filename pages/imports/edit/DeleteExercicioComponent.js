@@ -1,7 +1,7 @@
 /**
  * DeleteExercicioComponent.js - Componente para remoção de exercício
  */
-import { toast } from '/js/Utilities.js';
+import { toast } from "/js/Utilities.js";
 
 class DeleteExercicioComponent {
   constructor(config) {
@@ -13,19 +13,19 @@ class DeleteExercicioComponent {
   }
 
   render() {
-    const container = document.createElement('div');
-    container.className = 'p-4';
+    const container = document.createElement("div");
+    container.className = "p-4";
 
-    const message = document.createElement('div');
-    message.className = 'space-y-4';
+    const message = document.createElement("div");
+    message.className = "space-y-4";
 
     message.innerHTML = `
       <p class="text-gray-700">Deseja remover esse Exercício?</p>
       <p class="text-gray-700 font-medium">${this.exercicioData.base}</p>
     `;
 
-    const actions = document.createElement('div');
-    actions.className = 'flex justify-end space-x-4 mt-6';
+    const actions = document.createElement("div");
+    actions.className = "flex justify-end space-x-4 mt-6";
     actions.innerHTML = `
       <button id="back-btn" class="px-4 py-2 border border-gray-300 rounded-full text-gray-700 text-sm hover:bg-gray-100">
         Voltar
@@ -41,18 +41,18 @@ class DeleteExercicioComponent {
   }
 
   setupEventListeners() {
-    const backBtn = this.element.querySelector('#back-btn');
-    const deleteBtn = this.element.querySelector('#delete-btn');
+    const backBtn = this.element.querySelector("#back-btn");
+    const deleteBtn = this.element.querySelector("#delete-btn");
 
     if (backBtn) {
-      backBtn.addEventListener('click', () => {
-        toast.info('Retornando à lista de exercícios...');
+      backBtn.addEventListener("click", () => {
+        toast.info("Retornando à lista de exercícios...");
         this.onBack();
       });
     }
 
     if (deleteBtn) {
-      deleteBtn.addEventListener('click', () => {
+      deleteBtn.addEventListener("click", () => {
         this.onDelete();
       });
     }

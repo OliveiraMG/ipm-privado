@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IPM-e | Dashboard</title>
 
     <!-- IBM Plex Sans Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -18,188 +19,206 @@
 
     <!-- Custom Tailwind configuration -->
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'blue-dark': '#264757',
-                        'blue-medium': '#3B657A',
-                        'blue-light': '#5CACD1',
-                        'blue-lighter': '#6ECEFA',
-                        'gray-light': '#EDEDED',
-                        'gray-lighter': '#F5F5F5',
-                        'dark': '#0A0A0A',
-                        'card-blue': '#3B657A'
-                    },
-                    fontFamily: {
-                        'ibm': ['"IBM Plex Sans"', 'sans-serif']
-                    }
-                }
-            }
-        }
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "blue-dark": "#264757",
+              "blue-medium": "#3B657A",
+              "blue-light": "#5CACD1",
+              "blue-lighter": "#6ECEFA",
+              "gray-light": "#EDEDED",
+              "gray-lighter": "#F5F5F5",
+              dark: "#0A0A0A",
+              "card-blue": "#3B657A",
+            },
+            fontFamily: {
+              ibm: ['"IBM Plex Sans"', "sans-serif"],
+            },
+          },
+        },
+      };
     </script>
 
     <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/Main.css">
+    <link rel="stylesheet" href="css/Main.css" />
 
     <style>
-        /* Estilos adicionais para ajustes de layout */
-        .search-container {
-            display: flex;
-            align-items: stretch;
-            /* Garante que os elementos tenham a mesma altura */
-            width: 100%;
-            max-width: 800px;
-            /* Aumentando a largura do container */
-        }
+      /* Estilos adicionais para ajustes de layout */
+      .search-container {
+        display: flex;
+        align-items: stretch;
+        /* Garante que os elementos tenham a mesma altura */
+        width: 100%;
+        max-width: 800px;
+        /* Aumentando a largura do container */
+      }
 
-        .search-container select,
-        .search-container button {
-            height: 40px;
-            /* Altura fixa para garantir alinhamento */
-            line-height: normal;
-            /* Corrige alinhamento de texto */
-        }
+      .search-container select,
+      .search-container button {
+        height: 40px;
+        /* Altura fixa para garantir alinhamento */
+        line-height: normal;
+        /* Corrige alinhamento de texto */
+      }
 
-        .search-container button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
+      .search-container button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-        /* Ajuste para o título da seção de cards */
-        .stats-heading {
-            font-size: 1.125rem;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-            color: #4a5568;
-        }
+      /* Ajuste para o título da seção de cards */
+      .stats-heading {
+        font-size: 1.125rem;
+        margin-bottom: 1.5rem;
+        font-weight: 500;
+        color: #4a5568;
+      }
 
-        /* Tab de navegação */
-        .tabs {
-            display: flex;
-            margin-top: 2rem;
-            padding-left: 1rem;
-        }
+      /* Tab de navegação */
+      .tabs {
+        display: flex;
+        margin-top: 2rem;
+        padding-left: 1rem;
+      }
 
-        .tab {
-            padding: 0.5rem 1rem;
-            color: #AAABAB;
-            margin-right: 1rem;
-            cursor: pointer;
-            border-radius: 0.25rem 0.25rem 0 0;
-        }
+      .tab {
+        padding: 0.5rem 1rem;
+        color: #aaabab;
+        margin-right: 1rem;
+        cursor: pointer;
+        border-radius: 0.25rem 0.25rem 0 0;
+      }
 
-        .tab.active {
-            background-color: transparent;
-            border-radius: 2rem;
-            outline: #3B657A solid 1px;
-            color: #3B657A;
-        }
+      .tab.active {
+        background-color: transparent;
+        border-radius: 2rem;
+        outline: #3b657a solid 1px;
+        color: #3b657a;
+      }
     </style>
-</head>
+  </head>
 
-<body class="bg-gray-light font-ibm">
+  <body class="bg-gray-light font-ibm">
     <!-- Main content area - full width -->
     <div class="w-full flex flex-col min-h-screen">
-        <!-- Header Component -->
-        <header id="header-component" class="w-full">
-            <!-- Header será injetado via JavaScript -->
-        </header>
+      <!-- Header Component -->
+      <header id="header-component" class="w-full">
+        <!-- Header será injetado via JavaScript -->
+      </header>
 
-        <!-- Main dashboard content -->
-        <main class="flex-1 bg-gray-light w-full">
-            <!-- Content container -->
-            <div class="max-w-full mx-auto px-4 md:px-8 lg:px-12">
-                <!-- Filter area com alinhamento melhorado -->
-                <div class="flex justify-center py-5">
-                    <div class="w-11/12 search-container">
-                        <!-- Os componentes Select e Button serão injetados aqui via JavaScript -->
-                    </div>
-                </div>
-
-                <!-- Page Title -->
-                <div class="px-6 md:px-20 pb-4 mt-4 mb-6">
-                    <h2 id="municipality-title" class="text-4xl font-medium text-blue-dark">Selecione um município</h2>
-                </div>
-
-                <!-- Stats Container -->
-                <div id="stats-container" class="px-6">
-                    <!-- Os cards serão gerados pelo componente StatsSection -->
-                </div>
-
-                <div class="px-6 mt-8">
-                    <div id="content-container" class="bg-white rounded-[16px] shadow-[6px_6px_12px_rgba(0,0,0,0.25)] p-6 mb-6">
-                        <!-- Estado inicial - será mostrado quando nenhum município for selecionado -->
-                        <div id="initial-state">
-                            <div class="text-center py-8">
-                                <i class="fas fa-map-marker-alt text-blue-medium text-4xl mb-4"></i>
-                                <p class="text-gray-600 text-lg">Selecione um município para visualizar estatísticas e dados</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Conteúdo principal - será mostrado quando um município for selecionado -->
-                        <div id="municipality-content" class="hidden">
-                            <!-- Tabs de navegação -->
-                            <div class="tabs text-2xl font-medium mb-4">
-                                <div class="tab active">Município</div>
-                                <div class="tab">Gráficos</div>
-                                <div class="tab">Estado</div>
-                            </div>
-
-                            <!-- Container para conteúdo das abas -->
-                            <div class="tab-content py-4">
-                                <h3 class="text-xl font-medium text-blue-dark mb-4">Repasses ao Município</h3>
-                                <!-- Conteúdo será injetado pelo JavaScript -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <!-- Main dashboard content -->
+      <main class="flex-1 bg-gray-light w-full">
+        <!-- Content container -->
+        <div class="max-w-full mx-auto px-4 md:px-8 lg:px-12">
+          <!-- Filter area com alinhamento melhorado -->
+          <div class="flex justify-center py-5">
+            <div class="w-11/12 search-container">
+              <!-- Os componentes Select e Button serão injetados aqui via JavaScript -->
             </div>
-        </main>
+          </div>
+
+          <!-- Page Title -->
+          <div class="px-6 md:px-20 pb-4 mt-4 mb-6">
+            <h2
+              id="municipality-title"
+              class="text-4xl font-medium text-blue-dark"
+            >
+              Selecione um município
+            </h2>
+          </div>
+
+          <!-- Stats Container -->
+          <div id="stats-container" class="px-6">
+            <!-- Os cards serão gerados pelo componente StatsSection -->
+          </div>
+
+          <div class="px-6 mt-8">
+            <div
+              id="content-container"
+              class="bg-white rounded-[16px] shadow-[6px_6px_12px_rgba(0,0,0,0.25)] p-6 mb-6"
+            >
+              <!-- Estado inicial - será mostrado quando nenhum município for selecionado -->
+              <div id="initial-state">
+                <div class="text-center py-8">
+                  <i
+                    class="fas fa-map-marker-alt text-blue-medium text-4xl mb-4"
+                  ></i>
+                  <p class="text-gray-600 text-lg">
+                    Selecione um município para visualizar estatísticas e dados
+                  </p>
+                </div>
+              </div>
+
+              <!-- Conteúdo principal - será mostrado quando um município for selecionado -->
+              <div id="municipality-content" class="hidden">
+                <!-- Tabs de navegação -->
+                <div class="tabs text-2xl font-medium mb-4">
+                  <div class="tab active">Município</div>
+                  <div class="tab">Gráficos</div>
+                  <div class="tab">Estado</div>
+                </div>
+
+                <!-- Container para conteúdo das abas -->
+                <div class="tab-content py-4">
+                  <h3 class="text-xl font-medium text-blue-dark mb-4">
+                    Repasses ao Município
+                  </h3>
+                  <!-- Conteúdo será injetado pelo JavaScript -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
 
     <!-- Script de inicialização comum para garantir o funcionamento do Header -->
     <script>
-        // Verificar se o header foi inicializado
-        document.addEventListener('DOMContentLoaded', function () {
-            console.log("DOM carregado no index.html");
-            // Definimos um timeout para verificar se o módulo ES6 não inicializou o header
-            setTimeout(function () {
-                if (!document.querySelector('#header-component > *')) {
-                    console.log("Fallback: Header não foi inicializado pelo módulo ES6");
+      // Verificar se o header foi inicializado
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("DOM carregado no index.html");
+        // Definimos um timeout para verificar se o módulo ES6 não inicializou o header
+        setTimeout(function () {
+          if (!document.querySelector("#header-component > *")) {
+            console.log(
+              "Fallback: Header não foi inicializado pelo módulo ES6"
+            );
 
-                    // Solução alternativa caso os módulos ES6 não funcionem
-                    const script = document.createElement('script');
-                    script.src = 'components/Header.js';
-                    script.onload = function () {
-                        console.log("Script Header.js carregado como script normal");
-                        if (typeof Header !== 'undefined' && Header.initialize) {
-                            Header.initialize();
-                        }
-                    };
-                    document.head.appendChild(script);
-                }
-            }, 500);
+            // Solução alternativa caso os módulos ES6 não funcionem
+            const script = document.createElement("script");
+            script.src = "components/Header.js";
+            script.onload = function () {
+              console.log("Script Header.js carregado como script normal");
+              if (typeof Header !== "undefined" && Header.initialize) {
+                Header.initialize();
+              }
+            };
+            document.head.appendChild(script);
+          }
+        }, 500);
 
-            // Adicionar funcionalidade às tabs
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function () {
-                    // Remover classe active de todas as tabs
-                    tabs.forEach(t => t.classList.remove('active'));
-                    // Adicionar classe active à tab clicada
-                    this.classList.add('active');
-                });
-            });
+        // Adicionar funcionalidade às tabs
+        const tabs = document.querySelectorAll(".tab");
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", function () {
+            // Remover classe active de todas as tabs
+            tabs.forEach((t) => t.classList.remove("active"));
+            // Adicionar classe active à tab clicada
+            this.classList.add("active");
+          });
         });
+      });
     </script>
 
     <!-- Carregando o script principal como módulo ES6 -->
     <script type="module" src="js/Main.js"></script>
-</body>
-
+  </body>
 </html>

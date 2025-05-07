@@ -1,4 +1,4 @@
-import StatCard from './StatCard.js';
+import StatCard from "./StatCard.js";
 
 /**
  * StatsSection Component - Displays a section with statistical information cards
@@ -15,10 +15,12 @@ class StatsSection {
   }
 
   render() {
-    const cards = this.stats.map(stat => {
-      const card = new StatCard(stat.title, stat.value, stat.details);
-      return card.render();
-    }).join('');
+    const cards = this.stats
+      .map((stat) => {
+        const card = new StatCard(stat.title, stat.value, stat.details);
+        return card.render();
+      })
+      .join("");
 
     return `
       <div class="bg-white rounded-3xl  shadow-[6px_6px_12px_rgba(0,0,0,0.25)] p-10 mb-6">
@@ -43,72 +45,72 @@ class StatsSection {
   static renderWithData(container, options) {
     // Adaptar do formato de dados esperado para o formato da classe
     let statsArray = [];
-    
+
     if (options.data) {
       // Para o formato {total: {valor, mei, ...}, baixados: {valor, mei, ...}}
       if (options.data.total) {
         statsArray.push({
-          title: 'TOTAIS',
+          title: "TOTAIS",
           value: options.data.total.valor,
           details: {
             mei: options.data.total.mei,
             simplesNacional: options.data.total.simplesNacional,
-            simplificada: options.data.total.simplificado
-          }
+            simplificada: options.data.total.simplificado,
+          },
         });
       }
-      
+
       if (options.data.baixados) {
         statsArray.push({
-          title: 'BAIXADOS',
+          title: "BAIXADOS",
           value: options.data.baixados.valor,
           details: {
             mei: options.data.baixados.mei,
             simplesNacional: options.data.baixados.simplesNacional,
-            simplificada: options.data.baixados.simplificado
-          }
+            simplificada: options.data.baixados.simplificado,
+          },
         });
       }
-      
+
       if (options.data.ativos) {
         statsArray.push({
-          title: 'ATIVOS',
+          title: "ATIVOS",
           value: options.data.ativos.valor,
           details: {
             mei: options.data.ativos.mei,
             simplesNacional: options.data.ativos.simplesNacional,
-            simplificada: options.data.ativos.simplificado
-          }
+            simplificada: options.data.ativos.simplificado,
+          },
         });
       }
-      
+
       if (options.data.suspensos) {
         statsArray.push({
-          title: 'SUSPENSO',
+          title: "SUSPENSO",
           value: options.data.suspensos.valor,
           details: {
             mei: options.data.suspensos.mei,
             simplesNacional: options.data.suspensos.simplesNacional,
-            simplificada: options.data.suspensos.simplificado
-          }
+            simplificada: options.data.suspensos.simplificado,
+          },
         });
       }
     } else if (Array.isArray(options.stats)) {
       // Se já está no formato de array
       statsArray = options.stats;
     }
-    
+
     // Criar a seção e renderizar
     const section = new StatsSection(options.title, statsArray);
-    
+
     // Se container for string, tratar como seletor
-    if (typeof container === 'string') {
+    if (typeof container === "string") {
       const element = document.querySelector(container);
       if (element) {
         element.innerHTML = section.render();
         return element;
       }
-    } 
+    }
     // Senão, assumir que é um elemento DOM
     else if (container instanceof Element) {
       container.innerHTML = section.render();

@@ -1,7 +1,7 @@
 /**
  * PrintPerfilComponent.js - Componente para a página de impressão de perfis
  */
-import { toast } from '/js/Utilities.js';
+import { toast } from "/js/Utilities.js";
 
 class PrintPerfilComponent {
   /**
@@ -21,12 +21,12 @@ class PrintPerfilComponent {
    * @returns {HTMLElement} - Elemento do componente
    */
   render() {
-    const container = document.createElement('div');
-    container.className = 'p-4';
+    const container = document.createElement("div");
+    container.className = "p-4";
 
     // Formulário
-    const form = document.createElement('div');
-    form.className = 'space-y-4';
+    const form = document.createElement("div");
+    form.className = "space-y-4";
 
     // Campo do formulário
     form.innerHTML = `
@@ -38,8 +38,8 @@ class PrintPerfilComponent {
     `;
 
     // Botões de ação
-    const actions = document.createElement('div');
-    actions.className = 'flex justify-end space-x-4 mt-6';
+    const actions = document.createElement("div");
+    actions.className = "flex justify-end space-x-4 mt-6";
     actions.innerHTML = `
       <button id="back-btn" class="px-4 py-2 border border-gray-300 rounded-full text-gray-700 text-sm hover:bg-gray-100">
         Voltar
@@ -61,26 +61,26 @@ class PrintPerfilComponent {
    * Configura os eventos dos botões
    */
   setupEventListeners() {
-    const backBtn = this.element.querySelector('#back-btn');
-    const clearBtn = this.element.querySelector('#clear-btn');
-    const printBtn = this.element.querySelector('#print-btn');
+    const backBtn = this.element.querySelector("#back-btn");
+    const clearBtn = this.element.querySelector("#clear-btn");
+    const printBtn = this.element.querySelector("#print-btn");
 
     if (backBtn) {
-      backBtn.addEventListener('click', () => {
-        toast.info('Retornando à lista de perfis...');
+      backBtn.addEventListener("click", () => {
+        toast.info("Retornando à lista de perfis...");
         this.onBack();
       });
     }
 
     if (clearBtn) {
-      clearBtn.addEventListener('click', () => {
+      clearBtn.addEventListener("click", () => {
         this.clearForm();
-        toast.info('Filtros limpos.');
+        toast.info("Filtros limpos.");
       });
     }
 
     if (printBtn) {
-      printBtn.addEventListener('click', () => {
+      printBtn.addEventListener("click", () => {
         this.submitForm();
       });
     }
@@ -90,20 +90,20 @@ class PrintPerfilComponent {
    * Limpa o formulário
    */
   clearForm() {
-    const descricaoInput = this.element.querySelector('#descricao');
-    descricaoInput.value = '';
+    const descricaoInput = this.element.querySelector("#descricao");
+    descricaoInput.value = "";
   }
 
   /**
    * Processa o envio do formulário
    */
   submitForm() {
-    const descricaoInput = this.element.querySelector('#descricao');
+    const descricaoInput = this.element.querySelector("#descricao");
     const filters = {
-      descricao: descricaoInput.value || null
+      descricao: descricaoInput.value || null,
     };
 
-    toast.info('Preparando impressão...');
+    toast.info("Preparando impressão...");
     setTimeout(() => {
       this.onPrint(filters);
     }, 500);

@@ -2,16 +2,16 @@
  * RegisterCfopComponent.js - Componente para cadastro de CFOP
  */
 class RegisterCfopComponent {
-    constructor({ onSubmit, onBack }) {
-      this.onSubmit = onSubmit;
-      this.onBack = onBack;
-      this.element = document.createElement('div');
-      this.render();
-      this.setupEventListeners();
-    }
-  
-    render() {
-      this.element.innerHTML = `
+  constructor({ onSubmit, onBack }) {
+    this.onSubmit = onSubmit;
+    this.onBack = onBack;
+    this.element = document.createElement("div");
+    this.render();
+    this.setupEventListeners();
+  }
+
+  render() {
+    this.element.innerHTML = `
         <div class="p-6">
           <form id="register-cfop-form" class="space-y-4">
             <div class="grid grid-cols-3 gap-4">
@@ -39,31 +39,31 @@ class RegisterCfopComponent {
           </form>
         </div>
       `;
+  }
+
+  setupEventListeners() {
+    const form = this.element.querySelector("#register-cfop-form");
+    const backBtn = this.element.querySelector("#back-btn");
+
+    if (form) {
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const data = {
+          cfop: formData.get("cfop"),
+          descricao: formData.get("descricao"),
+          aplicacao: formData.get("aplicacao"),
+        };
+        this.onSubmit(data);
+      });
     }
-  
-    setupEventListeners() {
-      const form = this.element.querySelector('#register-cfop-form');
-      const backBtn = this.element.querySelector('#back-btn');
-  
-      if (form) {
-        form.addEventListener('submit', (e) => {
-          e.preventDefault();
-          const formData = new FormData(form);
-          const data = {
-            cfop: formData.get('cfop'),
-            descricao: formData.get('descricao'),
-            aplicacao: formData.get('aplicacao')
-          };
-          this.onSubmit(data);
-        });
-      }
-  
-      if (backBtn) {
-        backBtn.addEventListener('click', () => {
-          this.onBack();
-        });
-      }
+
+    if (backBtn) {
+      backBtn.addEventListener("click", () => {
+        this.onBack();
+      });
     }
   }
-  
-  export default RegisterCfopComponent;
+}
+
+export default RegisterCfopComponent;

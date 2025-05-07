@@ -1,9 +1,9 @@
 /**
  * PrintCityComponent.js - Componente para a página de impressão de cidades
  */
-import { Header } from '/components/layout/Header.js';
-import { toast } from '/js/Utilities.js';
-import ModalComponent from '/components/common/ModalComponent.js';
+import { Header } from "/components/layout/Header.js";
+import { toast } from "/js/Utilities.js";
+import ModalComponent from "/components/common/ModalComponent.js";
 
 class PrintCityComponent {
   /**
@@ -13,7 +13,7 @@ class PrintCityComponent {
    * @param {Function} config.onBack - Função chamada ao clicar em Voltar
    */
   constructor(config) {
-    this.containerId = config.containerId || 'print-city-container';
+    this.containerId = config.containerId || "print-city-container";
     this.onPrint = config.onPrint || (() => {});
     this.onBack = config.onBack || (() => {});
     this.element = this.render();
@@ -25,13 +25,13 @@ class PrintCityComponent {
    * @returns {HTMLElement} - Elemento do componente
    */
   render() {
-    const container = document.createElement('div');
-    container.className = 'w-full';
+    const container = document.createElement("div");
+    container.className = "w-full";
     container.id = this.containerId;
 
     // Formulário
-    const form = document.createElement('div');
-    form.className = 'p-4';
+    const form = document.createElement("div");
+    form.className = "p-4";
 
     // Campos do formulário
     form.innerHTML = `
@@ -59,8 +59,8 @@ class PrintCityComponent {
     `;
 
     // Botões de ação
-    const actions = document.createElement('div');
-    actions.className = 'flex justify-end space-x-4 mt-6';
+    const actions = document.createElement("div");
+    actions.className = "flex justify-end space-x-4 mt-6";
     actions.innerHTML = `
       <button id="back-btn" class="px-4 py-2 border border-gray-300 rounded-full text-gray-700 text-sm hover:bg-gray-100">
         Voltar
@@ -82,26 +82,26 @@ class PrintCityComponent {
    * Configura os eventos dos botões
    */
   setupEventListeners() {
-    const backBtn = this.element.querySelector('#back-btn');
-    const clearBtn = this.element.querySelector('#clear-btn');
-    const printBtn = this.element.querySelector('#print-btn');
+    const backBtn = this.element.querySelector("#back-btn");
+    const clearBtn = this.element.querySelector("#clear-btn");
+    const printBtn = this.element.querySelector("#print-btn");
 
     if (backBtn) {
-      backBtn.addEventListener('click', () => {
-        toast.info('Retornando à lista de cidades...');
+      backBtn.addEventListener("click", () => {
+        toast.info("Retornando à lista de cidades...");
         this.onBack();
       });
     }
 
     if (clearBtn) {
-      clearBtn.addEventListener('click', () => {
+      clearBtn.addEventListener("click", () => {
         this.clearForm();
-        toast.info('Filtros limpos.');
+        toast.info("Filtros limpos.");
       });
     }
 
     if (printBtn) {
-      printBtn.addEventListener('click', () => {
+      printBtn.addEventListener("click", () => {
         this.submitForm();
       });
     }
@@ -111,30 +111,30 @@ class PrintCityComponent {
    * Limpa o formulário
    */
   clearForm() {
-    const codigoInput = this.element.querySelector('#codigo');
-    const cidadeInput = this.element.querySelector('#cidade');
-    const ativoInput = this.element.querySelector('#ativo');
+    const codigoInput = this.element.querySelector("#codigo");
+    const cidadeInput = this.element.querySelector("#cidade");
+    const ativoInput = this.element.querySelector("#ativo");
 
-    codigoInput.value = '';
-    cidadeInput.value = '';
-    ativoInput.value = '';
+    codigoInput.value = "";
+    cidadeInput.value = "";
+    ativoInput.value = "";
   }
 
   /**
    * Processa o envio do formulário
    */
   submitForm() {
-    const codigoInput = this.element.querySelector('#codigo');
-    const cidadeInput = this.element.querySelector('#cidade');
-    const ativoInput = this.element.querySelector('#ativo');
+    const codigoInput = this.element.querySelector("#codigo");
+    const cidadeInput = this.element.querySelector("#cidade");
+    const ativoInput = this.element.querySelector("#ativo");
 
     const filters = {
       codigo: codigoInput.value ? parseInt(codigoInput.value) : null,
       cidade: cidadeInput.value || null,
-      ativo: ativoInput.value ? ativoInput.value === 'true' : null
+      ativo: ativoInput.value ? ativoInput.value === "true" : null,
     };
 
-    toast.info('Preparando impressão...');
+    toast.info("Preparando impressão...");
     setTimeout(() => {
       this.onPrint(filters);
     }, 500);
