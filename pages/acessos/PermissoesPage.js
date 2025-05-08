@@ -1,12 +1,12 @@
 /**
  * PermissoesPage.js - Página de listagem de permissões
  */
-import { Header } from "../../components/layout/Header.js";
-import { toast } from "../../js/Utilities.js";
-import RegisterPermissaoComponent from "../../pages/acessos/register/RegisterPermissaoComponent.js";
-import EditPermissaoComponent from "../../pages/acessos/edit/EditPermissaoComponent.js";
-import SearchPermissaoComponent from "../../pages/acessos/search/SearchPermissaoComponent.js";
-import PrintPermissaoComponent from "../../pages/acessos/print/PrintPermissaoComponent.js";
+import { Header } from "../..//components/layout/Header.js";
+import { toast } from "../..//js/Utilities.js";
+import RegisterPermissaoComponent from "../..//pages/acessos/register/RegisterPermissaoComponent.js";
+import EditPermissaoComponent from "../..//pages/acessos/edit/EditPermissaoComponent.js";
+import SearchPermissaoComponent from "../..//pages/acessos/search/SearchPermissaoComponent.js";
+import PrintPermissaoComponent from "../..//pages/acessos/print/PrintPermissaoComponent.js";
 import ModalComponent from "../../components/common/ModalComponent.js";
 
 class PermissoesPage {
