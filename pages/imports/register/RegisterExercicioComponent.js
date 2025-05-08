@@ -1,7 +1,7 @@
 /**
  * RegisterExercicioComponent.js - Componente para cadastro de exercício
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class RegisterExercicioComponent {
   constructor(config) {

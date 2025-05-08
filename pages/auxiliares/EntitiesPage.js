@@ -1,12 +1,12 @@
 /**
  * EntitiesPage.js - Página de listagem de entidades
  */
-import { Header } from "/components/layout/Header.js";
-import IndexesTable from "/components/tables/IndexesTable.js";
-import { toast } from "/js/Utilities.js";
-import RegisterEntityComponent from "/pages/auxiliares/register/RegisterEntityComponent.js";
-import SearchEntityComponent from "/pages/auxiliares/search/SearchEntityComponent.js";
-import ModalComponent from "/components/common/ModalComponent.js";
+import { Header } from "../../../components/layout/Header.js";
+import IndexesTable from "../../../components/tables/IndexesTable.js";
+import { toast } from "../../../js/Utilities.js";
+import RegisterEntityComponent from "../../../pages/auxiliares/register/RegisterEntityComponent.js";
+import SearchEntityComponent from "../../../pages/auxiliares/search/SearchEntityComponent.js";
+import ModalComponent from "../../../components/common/ModalComponent.js";
 
 class EntitiesPage {
   constructor() {

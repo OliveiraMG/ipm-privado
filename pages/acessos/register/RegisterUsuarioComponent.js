@@ -1,7 +1,7 @@
 /**
  * RegisterUsuarioComponent.js - Componente para cadastro de usuário
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class RegisterUsuarioComponent {
   constructor({ onSubmit, onBack }) {

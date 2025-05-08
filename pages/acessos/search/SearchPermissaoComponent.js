@@ -1,7 +1,7 @@
 /**
  * SearchPermissaoComponent.js - Componente para pesquisa de permissões
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class SearchPermissaoComponent {
   /**

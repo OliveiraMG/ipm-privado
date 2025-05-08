@@ -1,7 +1,7 @@
 /**
  * PrintPermissaoComponent.js - Componente para impressão de permissões
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class PrintPermissaoComponent {
   /**

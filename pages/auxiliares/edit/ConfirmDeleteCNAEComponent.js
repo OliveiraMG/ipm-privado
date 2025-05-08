@@ -1,7 +1,7 @@
 /**
  * ConfirmDeleteCNAEComponent.js - Componente para confirmação de exclusão de CNAE
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class ConfirmDeleteCNAEComponent {
   constructor({ cnae, onConfirm, onCancel }) {

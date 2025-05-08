@@ -1,7 +1,7 @@
 /**
  * EditPublicacaoComponent.js - Componente para edição de publicação
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class EditPublicacaoComponent {
   constructor(config) {

@@ -1,12 +1,12 @@
 /**
  * ExerciciosPage.js - Página de listagem de exercícios
  */
-import { Header } from "/components/layout/Header.js";
-import { toast } from "/js/Utilities.js";
-import RegisterExercicioComponent from "/pages/imports/register/RegisterExercicioComponent.js";
-import EditExercicioComponent from "/pages/imports/edit/EditExercicioComponent.js";
-import DeleteExercicioComponent from "/pages/imports/edit/DeleteExercicioComponent.js";
-import ModalComponent from "/components/common/ModalComponent.js";
+import { Header } from "../../components/layout/Header.js";
+import { toast } from "../../js/Utilities.js";
+import RegisterExercicioComponent from "../../pages/imports/register/RegisterExercicioComponent.js";
+import EditExercicioComponent from "../../pages/imports/edit/EditExercicioComponent.js";
+import DeleteExercicioComponent from "../../pages/imports/edit/DeleteExercicioComponent.js";
+import ModalComponent from "../../components/common/ModalComponent.js";
 
 class ExerciciosPage {
   constructor() {

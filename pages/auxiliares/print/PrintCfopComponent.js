@@ -1,7 +1,8 @@
 /**
  * PrintCfopComponent.js - Componente para a página de impressão de CFOPs
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
+
 class PrintCfopComponent {
   constructor({ onPrint, onBack }) {
     this.onPrint = onPrint || (() => {});

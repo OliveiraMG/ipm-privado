@@ -1,7 +1,7 @@
 /**
  * PrintPublicacaoComponent.js - Componente para impressão de publicações
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class PrintPublicacaoComponent {
   constructor(config) {

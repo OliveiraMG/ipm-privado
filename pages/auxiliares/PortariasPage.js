@@ -1,14 +1,14 @@
 /**
  * PortariasPage.js - Página de listagem de Portarias
  */
-import { Header } from "/components/layout/Header.js";
-import { toast } from "/js/Utilities.js";
-import RegisterPortariaComponent from "/pages/auxiliares/register/RegisterPortariaComponent.js";
-import EditPortariaComponent from "/pages/auxiliares/edit/EditPortariaComponent.js";
-import EditCfopPortariaComponent from "/pages/auxiliares/edit/EditCfopPortariaComponent.js";
-import SearchPortariaComponent from "/pages/auxiliares/search/SearchPortariaComponent.js";
-import PrintPortariaComponent from "/pages/auxiliares/print/PrintPortariaComponent.js";
-import ModalComponent from "/components/common/ModalComponent.js";
+import { Header } from "../../../components/layout/Header.js";
+import { toast } from "../../../js/Utilities.js";
+import RegisterPortariaComponent from "../../../pages/auxiliares/register/RegisterPortariaComponent.js";
+import EditPortariaComponent from "../../../pages/auxiliares/edit/EditPortariaComponent.js";
+import EditCfopPortariaComponent from "../../../pages/auxiliares/edit/EditCfopPortariaComponent.js";
+import SearchPortariaComponent from "../../../pages/auxiliares/search/SearchPortariaComponent.js";
+import PrintPortariaComponent from "../../../pages/auxiliares/print/PrintPortariaComponent.js";
+import ModalComponent from "../../../components/common/ModalComponent.js";
 
 class PortariasPage {
   constructor() {

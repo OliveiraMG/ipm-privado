@@ -1,10 +1,10 @@
 /**
  * CadastrarCNAEGrupoAtividadeComponent.js - Componente para gerenciamento de CNAEs de uma atividade
  */
-import { toast } from "/js/Utilities.js";
-import ConfirmDeleteCNAEComponent from "/pages/auxiliares/edit/ConfirmDeleteCNAEComponent.js";
-import SearchCNAEGrupoAtividadeComponent from "/pages/auxiliares/search/SearchCNAEGrupoAtividadeComponent.js";
-import ModalComponent from "/components/common/ModalComponent.js";
+import { toast } from "../../../js/Utilities.js";
+import ConfirmDeleteCNAEComponent from "../../../pages/auxiliares/edit/ConfirmDeleteCNAEComponent.js";
+import SearchCNAEGrupoAtividadeComponent from "../../../pages/auxiliares/search/SearchCNAEGrupoAtividadeComponent.js";
+import ModalComponent from "../../../components/common/ModalComponent.js";
 
 class CadastrarCNAEGrupoAtividadeComponent {
   constructor({ cnaeData, onUpdate, onBack }) {

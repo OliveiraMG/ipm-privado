@@ -1,8 +1,7 @@
 /**
  * ConfirmDeleteCfopComponent.js - Componente para confirmar a exclusão de um CFOP
  */
-import { toast } from "/js/Utilities.js";
-import ModalComponent from "/components/common/ModalComponent.js";
+import { toast } from "../../../js/Utilities.js";
 
 class ConfirmDeleteCfopComponent {
   constructor({ cfopData, onConfirm, onCancel }) {

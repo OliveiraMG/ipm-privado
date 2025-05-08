@@ -1,7 +1,7 @@
 /**
  * SearchGrupoAtividadeComponent.js - Componente para pesquisa de atividades no grupo de atividades
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class SearchGrupoAtividadeComponent {
   constructor({ onSearch, onCancel }) {

@@ -1,7 +1,7 @@
 /**
  * RegisterGrupoAtividadeComponent.js - Componente para o formulário de cadastro de grupos de atividades
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class RegisterGrupoAtividadeComponent {
   constructor({ onSubmit, onBack }) {

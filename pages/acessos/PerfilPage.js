@@ -1,14 +1,14 @@
 /**
  * PerfilPage.js - Página de listagem de perfis
  */
-import { Header } from "/components/layout/Header.js";
-import { toast } from "/js/Utilities.js";
-import RegisterPerfilComponent from "/pages/acessos/register/RegisterPerfilComponent.js";
-import EditPerfilComponent from "/pages/acessos/edit/EditPerfilComponent.js";
-import SearchPerfilComponent from "/pages/acessos/search/SearchPerfilComponent.js";
-import PrintPerfilComponent from "/pages/acessos/print/PrintPerfilComponent.js";
-import SincronizarPermissoesPerfilComponent from "/pages/acessos/edit/SincronizarPermissoesPerfilComponent.js";
-import ModalComponent from "/components/common/ModalComponent.js";
+import { Header } from "../../components/layout/Header.js";
+import { toast } from "../../js/Utilities.js";
+import RegisterPerfilComponent from "../../pages/acessos/register/RegisterPerfilComponent.js";
+import EditPerfilComponent from "../../pages/acessos/edit/EditPerfilComponent.js";
+import SearchPerfilComponent from "../../pages/acessos/search/SearchPerfilComponent.js";
+import PrintPerfilComponent from "../../pages/acessos/print/PrintPerfilComponent.js";
+import SincronizarPermissoesPerfilComponent from "../../pages/acessos/edit/SincronizarPermissoesPerfilComponent.js";
+import ModalComponent from "../../components/common/ModalComponent.js";
 
 class PerfilPage {
   constructor() {

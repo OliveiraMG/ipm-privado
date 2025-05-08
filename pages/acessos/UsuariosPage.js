@@ -1,15 +1,15 @@
 /**
  * UsuariosPage.js - Página de listagem de usuários
  */
-import { Header } from "/components/layout/Header.js";
-import { toast } from "/js/Utilities.js";
-import RegisterUsuarioComponent from "/pages/acessos/register/RegisterUsuarioComponent.js";
-import EditUsuarioComponent from "/pages/acessos/edit/EditUsuarioComponent.js";
-import ModalComponent from "/components/common/ModalComponent.js";
-import SincronizarPerfisUsuarioComponent from "/pages/acessos/edit/SincronizarPerfisUsuarioComponent.js";
-import SincronizarPermissoesUsuarioComponent from "/pages/acessos/edit/SincronizarPermissoesUsuarioComponent.js";
-import SearchUsuarioComponent from "/pages/acessos/search/SearchUsuarioComponent.js";
-import ExportUsuarioComponent from "/pages/acessos/print/ExportUsuarioComponent.js";
+import { Header } from "../../components/layout/Header.js";
+import { toast } from "../../js/Utilities.js";
+import RegisterUsuarioComponent from "../../pages/acessos/register/RegisterUsuarioComponent.js";
+import EditUsuarioComponent from "../../pages/acessos/edit/EditUsuarioComponent.js";
+import ModalComponent from "../../components/common/ModalComponent.js";
+import SincronizarPerfisUsuarioComponent from "../../pages/acessos/edit/SincronizarPerfisUsuarioComponent.js";
+import SincronizarPermissoesUsuarioComponent from "../../pages/acessos/edit/SincronizarPermissoesUsuarioComponent.js";
+import SearchUsuarioComponent from "../../pages/acessos/search/SearchUsuarioComponent.js";
+import ExportUsuarioComponent from "../../pages/acessos/print/ExportUsuarioComponent.js";
 
 class UsuariosPage {
   constructor() {

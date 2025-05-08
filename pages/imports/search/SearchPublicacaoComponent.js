@@ -1,7 +1,7 @@
 /**
  * SearchPublicacaoComponent.js - Componente para pesquisa de publicação
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class SearchPublicacaoComponent {
   constructor(config) {

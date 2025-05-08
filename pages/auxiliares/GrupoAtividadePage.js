@@ -1,14 +1,14 @@
 /**
  * GrupoAtividadePage.js - Página de listagem de Grupos de Atividades
  */
-import { Header } from "/components/layout/Header.js";
-import { toast } from "/js/Utilities.js";
-import RegisterGrupoAtividadeComponent from "/pages/auxiliares/register/RegisterGrupoAtividadeComponent.js";
-import EditGrupoAtividadeComponent from "/pages/auxiliares/edit/EditGrupoAtividadeComponent.js";
-import CadastrarCNAEGrupoAtividadeComponent from "/pages/auxiliares/register/CadastrarCNAEGrupoAtividadeComponent.js";
-import SearchGrupoAtividadeComponent from "/pages/auxiliares/search/SearchGrupoAtividadeComponent.js";
-import PrintGrupoAtividadeComponent from "/pages/auxiliares/print/PrintGrupoAtividadeComponent.js";
-import ModalComponent from "/components/common/ModalComponent.js";
+import { Header } from "../../../components/layout/Header.js";
+import { toast } from "../../../js/Utilities.js";
+import RegisterGrupoAtividadeComponent from "../../../pages/auxiliares/register/RegisterGrupoAtividadeComponent.js";
+import EditGrupoAtividadeComponent from "../../../pages/auxiliares/edit/EditGrupoAtividadeComponent.js";
+import CadastrarCNAEGrupoAtividadeComponent from "../../../pages/auxiliares/register/CadastrarCNAEGrupoAtividadeComponent.js";
+import SearchGrupoAtividadeComponent from "../../../pages/auxiliares/search/SearchGrupoAtividadeComponent.js";
+import PrintGrupoAtividadeComponent from "../../../pages/auxiliares/print/PrintGrupoAtividadeComponent.js";
+import ModalComponent from "../../../components/common/ModalComponent.js";
 
 class GrupoAtividadePage {
   constructor() {

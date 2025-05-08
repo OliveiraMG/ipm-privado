@@ -1,7 +1,7 @@
 /**
  * DeleteRemessaComponent.js - Componente para remoção de remessa
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class DeleteRemessaComponent {
   /**

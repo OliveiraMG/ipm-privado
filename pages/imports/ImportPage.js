@@ -1,10 +1,10 @@
 /**
  * ImportPage.js - Página de importação de arquivos
  */
-import { Header } from "/components/layout/Header.js";
-import Button from "/components/common/Button.js";
-import Select from "/components/common/Select.js";
-import FileUpload from "/components/forms/FileUpload.js";
+import { Header } from "../../components/layout/Header.js";
+import Button from "../../components/common/Button.js";
+import Select from "../../components/common/Select.js";
+import FileUpload from "../../components/forms/FileUpload.js";
 
 class ImportPage {
   constructor() {

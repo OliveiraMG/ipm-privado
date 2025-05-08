@@ -1,7 +1,7 @@
 /**
  * SearchGrupoAtividadeComponent.js - Componente para pesquisa de atividades no grupo de atividades
  */
-import { toast } from '/js/Utilities.js';
+import { toast } from "../../../js/Utilities.js";
 
 class SearchGrupoAtividadeComponent {
   constructor({ onSearch, onCancel }) {
@@ -12,11 +12,11 @@ class SearchGrupoAtividadeComponent {
   }
 
   render() {
-    const container = document.createElement('div');
-    container.className = 'w-full';
+    const container = document.createElement("div");
+    container.className = "w-full";
 
-    const form = document.createElement('div');
-    form.className = 'p-4';
+    const form = document.createElement("div");
+    form.className = "p-4";
 
     form.innerHTML = `
       <div class="grid grid-cols-2 gap-4 mb-4">
@@ -54,47 +54,47 @@ class SearchGrupoAtividadeComponent {
   }
 
   setupEventListeners() {
-    const cancelBtn = this.element.querySelector('#cancel-btn');
-    const clearBtn = this.element.querySelector('#clear-btn');
-    const searchBtn = this.element.querySelector('#search-btn');
+    const cancelBtn = this.element.querySelector("#cancel-btn");
+    const clearBtn = this.element.querySelector("#clear-btn");
+    const searchBtn = this.element.querySelector("#search-btn");
 
     if (cancelBtn) {
-      cancelBtn.addEventListener('click', () => {
-        toast.info('Pesquisa cancelada.');
+      cancelBtn.addEventListener("click", () => {
+        toast.info("Pesquisa cancelada.");
         this.onCancel();
       });
     }
 
     if (clearBtn) {
-      clearBtn.addEventListener('click', () => {
+      clearBtn.addEventListener("click", () => {
         this.clearForm();
-        toast.info('Filtros limpos.');
+        toast.info("Filtros limpos.");
       });
     }
 
     if (searchBtn) {
-      searchBtn.addEventListener('click', () => {
+      searchBtn.addEventListener("click", () => {
         this.submitForm();
       });
     }
   }
 
   clearForm() {
-    this.element.querySelector('#ativo').value = '';
-    this.element.querySelector('#atividade').value = '';
-    this.onSearch({ ativo: '', atividade: '' });
+    this.element.querySelector("#ativo").value = "";
+    this.element.querySelector("#atividade").value = "";
+    this.onSearch({ ativo: "", atividade: "" });
   }
 
   submitForm() {
-    const ativo = this.element.querySelector('#ativo').value;
-    const atividade = this.element.querySelector('#atividade').value;
+    const ativo = this.element.querySelector("#ativo").value;
+    const atividade = this.element.querySelector("#atividade").value;
 
     const filters = {
-      ativo: ativo || '',
-      atividade: atividade || ''
+      ativo: ativo || "",
+      atividade: atividade || "",
     };
 
-    toast.success('Pesquisa realizada com sucesso!');
+    toast.success("Pesquisa realizada com sucesso!");
     this.onSearch(filters);
   }
 }

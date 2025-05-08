@@ -1,7 +1,7 @@
 /**
  * EditPermissaoComponent.js - Componente para edição de permissão
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class EditPermissaoComponent {
   /**

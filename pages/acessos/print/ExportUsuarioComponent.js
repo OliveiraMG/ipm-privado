@@ -1,7 +1,7 @@
 /**
  * ExportUsuarioComponent.js - Componente para exportação de usuários
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class ExportUsuarioComponent {
   /**

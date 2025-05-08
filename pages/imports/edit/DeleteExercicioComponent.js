@@ -1,7 +1,7 @@
 /**
  * DeleteExercicioComponent.js - Componente para remoção de exercício
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class DeleteExercicioComponent {
   constructor(config) {

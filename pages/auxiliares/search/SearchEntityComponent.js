@@ -1,7 +1,7 @@
 /**
  * SearchEntityComponent.js - Componente para a página de pesquisa de entidade
  */
-import { toast } from '/js/Utilities.js';
+import { toast } from "../../../js/Utilities.js";
 
 class SearchEntityComponent {
   /**
@@ -11,7 +11,7 @@ class SearchEntityComponent {
    * @param {Function} config.onBack - Função chamada ao clicar em Voltar
    */
   constructor(config) {
-    this.containerId = config.containerId || 'search-entity-container';
+    this.containerId = config.containerId || "search-entity-container";
     this.onSearch = config.onSearch || (() => {});
     this.onBack = config.onBack || (() => {});
     this.element = this.render();
@@ -23,13 +23,14 @@ class SearchEntityComponent {
    * @returns {HTMLElement} - Elemento do componente
    */
   render() {
-    const container = document.createElement('div');
-    container.className = 'flex-1 bg-gray-light w-full';
+    const container = document.createElement("div");
+    container.className = "flex-1 bg-gray-light w-full";
     container.id = this.containerId;
 
     // Card principal
-    const card = document.createElement('div');
-    card.className = 'bg-white rounded-2xl shadow-[6px_6px_12px_rgba(0,0,0,0.25)] p-12';
+    const card = document.createElement("div");
+    card.className =
+      "bg-white rounded-2xl shadow-[6px_6px_12px_rgba(0,0,0,0.25)] p-12";
 
     // Título
     card.innerHTML = `
@@ -37,8 +38,8 @@ class SearchEntityComponent {
     `;
 
     // Formulário de pesquisa
-    const form = document.createElement('div');
-    form.className = 'grid grid-cols-3 gap-4 mb-6';
+    const form = document.createElement("div");
+    form.className = "grid grid-cols-3 gap-4 mb-6";
     form.innerHTML = `
       <div class="col-span-1">
         <label for="codigo" class="block text-sm font-medium text-gray-700">Código:</label>
@@ -63,8 +64,8 @@ class SearchEntityComponent {
     card.appendChild(form);
 
     // Botões de ação
-    const actions = document.createElement('div');
-    actions.className = 'flex justify-end space-x-4';
+    const actions = document.createElement("div");
+    actions.className = "flex justify-end space-x-4";
     actions.innerHTML = `
       <button id="back-btn" class="px-4 py-2 border border-gray-300 rounded-full text-gray-700 hover:bg-gray-100">
         Voltar
@@ -86,40 +87,40 @@ class SearchEntityComponent {
    * Configura os eventos dos botões
    */
   setupEventListeners() {
-    const backBtn = this.element.querySelector('#back-btn');
-    const clearBtn = this.element.querySelector('#clear-btn');
-    const searchBtn = this.element.querySelector('#search-btn');
+    const backBtn = this.element.querySelector("#back-btn");
+    const clearBtn = this.element.querySelector("#clear-btn");
+    const searchBtn = this.element.querySelector("#search-btn");
 
     if (backBtn) {
-      backBtn.addEventListener('click', () => {
-        toast.info('Retornando à lista de entidades...');
+      backBtn.addEventListener("click", () => {
+        toast.info("Retornando à lista de entidades...");
         this.onBack();
       });
     }
 
     if (clearBtn) {
-      clearBtn.addEventListener('click', () => {
-        const formInputs = this.element.querySelectorAll('input, select');
-        formInputs.forEach(input => {
-          input.value = '';
+      clearBtn.addEventListener("click", () => {
+        const formInputs = this.element.querySelectorAll("input, select");
+        formInputs.forEach((input) => {
+          input.value = "";
         });
-        toast.info('Filtros limpos.');
+        toast.info("Filtros limpos.");
       });
     }
 
     if (searchBtn) {
-      searchBtn.addEventListener('click', () => {
-        const codigo = this.element.querySelector('#codigo').value;
-        const cidade = this.element.querySelector('#cidade').value;
-        const ativo = this.element.querySelector('#ativo').value;
+      searchBtn.addEventListener("click", () => {
+        const codigo = this.element.querySelector("#codigo").value;
+        const cidade = this.element.querySelector("#cidade").value;
+        const ativo = this.element.querySelector("#ativo").value;
 
         const filters = {
           codigo: codigo ? parseInt(codigo) : null,
           cidade: cidade || null,
-          ativo: ativo ? ativo === 'true' : null
+          ativo: ativo ? ativo === "true" : null,
         };
 
-        toast.info('Pesquisando entidades...');
+        toast.info("Pesquisando entidades...");
         this.onSearch(filters);
       });
     }

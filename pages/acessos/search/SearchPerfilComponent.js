@@ -1,7 +1,7 @@
 /**
  * SearchPerfilComponent.js - Componente para a página de pesquisa de perfis
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class SearchPerfilComponent {
   /**

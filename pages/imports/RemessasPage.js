@@ -1,12 +1,12 @@
 /**
  * RemessasPage.js - Página de listagem de remessas
  */
-import { Header } from "/components/layout/Header.js";
-import { toast } from "/js/Utilities.js";
-import RegisterRemessaComponent from "/pages/imports/register/RegisterRemessaComponent.js";
-import EditRemessaComponent from "/pages/imports/edit/EditRemessaComponent.js";
-import DeleteRemessaComponent from "/pages/imports/edit/DeleteRemessaComponent.js";
-import ModalComponent from "/components/common/ModalComponent.js";
+import { Header } from "../../components/layout/Header.js";
+import { toast } from "../../js/Utilities.js";
+import RegisterRemessaComponent from "../../pages/imports/register/RegisterRemessaComponent.js";
+import EditRemessaComponent from "../../pages/imports/edit/EditRemessaComponent.js";
+import DeleteRemessaComponent from "../../pages/imports/edit/DeleteRemessaComponent.js";
+import ModalComponent from "../../components/common/ModalComponent.js";
 
 class RemessasPage {
   constructor() {

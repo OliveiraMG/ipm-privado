@@ -1,7 +1,7 @@
 /**
  * RegisterPerfilComponent.js - Componente para cadastro de perfil
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class RegisterPerfilComponent {
   /**

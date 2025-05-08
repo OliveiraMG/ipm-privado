@@ -1,8 +1,7 @@
 /**
  * UpdateRepercuteComponent.js - Componente para atualizar o campo Repercute de um CFOP
  */
-import { toast } from "/js/Utilities.js";
-import ModalComponent from "/components/common/ModalComponent.js";
+import { toast } from "../../../js/Utilities.js";
 
 class UpdateRepercuteComponent {
   constructor({ cfopData, onUpdate, onCancel }) {

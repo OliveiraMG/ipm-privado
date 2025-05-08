@@ -2,7 +2,6 @@
  * HeaderDropdown.js - Componente de dropdown para o header
  * Suporta tanto menus simples quanto categorizados
  */
-
 class HeaderDropdown {
   /**
    * Renderiza um dropdown do header

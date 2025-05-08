@@ -1,8 +1,7 @@
 /**
  * EditPortariaComponent.js - Componente para o formulário de edição de portarias
  */
-import { toast } from "/js/Utilities.js";
-import ModalComponent from "/components/common/ModalComponent.js";
+import { toast } from "../../../js/Utilities.js";
 
 class EditPortariaComponent {
   constructor({ portariaData, onUpdate, onBack }) {

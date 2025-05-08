@@ -1,7 +1,7 @@
 /**
  * EditGrupoAtividadeComponent.js - Componente para o formulário de edição de grupos de atividades
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class EditGrupoAtividadeComponent {
   constructor({ atividadeData, onUpdate, onBack }) {

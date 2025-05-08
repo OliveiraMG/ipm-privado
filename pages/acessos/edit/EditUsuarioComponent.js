@@ -1,7 +1,7 @@
 /**
  * EditUsuarioComponent.js - Componente para edição de usuário
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class EditUsuarioComponent {
   constructor({ usuarioData, onUpdate, onBack }) {

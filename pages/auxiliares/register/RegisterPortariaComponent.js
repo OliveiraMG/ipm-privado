@@ -1,8 +1,7 @@
 /**
  * RegisterPortariaComponent.js - Componente para o formulário de cadastro de portarias
  */
-import { toast } from "/js/Utilities.js";
-import ModalComponent from "/components/common/ModalComponent.js";
+import { toast } from "../../../js/Utilities.js";
 
 class RegisterPortariaComponent {
   constructor({ onSubmit, onBack }) {

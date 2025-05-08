@@ -1,7 +1,7 @@
 /**
  * EditExercicioComponent.js - Componente para edição de exercício
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class EditExercicioComponent {
   constructor(config) {

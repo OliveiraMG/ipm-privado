@@ -1,7 +1,7 @@
 /**
  * RegisterPermissaoComponent.js - Componente para cadastro de permissão
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class RegisterPermissaoComponent {
   /**

@@ -1,7 +1,7 @@
 /**
  * EditPerfilComponent.js - Componente para edição de perfil
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class EditPerfilComponent {
   /**

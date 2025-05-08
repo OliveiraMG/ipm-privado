@@ -1,10 +1,10 @@
 /**
  * EditCfopPortariaComponent.js - Componente para o formulário de edição de CFOPs de uma portaria
  */
-import { toast } from "/js/Utilities.js";
-import ModalComponent from "/components/common/ModalComponent.js";
-import ConfirmDeleteCfopComponent from "/pages/auxiliares/edit/ConfirmDeleteCfopComponent.js";
-import UpdateRepercuteComponent from "/pages/auxiliares/edit/UpdateRepercuteComponent.js";
+import { toast } from "../../../js/Utilities.js";
+import ModalComponent from "../../../components/common/ModalComponent.js";
+import ConfirmDeleteCfopComponent from "../../../pages/auxiliares/edit/ConfirmDeleteCfopComponent.js";
+import UpdateRepercuteComponent from "../../../pages/auxiliares/edit/UpdateRepercuteComponent.js";
 
 class EditCfopPortariaComponent {
   constructor({ cfopData, cfopSelect, onUpdate, onBack }) {

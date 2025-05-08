@@ -1,13 +1,13 @@
 /**
  * CfopPage.js - Página de listagem de CFOPs
  */
-import { Header } from "/components/layout/Header.js";
-import { toast } from "/js/Utilities.js";
-import RegisterCfopComponent from "/pages/auxiliares/register/RegisterCfopComponent.js";
-import EditCfopComponent from "/pages/auxiliares/edit/EditCfopComponent.js";
-import SearchCfopComponent from "/pages/auxiliares/search/SearchCfopComponent.js";
-import PrintCfopComponent from "/pages/auxiliares/print/PrintCfopComponent.js";
-import ModalComponent from "/components/common/ModalComponent.js";
+import { Header } from "../../../components/layout/Header.js";
+import { toast } from "../../../js/Utilities.js";
+import RegisterCfopComponent from "../../../pages/auxiliares/register/RegisterCfopComponent.js";
+import EditCfopComponent from "../../../pages/auxiliares/edit/EditCfopComponent.js";
+import SearchCfopComponent from "../../../pages/auxiliares/search/SearchCfopComponent.js";
+import PrintCfopComponent from "../../../pages/auxiliares/print/PrintCfopComponent.js";
+import ModalComponent from "../../../components/common/ModalComponent.js";
 
 class CfopPage {
   constructor() {

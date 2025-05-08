@@ -1,9 +1,9 @@
 /**
  * ImportedPage.js - Página de listagem de arquivos importados
  */
-import { Header } from "/components/layout/Header.js";
-import IndexesTable from "/components/tables/IndexesTable.js";
-import { toast } from "/js/Utilities.js";
+import { Header } from "../../components/layout/Header.js";
+import IndexesTable from "../../components/tables/IndexesTable.js";
+import { toast } from "../../js/Utilities.js";
 
 class ImportedPage {
   constructor() {

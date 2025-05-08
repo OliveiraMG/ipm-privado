@@ -1,7 +1,7 @@
 /**
  * PrintPerfilComponent.js - Componente para a página de impressão de perfis
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class PrintPerfilComponent {
   /**

@@ -1,7 +1,7 @@
 /**
  * SearchPortariaComponent.js - Componente para o formulário de pesquisa de portarias
  */
-import { toast } from '/js/Utilities.js';
+import { toast } from "../../../js/Utilities.js";
 
 class SearchPortariaComponent {
   constructor({ onSearch, onCancel }) {
@@ -12,11 +12,11 @@ class SearchPortariaComponent {
   }
 
   render() {
-    const container = document.createElement('div');
-    container.className = 'w-full';
+    const container = document.createElement("div");
+    container.className = "w-full";
 
-    const form = document.createElement('div');
-    form.className = 'p-4';
+    const form = document.createElement("div");
+    form.className = "p-4";
 
     form.innerHTML = `
       <div class="grid grid-cols-3 gap-4">
@@ -58,50 +58,50 @@ class SearchPortariaComponent {
   }
 
   setupEventListeners() {
-    const cancelBtn = this.element.querySelector('#cancel-btn');
-    const clearBtn = this.element.querySelector('#clear-btn');
-    const searchBtn = this.element.querySelector('#search-btn');
+    const cancelBtn = this.element.querySelector("#cancel-btn");
+    const clearBtn = this.element.querySelector("#clear-btn");
+    const searchBtn = this.element.querySelector("#search-btn");
 
     if (cancelBtn) {
-      cancelBtn.addEventListener('click', () => {
-        toast.info('Pesquisa cancelada.');
+      cancelBtn.addEventListener("click", () => {
+        toast.info("Pesquisa cancelada.");
         this.onCancel();
       });
     }
 
     if (clearBtn) {
-      clearBtn.addEventListener('click', () => {
+      clearBtn.addEventListener("click", () => {
         this.clearForm();
-        toast.info('Filtros limpos.');
+        toast.info("Filtros limpos.");
       });
     }
 
     if (searchBtn) {
-      searchBtn.addEventListener('click', () => {
+      searchBtn.addEventListener("click", () => {
         this.submitForm();
       });
     }
   }
 
   clearForm() {
-    this.element.querySelector('#vigente').value = '';
-    this.element.querySelector('#numero').value = '';
-    this.element.querySelector('#ano').value = '';
-    this.onSearch({ vigente: '', numero: '', ano: '' });
+    this.element.querySelector("#vigente").value = "";
+    this.element.querySelector("#numero").value = "";
+    this.element.querySelector("#ano").value = "";
+    this.onSearch({ vigente: "", numero: "", ano: "" });
   }
 
   submitForm() {
-    const vigente = this.element.querySelector('#vigente').value;
-    const numero = this.element.querySelector('#numero').value;
-    const ano = this.element.querySelector('#ano').value;
+    const vigente = this.element.querySelector("#vigente").value;
+    const numero = this.element.querySelector("#numero").value;
+    const ano = this.element.querySelector("#ano").value;
 
     const filters = {
-      vigente: vigente || '',
-      numero: numero || '',
-      ano: ano || ''
+      vigente: vigente || "",
+      numero: numero || "",
+      ano: ano || "",
     };
 
-    toast.success('Pesquisa realizada com sucesso!');
+    toast.success("Pesquisa realizada com sucesso!");
     this.onSearch(filters);
   }
 }

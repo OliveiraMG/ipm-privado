@@ -1,7 +1,7 @@
 /**
  * PrintPortariaComponent.js - Componente para o formulário de impressão de portarias
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class PrintPortariaComponent {
   constructor({ onPrint, onCancel }) {

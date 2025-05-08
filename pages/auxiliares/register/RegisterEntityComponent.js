@@ -1,9 +1,9 @@
 /**
  * RegisterEntityComponent.js - Componente para a página de cadastro de entidade
  */
-import { Header } from "/components/layout/Header.js";
-import { toast } from "/js/Utilities.js";
-import RichTextEditorComponent from "/components/forms/RichTextEditorComponent.js";
+import { Header } from "../../../components/layout/Header.js";
+import { toast } from "../../../js/Utilities.js";
+import RichTextEditorComponent from "../../../components/forms/RichTextEditorComponent.js";
 
 class RegisterEntityComponent {
   /**

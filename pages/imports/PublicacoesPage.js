@@ -1,14 +1,14 @@
 /**
  * PublicacoesPage.js - Página de listagem de publicações
  */
-import { Header } from "/components/layout/Header.js";
-import { toast } from "/js/Utilities.js";
-import RegisterPublicacaoComponent from "/pages/imports/register/RegisterPublicacaoComponent.js";
-import EditPublicacaoComponent from "/pages/imports/edit/EditPublicacaoComponent.js";
-import DeletePublicacaoComponent from "/pages/imports/edit/DeletePublicacaoComponent.js";
-import SearchPublicacaoComponent from "/pages/imports/search/SearchPublicacaoComponent.js";
-import PrintPublicacaoComponent from "/pages/imports/print/PrintPublicacaoComponent.js";
-import ModalComponent from "/components/common/ModalComponent.js";
+import { Header } from "../../components/layout/Header.js";
+import { toast } from "../../js/Utilities.js";
+import RegisterPublicacaoComponent from "../../pages/imports/register/RegisterPublicacaoComponent.js";
+import EditPublicacaoComponent from "../../pages/imports/edit/EditPublicacaoComponent.js";
+import DeletePublicacaoComponent from "../../pages/imports/edit/DeletePublicacaoComponent.js";
+import SearchPublicacaoComponent from "../../pages/imports/search/SearchPublicacaoComponent.js";
+import PrintPublicacaoComponent from "../../pages/imports/print/PrintPublicacaoComponent.js";
+import ModalComponent from "../../components/common/ModalComponent.js";
 
 class PublicacoesPage {
   constructor() {

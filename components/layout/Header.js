@@ -1,7 +1,6 @@
 /**
  * Header Component - Main navigation header for IPM-e
  */
-
 import HeaderDropdown from "../layout/HeaderDropdown.js";
 
 class Header {

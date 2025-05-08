@@ -1,14 +1,13 @@
 /**
  * CitiesPage.js - Página de listagem de cidades
  */
-import { Header } from "/components/layout/Header.js";
-import IndexesTable from "/components/tables/IndexesTable.js";
-import { toast } from "/js/Utilities.js";
-import RegisterCityComponent from "/pages/auxiliares/register/RegisterCityComponent.js";
-import SearchCityComponent from "/pages/auxiliares/search/SearchCityComponent.js";
-import PrintCityComponent from "/pages/auxiliares/print/PrintCityComponent.js";
-import EditCityComponent from "/pages/auxiliares/edit/EditCityComponent.js";
-import ModalComponent from "/components/common/ModalComponent.js";
+import { Header } from "../../../components/layout/Header.js";
+import { toast } from "../../../js/Utilities.js";
+import RegisterCityComponent from "../../../pages/auxiliares/register/RegisterCityComponent.js";
+import SearchCityComponent from "../../../pages/auxiliares/search/SearchCityComponent.js";
+import PrintCityComponent from "../../../pages/auxiliares/print/PrintCityComponent.js";
+import EditCityComponent from "../../../pages/auxiliares/edit/EditCityComponent.js";
+import ModalComponent from "../../../components/common/ModalComponent.js";
 
 class CitiesPage {
   constructor() {

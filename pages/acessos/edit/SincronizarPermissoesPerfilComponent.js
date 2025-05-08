@@ -1,7 +1,7 @@
 /**
  * SincronizarPermissoesPerfilComponent.js - Componente para sincronizar permissões de perfil
  */
-import { toast } from "/js/Utilities.js";
+import { toast } from "../../../js/Utilities.js";
 
 class SincronizarPermissoesPerfilComponent {
   /**

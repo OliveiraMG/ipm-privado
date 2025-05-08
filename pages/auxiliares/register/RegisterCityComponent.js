@@ -1,9 +1,8 @@
 /**
  * RegisterCityComponent.js - Componente para a página de cadastro de cidade
  */
-import { Header } from "/components/layout/Header.js";
-import { toast } from "/js/Utilities.js";
-import ModalComponent from "/components/common/ModalComponent.js";
+import { Header } from "../../../components/layout/Header.js";
+import { toast } from "../../../js/Utilities.js";
 
 class RegisterCityComponent {
   /**

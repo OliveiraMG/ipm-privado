@@ -2,9 +2,6 @@
  * ChartComponent.js - Componente genérico para gráficos usando Chart.js
  */
 
-/**
- * Classe que representa um gráfico genérico usando Chart.js
- */
 class ChartComponent {
   /**
    * Cria uma instância do gráfico
