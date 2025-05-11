@@ -70,16 +70,12 @@ export const toast = {
     const { icon, color } = TOAST_TYPES[type] || TOAST_TYPES.info;
 
     const toastEl = document.createElement("div");
-    toastEl.className = `fixed bottom-4 right-4 bg-${color}-100 border-l-4 border-${color}-500 text-${color}-700 p-4 rounded shadow-md z-50`;
+    toastEl.className = `fixed bottom-4 right-4 bg-${color}-100 border-l-4 border-${color}-500 text-${color}-700 p-4 rounded shadow-md z-50 flex =`;
     toastEl.innerHTML = `
-      <div class="flex items-center">
-        <div class="py-1"><i class="fas fa-${icon} mr-2"></i></div>
-        <div>
-          <p class="font-bold">${
-            type.charAt(0).toUpperCase() + type.slice(1)
-          }</p>
-          <p class="text-sm">${message}</p>
-        </div>
+      <div class="py-1"><i class="fas fa-${icon} mr-2"></i></div>
+      <div>
+        <p class="font-bold">${type.charAt(0).toUpperCase() + type.slice(1)}</p>
+        <p class="text-sm">${message}</p>
       </div>
     `;
 
