@@ -17,7 +17,7 @@ class InclusaoPage {
     this.setupBreadcrumbs();
     this.renderContent();
     this.loadData();
-    this.setupEventListeners(); // Chamando a função que configura os eventos corretamente
+    this.setupEventListeners();
   }
 
   setupEventListeners() {
@@ -90,8 +90,8 @@ class InclusaoPage {
     const modalHTML = `
   <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center hidden z-50">
     <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
-      <h2 class="text-xl font-semibold text-red-600 mb-4">Confirmar Exclusão</h2>
-      <p class="text-gray-700 mb-4">Tem certeza que deseja excluir o contribuinte <span class="font-bold"></span>?</p>
+      <h2 class="text-xl font-semibold text-[#264757] mb-4">Confirmar Exclusão</h2>
+      <p class="text-gray-700 mb-4">Tem certeza que deseja excluir o contribuinte <span class="font-bold text-red-600"></span>?</p>
       <div class="flex justify-end space-x-2">
         <button id="cancelDelete" class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400">Cancelar</button>
         <button id="confirmDelete" class="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700">Confirmar</button>
@@ -147,7 +147,7 @@ class InclusaoPage {
     const paginatedData = this.tableData.slice(startIndex, endIndex);
 
     let tableHTML = `
-      <table class="min-w-full border-collapse">
+      <table class="min-w-full border-collapse rounded-xl overflow-hidden">
         <thead>
           <tr class="bg-blue-dark">
             <th class="text-white text-sm text-center py-2 px-4">AÇÕES</th>

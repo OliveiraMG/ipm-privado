@@ -93,7 +93,7 @@ class VaCatEconomicaPage {
     const data = this.getPaginatedData();
 
     const tableHTML = `
-    <table class="w-full table-auto border-collapse">
+    <table class="w-full table-auto border-collapse rounded-xl overflow-hidden">
       <thead class="bg-[#23424A] text-white ">
         <tr>
           <th class="px-4 py-2 text-left">Apuração</th>
@@ -249,7 +249,7 @@ class VaCatEconomicaPage {
     const modalContent = document.createElement("div");
     modalContent.className = "overflow-x-auto max-h-96";
     modalContent.innerHTML = `
-        <table class="table-auto w-full border-collapse">
+        <table class="table-auto w-full border-collapse rounded-xl overflow-hidden">
           <thead>
             <tr class="bg-[#23424A] text-white">
               <th class="px-4 py-2 text-left">Ação</th>
@@ -393,7 +393,7 @@ class VaCatEconomicaPage {
 
     modalContent.innerHTML = `
       <div class="overflow-x-auto" style="max-height: calc(100vh - 150px);">
-        <table class="w-full table-auto border-collapse">
+        <table class="w-full table-auto border-collapse rounded-xl overflow-hidden">
           <thead class="bg-[#23424A] text-white sticky top-0">
             <tr>
               <th class="px-4 py-2 text-left">Ações</th>

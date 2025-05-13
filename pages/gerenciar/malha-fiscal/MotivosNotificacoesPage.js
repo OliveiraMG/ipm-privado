@@ -1,6 +1,7 @@
 /**
- * MotivosNotificacoesPage.js - Página de listagem de permissões
- */ import { Header } from "../../../components/layout/Header.js";
+ * MotivosNotificacoesPage.js - Página de listagem de motivos de notificações
+ */
+import { Header } from "../../../components/layout/Header.js";
 import { toast } from "../../../js/Utilities.js";
 import ModalComponent from "../../../components/common/ModalComponent.js";
 import RegisterMotivoComponent from "./registers/RegisterMotivosNotificacoesComponent.js";
@@ -170,7 +171,7 @@ class MotivosNotificacoesPage {
 
     this.modal.open();
   }
-
+  
   updateData(updatedData) {
     this.tableData = this.tableData.map((item) =>
       item.id === updatedData.id ? { ...item, ...updatedData } : item
@@ -231,7 +232,7 @@ class MotivosNotificacoesPage {
       .join("");
 
     container.innerHTML = `
-      <table class="min-w-full border-collapse">
+      <table class="min-w-full border-collapse rounded-xl overflow-hidden">
         <thead>
           <tr class="bg-blue-dark">
             <th class="text-white text-sm text-center py-2 px-4 border-2">AÇÕES</th>

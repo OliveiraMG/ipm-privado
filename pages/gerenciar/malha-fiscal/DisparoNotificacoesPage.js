@@ -48,6 +48,7 @@ class DisparoNotificacoesPage {
     const content = document.createElement("div");
     content.className = "text-gray-700 text-base mb-6";
     content.innerHTML = `
+    PAGINA NAO IMPLEMENTADA
         `;
 
     card.appendChild(content);

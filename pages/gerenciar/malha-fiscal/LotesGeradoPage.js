@@ -1,7 +1,8 @@
 /**
- * LotesGeradoPage.js - Página de Lotes gGerados
- */ 
+ * LotesGeradoPage.js - Página de Lotes Gerados
+ */
 import { Header } from "../../../components/layout/Header.js";
+import { toast } from "../../../js/Utilities.js";
 
 class LotesGeradosPage {
   constructor() {
@@ -23,6 +24,7 @@ class LotesGeradosPage {
     this.renderContent();
     this.modal = this.createNotificationModal();
     this.deleteModal = this.createDeleteModal();
+    this.confirmationModal = this.createConfirmationModal(); // Cria o modal de confirmação
   }
 
   setupBreadcrumbs() {
@@ -85,8 +87,14 @@ class LotesGeradosPage {
 
     const data = this.getPaginatedData();
 
+    if (!data.length) {
+      container.innerHTML =
+        '<p class="text-center py-4">Nenhum dado disponível</p>';
+      return;
+    }
+
     const tableHTML = `
-    <table class="w-full table-auto border-collapse">
+    <table class="w-full table-auto border-collapse rounded-xl overflow-hidden">
       <thead class="bg-[#23424A] text-white">
         <tr>
           <th class="px-4 py-2 text-left border-2">Ações</th>
@@ -110,7 +118,7 @@ class LotesGeradosPage {
                     <i class="fas fa-bell"></i> Notificações
                   </button>                  
                   
-                  <button class="flex items-center gap-1 bg-[#3C7A89] hover:opacity-60 text-white px-3 py-1 rounded transition-all duration-300 ease-in-out">
+                  <button class="imprimir-btn flex items-center gap-1 bg-[#264757] hover:opacity-60 text-white px-3 py-1 rounded transition-all duration-300 ease-in-out">
                     <i class="fas fa-print"></i>
                     Imprimir
                   </button>
@@ -134,23 +142,22 @@ class LotesGeradosPage {
   `;
 
     container.innerHTML = tableHTML;
-    // Após container.innerHTML = tableHTML;
-    container.innerHTML = tableHTML;
 
-    // Adicionar eventos aos botões de notificação
-    container.querySelectorAll(".notificar-btn").forEach((btn) => {
-      btn.onclick = (e) => {
-        const index = parseInt(e.currentTarget.dataset.index, 10);
+    const notificarButtons = container.querySelectorAll(".notificar-btn");
+    notificarButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        const index = e.currentTarget.dataset.index;
         this.showNotifications(index);
-      };
+        this.notificationPage = 1;
+      });
     });
 
-    // Adicionar eventos aos botões de exclusão
-    container.querySelectorAll(".excluir-btn").forEach((btn) => {
-      btn.onclick = (e) => {
-        const index = parseInt(e.currentTarget.dataset.index, 10);
+    const excluirButtons = container.querySelectorAll(".excluir-btn");
+    excluirButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        const index = e.currentTarget.dataset.index;
         this.showDeleteModal(index);
-      };
+      });
     });
   }
 
@@ -159,6 +166,7 @@ class LotesGeradosPage {
     this.updateNotificationModal();
     this.modal.classList.remove("hidden");
   }
+
   showDeleteModal(index) {
     this.selectedItemIndex = index;
     const item = this.tableData[index];
@@ -179,8 +187,10 @@ class LotesGeradosPage {
   }
 
   updateNotificationModal() {
-    const modal = document.getElementById("notificationModal");
+    const modal = document.getElementById("notification-modal");
+    if (!modal) return;
     const tbody = modal.querySelector("tbody");
+    if (!tbody) return;
 
     const notificacoes = this.selectedItem?.notificacoes || [];
     const start = (this.notificationPage - 1) * this.notificationsPerPage;
@@ -192,7 +202,7 @@ class LotesGeradosPage {
         (item) => `
       <tr class="bg-white border-t">
         <td class="px-4 py-2 flex gap-2">
-          <button class="flex items-center gap-1 bg-[#9F3A3A] hover:opacity-60 text-white px-3 py-1 rounded">
+          <button class="excluir-notificacao-btn flex items-center gap-1 bg-[#9F3A3A] hover:opacity-60 text-white px-3 py-1 rounded" data-cfop="${item.cfop}">
             Excluir 
             <i class="fas fa-trash-alt"></i>
           </button>
@@ -210,6 +220,17 @@ class LotesGeradosPage {
       )
       .join("");
 
+    // Adiciona event listeners para os botões de excluir notificação
+    const excluirNotificacaoButtons = tbody.querySelectorAll(
+      ".excluir-notificacao-btn"
+    );
+    excluirNotificacaoButtons.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        const cfopToDelete = event.currentTarget.dataset.cfop;
+        this.cfopToDelete = cfopToDelete; // Store CFOP to delete
+        this.showConfirmationModal(); // Show confirmation modal
+      });
+    });
     this.renderNotificationPagination(notificacoes.length);
   }
 
@@ -227,7 +248,7 @@ class LotesGeradosPage {
     <button class="px-3 py-1 border rounded ${
       this.notificationPage === 1
         ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-        : "bg-white text-blue-dark"
+        : "bg-white text-blue-dark hover:bg-blue-light"
     }"
       ${
         this.notificationPage === 1 ? "disabled" : ""
@@ -239,7 +260,7 @@ class LotesGeradosPage {
       <button class="px-3 py-1 border rounded ${
         this.notificationPage === i
           ? "bg-blue-dark text-white"
-          : "bg-white text-blue-dark"
+          : "bg-white text-blue-dark hover:bg-blue-light"
       }"
         data-page="${i}">${i}</button>
     `;
@@ -249,7 +270,7 @@ class LotesGeradosPage {
     <button class="px-3 py-1 border rounded ${
       this.notificationPage === totalPages
         ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-        : "bg-white text-blue-dark"
+        : "bg-white text-blue-dark hover:bg-blue-light"
     }"
       ${
         this.notificationPage === totalPages ? "disabled" : ""
@@ -265,26 +286,34 @@ class LotesGeradosPage {
       };
     });
 
-    document.getElementById("noti-prev").onclick = () => {
-      if (this.notificationPage > 1) {
-        this.notificationPage--;
-        this.updateNotificationModal();
-      }
-    };
-    document.getElementById("noti-next").onclick = () => {
-      if (this.notificationPage < totalPages) {
-        this.notificationPage++;
-        this.updateNotificationModal();
-      }
-    };
+    const prevButton = document.getElementById("noti-prev");
+    const nextButton = document.getElementById("noti-next");
+
+    if (prevButton) {
+      prevButton.onclick = () => {
+        if (this.notificationPage > 1) {
+          this.notificationPage--;
+          this.updateNotificationModal();
+        }
+      };
+    }
+
+    if (nextButton) {
+      nextButton.onclick = () => {
+        if (this.notificationPage < totalPages) {
+          this.notificationPage++;
+          this.updateNotificationModal();
+        }
+      };
+    }
   }
 
   createNotificationModal() {
-    const modal = document.createElement("div");
-    modal.id = "notificationModal";
-    modal.className =
+    const modalDiv = document.createElement("div");
+    modalDiv.id = "notification-modal";
+    modalDiv.className =
       "fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50";
-    modal.innerHTML = `
+    modalDiv.innerHTML = `
     <div class="bg-white p-8 rounded-2xl w-[80%] max-w-4xl shadow-lg relative">
       <h2 class="text-2xl font-bold mb-4 text-blue-dark">Notificações</h2>
       <button class="absolute top-2 right-4 text-gray-500 hover:text-gray-700 text-xl" id="closeNotificationModal">&times;</button>
@@ -309,20 +338,31 @@ class LotesGeradosPage {
     </div>
   `;
 
-    document.getElementById("closeNotificationModal").onclick = () => {
-      modal.classList.add("hidden");
-    };
-    document.getElementById("voltarModal").onclick = () => {
-      modal.classList.add("hidden");
-    };
-    document.getElementById("editarModal").onclick = () => {
-      alert("Função de edição ainda não implementada.");
-    };
+    document.body.appendChild(modalDiv);
 
-    document.body.appendChild(modal);
-    document.getElementById("closeNotificationModal").onclick = () => {
-      modal.classList.add("hidden");
-    };
+    const modal = document.getElementById("notification-modal");
+    const closeModalBtn = document.getElementById("closeNotificationModal");
+    const voltarBtn = document.getElementById("voltarModal");
+    const editarBtn = document.getElementById("editarModal");
+
+    if (closeModalBtn) {
+      closeModalBtn.onclick = () => {
+        modal.classList.add("hidden");
+      };
+    }
+
+    if (voltarBtn) {
+      voltarBtn.onclick = () => {
+        modal.classList.add("hidden");
+      };
+    }
+
+    if (editarBtn) {
+      editarBtn.onclick = () => {
+        toast.info("Função de edição ainda não implementada.");
+      };
+    }
+
     return modal;
   }
 
@@ -343,13 +383,80 @@ class LotesGeradosPage {
       </div>
     `;
     document.body.appendChild(modal);
-    document.getElementById("cancelDelete").onclick = () => {
-      modal.classList.add("hidden");
-    };
-    document.getElementById("confirmDelete").onclick = () => {
-      modal.classList.add("hidden");
-    };
+    const cancelDeleteBtn = document.getElementById("cancelDelete");
+    const confirmDeleteBtn = document.getElementById("confirmDelete");
+
+    if (cancelDeleteBtn) {
+      cancelDeleteBtn.onclick = () => {
+        modal.classList.add("hidden");
+      };
+    }
+
+    if (confirmDeleteBtn) {
+      confirmDeleteBtn.onclick = () => {
+        modal.classList.add("hidden");
+      };
+    }
     return modal;
+  }
+
+  createConfirmationModal() {
+    const modalDiv = document.createElement("div");
+    modalDiv.id = "confirmation-modal";
+    modalDiv.className =
+      "fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50";
+    modalDiv.innerHTML = `
+      <div class="bg-white p-6 rounded-2xl shadow-xl w-[90%] max-w-md relative text-center">
+        <h2 class="text-xl font-bold mb-4">Confirmação</h2>
+        <p class="text-gray-700 mb-6">Deseja realmente excluir esta notificação?</p>
+        <div class="flex justify-center gap-4">
+          <button id="cancelConfirmation" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancelar</button>
+          <button id="confirmConfirmation" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Excluir</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modalDiv);
+
+    const modal = document.getElementById("confirmation-modal");
+    const cancelBtn = document.getElementById("cancelConfirmation");
+    const confirmBtn = document.getElementById("confirmConfirmation");
+
+    if (cancelBtn) {
+      cancelBtn.onclick = () => {
+        modal.classList.add("hidden");
+      };
+    }
+
+    if (confirmBtn) {
+      confirmBtn.onclick = () => {
+        // Perform the deletion
+        this.selectedItem.notificacoes = this.selectedItem.notificacoes.filter(
+          (n) => n.cfop !== this.cfopToDelete
+        );
+        this.updateNotificationModal(); // Re-render the modal after deletion
+
+        // Recalculate totalPages and current page for notification pagination
+        const totalNotificacoes = this.selectedItem.notificacoes.length;
+        const totalPages = Math.ceil(
+          totalNotificacoes / this.notificationsPerPage
+        );
+        if (this.notificationPage > totalPages) {
+          this.notificationPage = totalPages; // Adjust to the last page if necessary
+        }
+        this.renderNotificationPagination(totalNotificacoes);
+
+        modal.classList.add("hidden");
+      };
+    }
+    return modal;
+  }
+
+  showConfirmationModal() {
+    this.confirmationModal.classList.remove("hidden");
+  }
+
+  hideConfirmationModal() {
+    this.confirmationModal.classList.add("hidden");
   }
 
   renderPagination() {
@@ -371,7 +478,7 @@ class LotesGeradosPage {
         <button class="px-3 py-1 border rounded ${
           this.currentPage === i
             ? "bg-blue-dark text-white"
-            : "bg-white text-blue-dark"
+            : "bg-white text-blue-dark hover:bg-blue-light"
         }" data-page="${i}">
           ${i}
         </button>
@@ -390,7 +497,9 @@ class LotesGeradosPage {
 
     paginationContainer.innerHTML = paginationHTML;
 
-    paginationContainer.querySelectorAll("button[data-page]").forEach((btn) => {
+    const pageButtons =
+      paginationContainer.querySelectorAll("button[data-page]");
+    pageButtons.forEach((btn) => {
       btn.onclick = () => {
         this.currentPage = parseInt(btn.dataset.page);
         this.renderTable();
@@ -398,21 +507,28 @@ class LotesGeradosPage {
       };
     });
 
-    document.getElementById("prev-page").onclick = () => {
-      if (this.currentPage > 1) {
-        this.currentPage--;
-        this.renderTable();
-        this.renderPagination();
-      }
-    };
+    const prevPageBtn = document.getElementById("prev-page");
+    const nextPageBtn = document.getElementById("next-page");
 
-    document.getElementById("next-page").onclick = () => {
-      if (this.currentPage < this.totalPages) {
-        this.currentPage++;
-        this.renderTable();
-        this.renderPagination();
-      }
-    };
+    if (prevPageBtn) {
+      prevPageBtn.onclick = () => {
+        if (this.currentPage > 1) {
+          this.currentPage--;
+          this.renderTable();
+          this.renderPagination();
+        }
+      };
+    }
+
+    if (nextPageBtn) {
+      nextPageBtn.onclick = () => {
+        if (this.currentPage < this.totalPages) {
+          this.currentPage++;
+          this.renderTable();
+          this.renderPagination();
+        }
+      };
+    }
   }
 
   getMockData() {
@@ -439,7 +555,7 @@ class LotesGeradosPage {
         ],
       },
       {
-        token: "N12122024095738",
+        token: "N12122024095739",
         cidade: "ACORIZAL",
         atividadeEconomica: "PECUÁRIA",
         usuario: "DESENVOLVEDORA",
@@ -454,7 +570,7 @@ class LotesGeradosPage {
         ],
       },
       {
-        token: "N12122024095738",
+        token: "N12122024095740",
         cidade: "PORTO ESPERIDIAO",
         atividadeEconomica: "PECUÁRIA",
         usuario: "DESENVOLVEDOR",
@@ -474,7 +590,14 @@ class LotesGeradosPage {
       },
     ];
   }
+
+  static initialize() {
+    return new LotesGeradosPage();
+  }
 }
 
-// Instanciar globalmente
-window.lotesPage = new LotesGeradosPage();
+document.addEventListener("DOMContentLoaded", () => {
+  LotesGeradosPage.initialize();
+});
+
+export default LotesGeradosPage;

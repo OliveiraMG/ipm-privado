@@ -91,7 +91,7 @@ class VaRecBrutaPage {
     const data = this.getPaginatedData();
 
     const tableHTML = `
-    <table class="w-full table-auto border-collapse">
+    <table class="w-full table-auto border-collapse rounded-xl overflow-hidden">
       <thead class="bg-[#23424A] text-white ">
         <tr>
           <th class="px-4 py-2 text-left">Apuração</th>
