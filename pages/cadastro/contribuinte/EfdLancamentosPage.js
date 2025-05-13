@@ -287,13 +287,13 @@ class EfdLancamentosPage {
               <td class="px-2 py-1 md:px-4 md:py-2 text-sm whitespace-nowrap">
                 <div class="flex flex-col sm:flex-row gap-2">
                   <button
-                    class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-xs md:text-sm flex items-center gap-1 delete-importado-btn w-full sm:w-auto"
+                    class="bg-red-600 hover:opacity-60 transition-all duration-300 ease-in-out text-white px-2 py-1 rounded text-xs md:text-sm flex items-center gap-1 delete-importado-btn w-full sm:w-auto"
                     data-index="${index}"
                   >
                     <i class="fas fa-trash-alt"></i> Apagar
                   </button>
                   <button
-                    class="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-xs md:text-sm flex items-center gap-1 print-importado-btn w-full sm:w-auto"
+                    class="btn-primary hover:opacity-60 transition-all duration-300 ease-in-out text-white px-2 py-1 rounded text-xs md:text-sm flex items-center gap-1 print-importado-btn w-full sm:w-auto"
                     data-index="${index}"
                   >
                     <i class="fas fa-print"></i> Imprimir

@@ -132,14 +132,15 @@ class VaPositivosPage {
             <th class="px-2 py-1 md:px-4 md:py-2 text-left">Inscrição</th>
             <th class="px-2 py-1 md:px-4 md:py-2 text-left">CNAE</th>
             <th class="px-2 py-1 md:px-4 md:py-2 text-left">CFOP</th>
-            <th class="px-2 py-1 md:px-4 md:py-2 text-left">Contribuinte</th>
-            <th class="px-2 py-1 md:px-4 md:py-2 text-left">Valor Contábil</th>
-            <th class="px-2 py-1 md:px-4 md:py-2 text-left">Valor ST ICMS</th>
-            <th class="px-2 py-1 md:px-4 md:py-2 text-left">Valor ST IPI</th>
-            <th class="px-2 py-1 md:px-4 md:py-2 text-left">CRC Contador</th>
             <th class="px-2 py-1 md:px-4 md:py-2 text-left">Tipo</th>
-            <th class="px-2 py-1 md:px-4 md:py-2 text-left">Data Inicio</th>
-            <th class="px-2 py-1 md:px-4 md:py-2 text-left">Data Final</th>
+            <th class="px-2 py-1 md:px-4 md:py-2 text-left">Contribuinte</th>
+            <th class="px-2 py-1 md:px-4 md:py-2 text-left">VR Adicionado</th>
+            <th class="px-2 py-1 md:px-4 md:py-2 text-left">Entradas</th>
+            <th class="px-2 py-1 md:px-4 md:py-2 text-left">Saidas</th>
+            <th class="px-2 py-1 md:px-4 md:py-2 text-left">ST Entradas</th>
+            <th class="px-2 py-1 md:px-4 md:py-2 text-left">ST Saidas</th>
+            <th class="px-2 py-1 md:px-4 md:py-2 text-left">IPI Entradas</th>
+            <th class="px-2 py-1 md:px-4 md:py-2 text-left">IPI Saidas</th>
             <th class="px-2 py-1 md:px-4 md:py-2 text-left">Municipio</th>
           </tr>
         </thead>
@@ -152,14 +153,15 @@ class VaPositivosPage {
                   <td class="px-2 py-1 md:px-4 md:py-2 border-2">${item.inscricao}</td>
                   <td class="px-2 py-1 md:px-4 md:py-2 border-2">${item.cnae}</td>
                   <td class="px-2 py-1 md:px-4 md:py-2 border-2">${item.cfop}</td>
-                  <td class="px-2 py-1 md:px-4 md:py-2 border-2">${item.contribuintes}</td>
-                  <td class="px-2 py-1 md:px-4 md:py-2 border-2">${item.valorContabil}</td>
-                  <td class="px-2 py-1 md:px-4 md:py-2 border-2">${item.valorSt}</td>
-                  <td class="px-2 py-1 md:px-4 md:py-2 border-2">${item.valorStIpi}</td>
-                  <td class="px-2 py-1 md:px-4 md:py-2 border-2">${item.crcContador}</td>
                   <td class="px-2 py-1 md:px-4 md:py-2 border-2">${item.tipo}</td>
-                  <td class="px-2 py-1 md:px-4 md:py-2 border-2">${item.dataInicio}</td>
-                  <td class="px-2 py-1 md:px-4 md:py-2 border-2">${item.dataFinal}</td>
+                  <td class="px-2 py-1 md:px-4 md:py-2 border-2">${item.contribuintes}</td>
+                  <td class="px-2 py-1 md:px-4 md:py-2 border-2">${item.vrAdicionado}</td>
+                  <td class="px-2 py-1 md:px-4 md:py-2 border-2">${item.entradas}</td>
+                  <td class="px-2 py-1 md:px-4 md:py-2 border-2">${item.saidas}</td>
+                  <td class="px-2 py-1 md:px-4 md:py-2 border-2">${item.stEntradas}</td>
+                  <td class="px-2 py-1 md:px-4 md:py-2 border-2">${item.stSaidas}</td>
+                  <td class="px-2 py-1 md:px-4 md:py-2 border-2">${item.ipiEntradas}</td>
+                  <td class="px-2 py-1 md:px-4 md:py-2 border-2">${item.ipiSaidas}</td>
                   <td class="px-2 py-1 md:px-4 md:py-2 border-2">${item.municipio}</td>
                 </tr>
               `
@@ -287,13 +289,13 @@ class VaPositivosPage {
               <td class="px-2 py-1 md:px-4 md:py-2 text-sm whitespace-nowrap">
                 <div class="flex flex-col sm:flex-row gap-2">
                   <button
-                    class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-xs md:text-sm flex items-center gap-1 delete-importado-btn w-full sm:w-auto"
+                    class="bg-red-600 hover:opacity-60 transition-all duration-300 ease-in-out text-white px-2 py-1 rounded text-xs md:text-sm flex items-center gap-1 delete-importado-btn w-full sm:w-auto"
                     data-index="${index}"
                   >
                     <i class="fas fa-trash-alt"></i> Apagar
                   </button>
                   <button
-                    class="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-xs md:text-sm flex items-center gap-1 print-importado-btn w-full sm:w-auto"
+                    class="btn-primary hover:opacity-60 transition-all duration-300 ease-in-out text-white px-2 py-1 rounded text-xs md:text-sm flex items-center gap-1 print-importado-btn w-full sm:w-auto"
                     data-index="${index}"
                   >
                     <i class="fas fa-print"></i> Imprimir
@@ -379,7 +381,6 @@ class VaPositivosPage {
       });
     }, 0);
   }
-
   openDeleteImportadoModal(item, index, data) {
     const modalContent = document.createElement("div");
     modalContent.className = "text-gray-700 text-base space-y-6 text-center";
@@ -516,7 +517,7 @@ class VaPositivosPage {
 
     setTimeout(() => {
       const applyFilterImprimirBtn = document.getElementById(
-          "apply-filter-imprimir-btn"
+        "apply-filter-imprimir-btn"
       );
       const backFilterPrintBtn = document.getElementById("back-filter-print");
 
@@ -719,19 +720,16 @@ class VaPositivosPage {
         inscricao: `1234567890${i}`,
         cnae: `12345678${i}`,
         cfop: `1234${i}`,
-        contribuintes: `Contribuinte ${i}`,
-        valorContabil: `R$ ${valorMocked}`,
-        valorSt: "0,00",
-        valorStIpi: "0,00",
-        crcContador: "MT000256OO7",
         tipo: "Não Informado",
-        dataInicio: `2021/${(i % 12) + 1 < 10 ? "0" : ""}${(i % 12) + 1}/${
-          (i % 12) + 1 < 10 ? "0" : ""
-        }${(i % 12) + 1}`,
-        dataFinal: `2023/${(i % 12) + 1 < 10 ? "0" : ""}${(i % 12) + 1}/${
-          (i % 12) + 1 < 10 ? "0" : ""
-        }${(i % 12) + 1}`,
-        municipio: `Município ${i}`,
+        contribuintes: `Contribuinte ${i}`,
+        vrAdicionado: `R$ ${valorMocked}`,
+        entradas: `R$ ${valorMocked}`,
+        saidas: `R$ ${valorMocked}`,
+        stEntradas: `R$ ${valorMocked}`,
+        stSaidas: `R$ ${valorMocked}`,
+        ipiEntradas: `R$ ${valorMocked}`,
+        ipiSaidas: `R$ ${valorMocked}`,
+        municipio: `Pontes e Lacerda`,
       });
     }
 

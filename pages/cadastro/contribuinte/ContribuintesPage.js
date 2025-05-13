@@ -124,7 +124,7 @@ class ContribuintesPage {
               )}</div>
             </div>
             <div class="text-md text-gray-600 mb-2">Contabilista: Nome do Contabilista</div>
-            <div class="text-md text-gray-600 mb-2">Situação: Ativo</div>
+            <div class="text-md text-gray-600 mb-2">Situação: <span class='p-1 bg-green-300'>Ativo</span></div>
             <div class="text-md text-gray-600 mb-2">Município: CIDADE - UF</div>
             <div class="text-md text-gray-600">Grupo Eco: NOME DO GRUPO ECONÔMICO</div>
             <div class="mt-3 flex justify-between items-center">

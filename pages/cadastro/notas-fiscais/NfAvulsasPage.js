@@ -1,10 +1,10 @@
 /**
- * NfEntradasPage.js - Página de Listagem de Notas Fiscais de Entradas
+ * NfAvulsasPage.js - Página de Listagem de Notas Fiscais Avulsas
  */
 import ModalComponent from "../../../components/common/ModalComponent.js";
 import { Header } from "../../../components/layout/Header.js";
 
-class NfEntradasPage {
+class NfAvulsasPage {
   constructor() {
     this.tableData = [];
     this.modal = null;
@@ -15,7 +15,7 @@ class NfEntradasPage {
   }
 
   initialize() {
-    console.log("Inicializando NfEntradasPage...");
+    console.log("Inicializando NfAvulsasPage...");
     Header.initialize();
     this.setupBreadcrumbs();
     this.loadData();
@@ -28,8 +28,8 @@ class NfEntradasPage {
     if (breadcrumbContainer) {
       breadcrumbContainer.innerHTML = `
         <div class="pt-1 pb-1 pl-4 pr-4 md:pl-20 md:pr-16">
-          <div class="text-gray-500 text-base leading-tight">Cadastro | Contribuinte | NF-e Entradas</div>
-          <div class="text-blue-dark font-semibold text-2xl md:text-4xl leading-tight mt-0">NF-e Entradas</div>
+          <div class="text-gray-500 text-base leading-tight">Cadastro | Contribuinte | NF-e Avulsas</div>
+          <div class="text-blue-dark font-semibold text-2xl md:text-4xl leading-tight mt-0">NF-e Avulsas</div>
         </div>
       `;
     }
@@ -690,12 +690,12 @@ class NfEntradasPage {
   }
 
   static initialize() {
-    return new NfEntradasPage();
+    return new NfAvulsasPage();
   }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  NfEntradasPage.initialize();
+  NfAvulsasPage.initialize();
 });
 
-export default NfEntradasPage;
+export default NfAvulsasPage;
