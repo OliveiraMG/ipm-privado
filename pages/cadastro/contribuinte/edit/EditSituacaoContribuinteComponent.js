@@ -1,84 +1,86 @@
 /**
- * EditSituacaoContribuinteComponent.js - Componente para edição de Situação.
+ * EditMotivoComponent.js - Componente para edição de Motivos de Notificações
  */
-import { toast } from "../../../js/Utilities.js";
-
 class EditSituacaoContribuinteComponent {
-  constructor(config) {
-    this.exercicioData = config.exercicioData || {};
-    this.onUpdate = config.onUpdate || (() => {});
-    this.onBack = config.onBack || (() => {});
-    this.element = this.render();
+  constructor({ motivosData, onUpdate, onBack }) {
+    this.motivosData = motivosData;
+    this.onUpdate = onUpdate;
+    this.onBack = onBack;
+    this.element = document.createElement("div");
+    this.render();
     this.setupEventListeners();
   }
 
   render() {
-    const container = document.createElement("div");
-    container.className = "p-4";
-
-    const form = document.createElement("div");
-    form.className = "space-y-4";
-
-    form.innerHTML = `
-      <div>
-        <label for="exercicio" class="block text-sm font-medium text-gray-700">Exercício:</label>
-        <input type="number" id="exercicio" name="exercicio"
-               value="${this.exercicioData.base || ""}"
-               class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-light focus:border-blue-light">
+    this.element.innerHTML = `
+      <div class="p-6">
+        <form id="edit-motivo-form" class="space-y-4">
+          <div>
+            <label for="sigla" class="block text-sm font-medium text-gray-700">Sigla*</label>
+            <input type="text" id="sigla" name="sigla" value="${
+              this.motivosData.sigla || ""
+            }" class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm" required>
+          </div>
+          <div>
+            <label for="descricao" class="block text-sm font-medium text-gray-700">Descrição*</label>
+            <textarea id="descricao" name="descricao" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm" required>${
+              this.motivosData.descricao || ""
+            }</textarea>
+          </div>
+          <div>
+            <label for="modulo" class="block text-sm font-medium text-gray-700">Módulo*</label>
+            <input type="text" id="modulo" name="modulo" value="${
+              this.motivosData.modulo || ""
+            }" class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm" required>
+          </div>
+          <div>
+            <label for="ativo" class="block text-sm font-medium text-gray-700">Ativo*</label>
+            <select id="ativo" name="ativo" class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm">
+              <option value="Sim" ${
+                this.motivosData.ativo === "Sim" ? "selected" : ""
+              }>Sim</option>
+              <option value="Não" ${
+                this.motivosData.ativo === "Não" ? "selected" : ""
+              }>Não</option>
+            </select>
+          </div>
+          <div class="flex justify-end space-x-4 mt-6">
+            <button type="button" id="back-btn" class="px-4 py-2 border border-gray-300 rounded-full text-gray-700 hover:bg-gray-100">
+              Voltar
+            </button>
+            <button type="submit" class="px-4 py-2 bg-blue-dark text-white rounded-full hover:bg-blue-medium">
+              Salvar Alterações
+            </button>
+          </div>
+        </form>
       </div>
     `;
-
-    const actions = document.createElement("div");
-    actions.className = "flex justify-end space-x-4 mt-6";
-    actions.innerHTML = `
-      <button id="back-btn" class="px-4 py-2 border border-gray-300 rounded-full text-gray-700 text-sm hover:bg-gray-100">
-        Voltar
-      </button>
-      <button id="submit-btn" class="px-4 py-2 bg-blue-dark text-white rounded-full text-sm hover:bg-blue-medium">
-        Editar
-      </button>
-    `;
-
-    form.appendChild(actions);
-    container.appendChild(form);
-    return container;
   }
 
   setupEventListeners() {
+    const form = this.element.querySelector("#edit-motivo-form");
     const backBtn = this.element.querySelector("#back-btn");
-    const submitBtn = this.element.querySelector("#submit-btn");
+
+    if (form) {
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const updatedData = {
+          id: this.motivosData.id,
+          sigla: formData.get("sigla"),
+          descricao: formData.get("descricao"),
+          modulo: formData.get("modulo"),
+          ativo: formData.get("ativo"),
+        };
+        this.onUpdate(updatedData);
+      });
+    }
 
     if (backBtn) {
       backBtn.addEventListener("click", () => {
-        toast.info("Retornando à lista de exercícios...");
         this.onBack();
       });
     }
-
-    if (submitBtn) {
-      submitBtn.addEventListener("click", () => {
-        this.submitForm();
-      });
-    }
-  }
-
-  submitForm() {
-    const exercicioInput = this.element.querySelector("#exercicio");
-    const exercicio = exercicioInput.value.trim();
-
-    if (!exercicio) {
-      toast.error("O campo Exercício é obrigatório!");
-      return;
-    }
-
-    const updatedData = {
-      id: this.exercicioData.id,
-      base: parseInt(exercicio),
-      apuracao: parseInt(exercicio) + 1,
-      aplicacao: parseInt(exercicio) + 2,
-    };
-
-    this.onUpdate(updatedData);
   }
 }
 

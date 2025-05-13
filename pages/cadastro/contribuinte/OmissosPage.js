@@ -20,7 +20,6 @@ class OmissosPage {
     this.setupBreadcrumbs();
     this.loadData();
     this.renderContent();
-    this.modal = this.createMunicipioModal();
     this.deleteModal = this.createDeleteModal();
   }
 
@@ -125,7 +124,7 @@ class OmissosPage {
     const data = this.getPaginatedData();
 
     const tableHTML = `
-      <table class="w-full table-auto border-collapse">
+      <table class="w-full table-auto border-collapse rounded-xl overflow-hidden">
         <thead class="bg-[#23424A] text-white">
           <tr>
             <th class="px-2 py-1 md:px-4 md:py-2 text-left">Ano Apuração</th>
@@ -155,54 +154,6 @@ class OmissosPage {
       </table>
     `;
     container.innerHTML = tableHTML;
-  }
-
-  createMunicipioModal() {
-    const modalContent = document.createElement("div");
-    modalContent.className = "overflow-x-auto max-h-96";
-    modalContent.innerHTML = `
-        <table class="table-auto w-full border-collapse">
-          <thead>
-            <tr class="bg-[#23424A] text-white">
-              <th class="px-2 py-1 md:px-4 md:py-2 text-left">Ação</th>
-              <th class="px-2 py-1 md:px-4 md:py-2 text-left">CFOP</th>
-              <th class="px-2 py-1 md:px-4 md:py-2 text-left">Descrição</th>
-              <th class="px-2 py-1 md:px-4 md:py-2 text-left">Repercute no Cálculo?</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${(this.tableData.notificacoes || [])
-              .map(
-                (item) => `
-                  <tr class="bg-white border-t">
-                    <td class="px-2 py-1 md:px-4 md:py-2 flex gap-2 flex-wrap">
-                      <button class="bg-[#3C7A89] hover:bg-[#336674] text-white px-2 py-1 rounded text-xs md:text-sm flex items-center gap-1">
-                        Apagar <i class="fas fa-trash-alt"></i>
-                      </button>
-                    </td>
-                    <td class="px-2 py-1 md:px-4 md:py-2">${item.cfop}</td>
-                    <td class="px-2 py-1 md:px-4 md:py-2">${item.descricao}</td>
-                    <td class="px-2 py-1 md:px-4 md:py-2">${item.repercute}</td>
-                  </tr>
-                `
-              )
-              .join("")}
-          </tbody>
-        </table>
-      `;
-
-    this.municipioModalComponent = new ModalComponent({
-      id: "MunicipioModal",
-      title: "Notificações",
-      content: modalContent,
-      onClose: () => (this.municipioModalComponent = null),
-    });
-
-    const modalElement = document.getElementById("MunicipioModal");
-    if (!modalElement) {
-      document.body.appendChild(this.municipioModalComponent.modalElement);
-    }
-    return this.municipioModalComponent;
   }
 
   openSearchModal() {
@@ -303,7 +254,7 @@ class OmissosPage {
 
     modalContent.innerHTML = `
       <div class="overflow-x-auto" style="max-height: calc(100vh - 150px);">
-        <table class="w-full table-auto border-collapse">
+        <table class="w-full table-auto border-collapse rounded-xl overflow-hidden">
           <thead class="bg-[#23424A] text-white sticky top-0">
             <tr>
               <th class="px-2 py-1 md:px-4 md:py-2 text-left">Ações</th>

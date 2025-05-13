@@ -9,6 +9,8 @@ class SituacaoContribuintePage {
     this.currentPage = 1;
     this.itemsPerPage = 10;
     this.totalPages = 1;
+    this.editModal = null; // Alterado para armazenar a instância do modal de edição
+    this.registerModal = null;
     this.initialize();
   }
 
@@ -134,7 +136,7 @@ class SituacaoContribuintePage {
     const paginatedData = this.tableData.slice(startIndex, endIndex);
 
     let tableHTML = `
-      <table class="min-w-full border-collapse">
+      <table class="min-w-full border-collapse rounded-xl overflow-hidden">
         <thead>
           <tr class="bg-blue-dark">
             <th class="text-white text-sm text-center py-2 px-4">AÇÕES</th>
@@ -152,9 +154,9 @@ class SituacaoContribuintePage {
       tableHTML += `
         <tr class="${rowClass}">
           <td class="text-center py-2 px-4 border-2">
-            <button class="btn-primary delete-btn text-xs text-white px-2 py-1 rounded" data-id="${row.id}">
+            <button id='editar-btn editar-btn-${row.id}' class="btn-primary delete-btn text-xs text-white px-2 py-1 rounded" data-id="${row.id}">
               <i class='fa-solid fa-pen'></i>
-               Editar
+              Editar
             </button>
           </td>
           <td class="text-center py-2 px-4 border-2">${row.inscricao}</td>
@@ -171,10 +173,13 @@ class SituacaoContribuintePage {
   }
 
   setupTableButtonEvents() {
-    const deleteButtons = document.querySelectorAll(".delete-btn");
-    deleteButtons.forEach((button, index) => {
-      button.addEventListener("click", () => {
-        this.showDeleteModal(index);
+    const editButtons = document.getElementById("editar-btn");
+
+    editButtons.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+        const id = parseInt(button.dataset.id);
+        this.openEditModal(id);
       });
     });
   }
@@ -185,6 +190,25 @@ class SituacaoContribuintePage {
     this.renderTable();
     this.renderPagination();
     toast.success("Contribuinte deletado com sucesso!");
+  }
+
+  updateData(updatedData) {
+    const index = this.tableData.findIndex(
+      (item) => item.id === updatedData.id
+    );
+    if (index !== -1) {
+      this.tableData[index] = {
+        ...this.tableData[index],
+        inscricao: updatedData.inscricao,
+        contribuinte: updatedData.contribuinte,
+        dataInclusao: updatedData.dataInclusao,
+        motivo: updatedData.motivo,
+      };
+      this.renderTable();
+      toast.success("Dados atualizados com sucesso!");
+    } else {
+      toast.error("Erro: Contribuinte não encontrado para atualização.");
+    }
   }
 
   renderButtons() {
@@ -213,6 +237,9 @@ class SituacaoContribuintePage {
     document
       .getElementById("search-btn")
       .addEventListener("click", () => this.openSearchModal());
+    document.getElementById("cadastrar-btn").addEventListener("click", () => {
+      this.openRegisterModal();
+    });
   }
 
   renderPagination() {
@@ -258,6 +285,39 @@ class SituacaoContribuintePage {
 
     paginationContainer.innerHTML = paginationHTML;
     this.setupPaginationEvents();
+  }
+
+  setupPaginationEvents() {
+    document.querySelectorAll(".page-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        this.currentPage = parseInt(btn.dataset.page);
+        this.renderTable();
+        this.renderPagination();
+      });
+    });
+
+    const prev = document.getElementById("prev-page");
+    const next = document.getElementById("next-page");
+
+    if (prev) {
+      prev.addEventListener("click", () => {
+        if (this.currentPage > 1) {
+          this.currentPage--;
+          this.renderTable();
+          this.renderPagination();
+        }
+      });
+    }
+
+    if (next) {
+      next.addEventListener("click", () => {
+        if (this.currentPage < this.totalPages) {
+          this.currentPage++;
+          this.renderTable();
+          this.renderPagination();
+        }
+      });
+    }
   }
 
   openSearchModal() {
@@ -315,6 +375,47 @@ class SituacaoContribuintePage {
         });
       }
     }, 0);
+  }
+
+  openRegisterModal() {
+    const registerComponent = new RegisterExercicioComponent({
+      onSubmit: (data) => {
+        const newExercicio = {
+          id: Math.max(...this.tableData.map((d) => d.id), 0) + 1,
+          inscricao: data.exercicio, // Ajuste nos nomes dos campos para corresponder à tabela
+          contribuinte: data.exercicio,
+          dataInclusao: data.exercicio,
+          motivo: data.exercicio,
+        };
+        this.tableData.unshift(newExercicio);
+        this.totalPages = Math.ceil(this.tableData.length / this.itemsPerPage); // Recalcular total de páginas
+        this.currentPage = 1; // Resetar para a primeira página após adicionar
+        this.renderTable();
+        this.renderPagination();
+        this.registerModal.close();
+        toast.success("Exercício cadastrado com sucesso!");
+      },
+      onBack: () => {
+        this.registerModal.close();
+        toast.info("Retornado à lista de exercícios");
+      },
+    });
+
+    this.registerModal = new ModalComponent({
+      id: "register-exercicio-modal",
+      title: "Cadastrar Exercícios",
+      titleClass: "text-blue-dark font-semibold text-xl",
+      content: registerComponent.element,
+      contentClass: "p-0",
+      onClose: () => {
+        this.registerModal = null;
+      },
+    });
+    this.registerModal.open();
+  }
+
+  openEditModal(exercicioId) {
+    // Logic here
   }
 
   openImprimirModal() {
@@ -406,33 +507,6 @@ class SituacaoContribuintePage {
         }
       });
     }
-  }
-
-  showDeleteModal(index) {
-    this.selectedItemIndex = index;
-    const item = this.tableData[index];
-
-    this.deleteModal.querySelector("span.font-bold").innerText =
-      item.contribuinte;
-    this.deleteModal.classList.remove("hidden");
-
-    const confirmBtn = document.getElementById("confirmDelete");
-    const cancelBtn = document.getElementById("cancelDelete");
-
-    confirmBtn.onclick = () => {
-      this.tableData.splice(this.selectedItemIndex, 1);
-      this.totalPages = Math.ceil(this.tableData.length / this.itemsPerPage);
-      if (this.currentPage > this.totalPages)
-        this.currentPage = this.totalPages || 1;
-      this.renderTable();
-      this.renderPagination();
-      this.deleteModal.classList.add("hidden");
-      toast.success("Contribuinte deletado com sucesso!");
-    };
-
-    cancelBtn.onclick = () => {
-      this.deleteModal.classList.add("hidden");
-    };
   }
 
   static initialize() {

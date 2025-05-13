@@ -20,7 +20,6 @@ class EfdLancamentosPage {
     this.setupBreadcrumbs();
     this.loadData();
     this.renderContent();
-    this.modal = this.createMunicipioModal();
     this.deleteModal = this.createDeleteModal();
   }
 
@@ -125,7 +124,7 @@ class EfdLancamentosPage {
     const data = this.getPaginatedData();
 
     const tableHTML = `
-      <table class="w-full table-auto border-collapse">
+      <table class="w-full table-auto border-collapse rounded-xl overflow-hidden">
         <thead class="bg-[#23424A] text-white">
           <tr>
             <th class="px-2 py-1 md:px-4 md:py-2 text-left">Apuração</th>
@@ -172,111 +171,6 @@ class EfdLancamentosPage {
     container.innerHTML = tableHTML;
   }
 
-  createMunicipioModal() {
-    const modalContent = document.createElement("div");
-    modalContent.className = "overflow-x-auto max-h-96";
-    modalContent.innerHTML = `
-        <table class="table-auto w-full border-collapse">
-          <thead>
-            <tr class="bg-[#23424A] text-white">
-              <th class="px-2 py-1 md:px-4 md:py-2 text-left">Ação</th>
-              <th class="px-2 py-1 md:px-4 md:py-2 text-left">CFOP</th>
-              <th class="px-2 py-1 md:px-4 md:py-2 text-left">Descrição</th>
-              <th class="px-2 py-1 md:px-4 md:py-2 text-left">Repercute no Cálculo?</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${(this.tableData.notificacoes || [])
-              .map(
-                (item) => `
-                  <tr class="bg-white border-t">
-                    <td class="px-2 py-1 md:px-4 md:py-2 flex gap-2 flex-wrap">
-                      <button class="bg-[#3C7A89] hover:bg-[#336674] text-white px-2 py-1 rounded text-xs md:text-sm flex items-center gap-1">
-                        Apagar <i class="fas fa-trash-alt"></i>
-                      </button>
-                    </td>
-                    <td class="px-2 py-1 md:px-4 md:py-2">${item.cfop}</td>
-                    <td class="px-2 py-1 md:px-4 md:py-2">${item.descricao}</td>
-                    <td class="px-2 py-1 md:px-4 md:py-2">${item.repercute}</td>
-                  </tr>
-                `
-              )
-              .join("")}
-          </tbody>
-        </table>
-      `;
-
-    this.municipioModalComponent = new ModalComponent({
-      id: "MunicipioModal",
-      title: "Notificações",
-      content: modalContent,
-      onClose: () => (this.municipioModalComponent = null),
-    });
-
-    const modalElement = document.getElementById("MunicipioModal");
-    if (!modalElement) {
-      document.body.appendChild(this.municipioModalComponent.modalElement);
-    }
-    return this.municipioModalComponent;
-  }
-
-  openSearchModal() {
-    const modalContent = document.createElement("div");
-    modalContent.className = "text-gray-700 text-base space-y-6";
-
-    modalContent.innerHTML = `
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <select id="filter-type-select-1" class="w-full border border-gray-300 rounded-lg h-10 md:h-12 px-3">
-          <option disabled selected>Selecione</option>
-          <option value="situacao">Situação</option>
-          <option value="atividade">Atividade Econômica</option>
-          <option value="contador">Contabilista</option>
-          <option value="contribuinte">Contribuinte</option>
-        </select>
-        <select id="filter-exercicio-select-1" class="w-full border border-gray-300 rounded-lg h-10 md:h-12 px-3">
-          <option disabled selected>Exercícios</option>
-          <option>Exercício 1</option>
-          <option>Exercício 2</option>
-          <option>Exercício 3</option>
-        </select>
-      </div>
-      <div class="flex flex-col sm:flex-row justify-end gap-4 mt-6">
-        <button type="button" id="back-filter" class="btn-secondary px-4 md:px-6 py-2 border rounded-lg text-gray-700 w-full sm:w-auto">Voltar</button>
-        <button type="button" id="clear-filter" class="btn-secondary px-4 md:px-6 py-2 border rounded-lg text-gray-700 w-full sm:w-auto">Limpar Filtro</button>
-        <button type="button" id="apply-filter-btn" class="btn-primary px-4 md:px-6 py-2 text-white rounded-lg w-full sm:w-auto">
-          <i class="fa-solid fa-filter mr-2"></i>Aplicar Filtro
-        </button>
-      </div>
-    `;
-
-    this.modal = new ModalComponent({
-      id: "search-modal",
-      title: "Pesquisar",
-      content: modalContent,
-      onClose: () => (this.modal = null),
-    });
-
-    this.modal.open();
-
-    setTimeout(() => {
-      const applyFilterBtn = document.getElementById("apply-filter-btn");
-      const backFilterBtn = document.getElementById("back-filter");
-      if (applyFilterBtn) {
-        applyFilterBtn.addEventListener("click", (e) => {
-          e.preventDefault();
-          this.applyFilter();
-          this.closeModal();
-        });
-      }
-      if (backFilterBtn) {
-        backFilterBtn.addEventListener("click", (e) => {
-          e.preventDefault();
-          this.closeModal();
-        });
-      }
-    }, 0);
-  }
-
   openImportadosModal() {
     const data = this.getMockImportadosData();
 
@@ -318,7 +212,7 @@ class EfdLancamentosPage {
 
     modalContent.innerHTML = `
       <div class="overflow-x-auto" style="max-height: calc(100vh - 150px);">
-        <table class="w-full table-auto border-collapse">
+        <table class="w-full table-auto border-collapse rounded-xl overflow-hidden">
           <thead class="bg-[#23424A] text-white sticky top-0">
             <tr>
               <th class="px-2 py-1 md:px-4 md:py-2 text-left">Ações</th>

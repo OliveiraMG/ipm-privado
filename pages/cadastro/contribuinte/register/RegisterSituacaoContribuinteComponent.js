@@ -1,9 +1,14 @@
 /**
- * RegisterSituacaoContribuinteComponent.js - Componente para cadastro de situação
+ * RegisterPermissaoComponent.js - Componente para cadastro de permissão
  */
-import { toast } from "../../../js/Utilities.js";
+import { toast } from "../../../../js/Utilities.js";
 
 class RegisterSituacaoContribuinteComponent {
+  /**
+   * @param {Object} config - Configuração do componente
+   * @param {Function} config.onSubmit - Função chamada ao submeter o formulário
+   * @param {Function} config.onBack - Função chamada ao clicar em Voltar
+   */
   constructor(config) {
     this.onSubmit = config.onSubmit || (() => {});
     this.onBack = config.onBack || (() => {});
@@ -20,9 +25,36 @@ class RegisterSituacaoContribuinteComponent {
 
     form.innerHTML = `
       <div>
-        <label for="exercicio" class="block text-sm font-medium text-gray-700">Exercício:</label>
-        <input type="number" id="exercicio" name="exercicio"
+        <select id="sigla" name="sigla" class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-light focus:border-blue-light">
+          <option value="" disabled selected>Selecione a Sigla</option>
+          <option value="VANAP">VANAP</option>
+          <option value="CVAPA">CVAPA</option>
+          <option value="AVULS">AVULS</option>
+          <option value="CNTSM">CNTSM</option>
+        </select>
+      </div>
+      <div>
+        <label for="descricao" class="block text-sm font-medium text-gray-700">Descrição:</label>
+        <input type="text" id="descricao" name="descricao"
                class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-light focus:border-blue-light">
+      </div>
+      <div>
+        <select id="modulo" name="modulo" class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-light focus:border-blue-light">
+          <option value="" disabled selected>Selecione o Modulo</option>
+          <option value="IMPORTAÇÃO">Importação</option>
+          <option value="GERENCIAR">Gerenciar</option>
+          <option value="CADASTRO">Cadastro</option>
+          <option value="RELATÓRIOS">Relatórios</option>
+          <option value="AUXILIARES">Auxiliares</option>
+          <option value="ACESSOS">Acessos</option>
+        </select>
+      </div>
+      <div>
+        <select id='ativo' name='ativo' class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm focus:ring-blue-light focus:border-blue-light">
+          <option value="" disabled selected>Ativo?</option>
+          <option value="SIM">Sim</option>
+          <option value="NAO">Não</option>
+        </select>
       </div>
     `;
 
@@ -48,7 +80,7 @@ class RegisterSituacaoContribuinteComponent {
 
     if (backBtn) {
       backBtn.addEventListener("click", () => {
-        toast.info("Retornando à lista de exercícios...");
+        toast.info("Retornando à lista de permissões...");
         this.onBack();
       });
     }
@@ -61,18 +93,44 @@ class RegisterSituacaoContribuinteComponent {
   }
 
   submitForm() {
-    const exercicioInput = this.element.querySelector("#exercicio");
-    const exercicio = exercicioInput.value.trim();
+    const descricaoInput = this.element.querySelector("#descricao");
+    const moduloInput = this.element.querySelector("#modulo");
+    const siglaInput = this.element.querySelector("#sigla");
+    const ativoInput = this.element.querySelector("#ativo");
 
-    if (!exercicio) {
-      toast.error("O campo Exercício é obrigatório!");
+    const descricao = descricaoInput.value.trim();
+    const modulo = moduloInput.value;
+    const sigla = siglaInput.value;
+    const ativo = ativoInput.value;
+
+    if (!sigla) {
+      toast.error("O campo Sigla é obrigatório!");
+      return;
+    }
+
+    if (!descricao) {
+      toast.error("O campo Descrição é obrigatório!");
+      return;
+    }
+
+    if (!modulo) {
+      toast.error("O campo Módulo é obrigatório!");
+      return;
+    }
+
+    if (!ativo) {
+      toast.error("O campo Ativo é obrigatório!");
       return;
     }
 
     const data = {
-      exercicio: parseInt(exercicio),
+      sigla: sigla,
+      descricao: descricao,
+      modulo: modulo,
+      ativo: ativo,
     };
 
+    toast.success("Permissão cadastrada com sucesso!");
     this.onSubmit(data);
   }
 }
